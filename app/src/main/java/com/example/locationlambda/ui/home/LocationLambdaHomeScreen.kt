@@ -1,6 +1,7 @@
 package com.example.locationlambda.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.locationlambda.ui.model.LocationRuleUi
+import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.theme.CardSurface
 import com.example.locationlambda.ui.theme.Divider
 import com.example.locationlambda.ui.theme.EnterBlue
@@ -40,46 +43,13 @@ import com.example.locationlambda.ui.theme.SlateSoft
 import com.example.locationlambda.ui.theme.SuccessGreen
 
 @Composable
-fun LocationLambdaHomeScreen() {
-    val maxRules = 5
-    val sampleRules = listOf(
-        LocationRuleUi(
-            name = "渋谷駅",
-            addressLabel = "東京都渋谷区道玄坂1-1-1",
-            areaLabel = "半径150m",
-            transitions = listOf(
-                TransitionUi("到着", EnterBlue)
-            ),
-            actionTypeLabel = "URLを開く",
-            actionTargetLabel = "https://example.com",
-            enabled = true
-        ),
-        LocationRuleUi(
-            name = "会社",
-            addressLabel = "東京都千代田区丸の内1-1-1",
-            areaLabel = "半径200m",
-            transitions = listOf(
-                TransitionUi("退出", ExitOrange)
-            ),
-            actionTypeLabel = "アプリを開く",
-            actionTargetLabel = "Teams",
-            enabled = true
-        ),
-        LocationRuleUi(
-            name = "ジム",
-            addressLabel = "東京都新宿区西新宿2-2-2",
-            areaLabel = "半径120m",
-            transitions = listOf(
-                TransitionUi("到着", EnterBlue),
-                TransitionUi("退出", ExitOrange)
-            ),
-            actionTypeLabel = "なし",
-            actionTargetLabel = "-",
-            enabled = false
-        )
-    )
-    val ruleSlots = sampleRules.map<LocationRuleUi, LocationRuleUi?> { it } +
-        List((maxRules - sampleRules.size).coerceAtLeast(0)) { null }
+fun LocationLambdaHomeScreen(
+    rules: List<LocationRuleUi>,
+    maxRules: Int,
+    onEditRule: (LocationRuleUi) -> Unit
+) {
+    val ruleSlots = rules.map<LocationRuleUi, LocationRuleUi?> { it } +
+        List((maxRules - rules.size).coerceAtLeast(0)) { null }
 
     Scaffold(containerColor = MaterialTheme.colorScheme.background) { innerPadding ->
         Surface(
@@ -98,13 +68,16 @@ fun LocationLambdaHomeScreen() {
             ) {
                 item {
                     HomeHeader(
-                        ruleCount = sampleRules.size,
-                        activeCount = sampleRules.count { it.enabled },
+                        ruleCount = rules.size,
+                        activeCount = rules.count { it.enabled },
                         maxRules = maxRules
                     )
                 }
                 item {
-                    RuleList(rules = ruleSlots)
+                    RuleList(
+                        rules = ruleSlots,
+                        onEditRule = onEditRule
+                    )
                 }
             }
         }
@@ -144,7 +117,10 @@ private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
 }
 
 @Composable
-private fun RuleList(rules: List<LocationRuleUi?>) {
+private fun RuleList(
+    rules: List<LocationRuleUi?>,
+    onEditRule: (LocationRuleUi) -> Unit
+) {
     Surface(
         color = CardSurface,
         shape = RoundedCornerShape(28.dp)
@@ -154,7 +130,10 @@ private fun RuleList(rules: List<LocationRuleUi?>) {
                 if (rule == null) {
                     EmptyRuleRow()
                 } else {
-                    RuleRow(rule = rule)
+                    RuleRow(
+                        rule = rule,
+                        onEditRule = onEditRule
+                    )
                 }
                 if (index != rules.lastIndex) {
                     HorizontalDivider(color = Divider)
@@ -243,7 +222,10 @@ private fun EmptyRuleRow() {
 }
 
 @Composable
-private fun RuleRow(rule: LocationRuleUi) {
+private fun RuleRow(
+    rule: LocationRuleUi,
+    onEditRule: (LocationRuleUi) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -317,7 +299,6 @@ private fun RuleRow(rule: LocationRuleUi) {
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -326,18 +307,19 @@ private fun RuleRow(rule: LocationRuleUi) {
                     color = Slate
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                EditButton()
+                EditButton(onClick = { onEditRule(rule) })
             }
         }
     }
 }
 
 @Composable
-private fun EditButton() {
+private fun EditButton(onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .clip(CircleShape)
             .background(Color(0xFFF3EEE5))
+            .clickable(onClick = onClick)
             .padding(horizontal = 14.dp, vertical = 10.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -381,31 +363,56 @@ private fun TransitionBadge(label: String, color: Color) {
     }
 }
 
-private data class LocationRuleUi(
-    val name: String,
-    val addressLabel: String,
-    val areaLabel: String,
-    val transitions: List<TransitionUi>,
-    val actionTypeLabel: String,
-    val actionTargetLabel: String,
-    val enabled: Boolean
-)
-
-private data class TransitionUi(
-    val label: String,
-    val color: Color
-)
-
 @Preview(showBackground = true)
 @Composable
 private fun LocationLambdaHomePreview() {
+    val previewRules = listOf(
+        LocationRuleUi(
+            id = "1",
+            name = "渋谷駅",
+            addressLabel = "東京都渋谷区道玄坂1-1-1",
+            areaLabel = "半径150m",
+            transitions = listOf(TransitionUi("到着", EnterBlue)),
+            actionTypeLabel = "URLを開く",
+            actionTargetLabel = "https://example.com",
+            enabled = true
+        ),
+        LocationRuleUi(
+            id = "2",
+            name = "会社",
+            addressLabel = "東京都千代田区丸の内1-1-1",
+            areaLabel = "半径200m",
+            transitions = listOf(TransitionUi("退出", ExitOrange)),
+            actionTypeLabel = "アプリを開く",
+            actionTargetLabel = "Teams",
+            enabled = true
+        ),
+        LocationRuleUi(
+            id = "3",
+            name = "ジム",
+            addressLabel = "東京都新宿区西新宿2-2-2",
+            areaLabel = "半径120m",
+            transitions = listOf(
+                TransitionUi("到着", EnterBlue),
+                TransitionUi("退出", ExitOrange)
+            ),
+            actionTypeLabel = "なし",
+            actionTargetLabel = "-",
+            enabled = false
+        )
+    )
+
     LocationLambdaTheme {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(SandBackground)
         ) {
-            LocationLambdaHomeScreen()
+            LocationLambdaHomeScreen(
+                rules = previewRules,
+                maxRules = 5,
+                onEditRule = {}
+            )
         }
     }
 }
