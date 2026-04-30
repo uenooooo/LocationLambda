@@ -2,6 +2,7 @@ package com.example.locationlambda.ui.edit
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -20,7 +21,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -62,24 +62,8 @@ fun LocationLambdaEditScreen(
     onSave: (LocationRuleUi) -> Unit
 ) {
     val context = LocalContext.current
-    val appChoices = remember {
-        listOf(
-            AppChoice("Teams", "com.microsoft.teams"),
-            AppChoice("Google Maps", "com.google.android.apps.maps"),
-            AppChoice("Spotify", "com.spotify.music"),
-            AppChoice("YouTube", "com.google.android.youtube")
-        )
-    }
-    val mapChoices = remember {
-        listOf(
-            MapChoice("渋谷駅", "東京都渋谷区道玄坂1-1-1", "半径 150m"),
-            MapChoice("会社", "東京都千代田区丸の内1-1-1", "半径 300m"),
-            MapChoice("ジム", "東京都新宿区西新宿2-2-2", "半径 120m")
-        )
-    }
 
-    var showAppDialog by remember { mutableStateOf(false) }
-    var showMapDialog by remember { mutableStateOf(false) }
+    var showAppSelectionScreen by remember { mutableStateOf(false) }
     var name by rememberSaveable(rule.id) { mutableStateOf(rule.name) }
     var address by rememberSaveable(rule.id) { mutableStateOf(rule.addressLabel) }
     var radiusLabel by rememberSaveable(rule.id) { mutableStateOf(rule.areaLabel) }
@@ -137,31 +121,17 @@ fun LocationLambdaEditScreen(
         }
     }
 
-    if (showAppDialog) {
-        AppPickerDialog(
-            choices = appChoices,
+    if (showAppSelectionScreen) {
+        AppSelectionScreen(
             selectedPackageName = actionTargetValue,
-            onDismiss = { showAppDialog = false },
+            onBack = { showAppSelectionScreen = false },
             onSelect = { choice ->
                 actionTargetLabel = choice.name
                 actionTargetValue = choice.packageName
-                showAppDialog = false
+                showAppSelectionScreen = false
             }
         )
-    }
-
-    if (showMapDialog) {
-        MapPickerDialog(
-            choices = mapChoices,
-            selectedAddress = address,
-            onDismiss = { showMapDialog = false },
-            onSelect = { choice ->
-                name = choice.name
-                address = choice.address
-                radiusLabel = choice.radiusLabel
-                showMapDialog = false
-            }
-        )
+        return
     }
 
     Scaffold(
@@ -272,8 +242,7 @@ fun LocationLambdaEditScreen(
                             MapSelectorRow(
                                 name = name,
                                 address = address,
-                                radiusLabel = radiusLabel,
-                                onClick = { showMapDialog = true }
+                                radiusLabel = radiusLabel
                             )
                         }
                         DividerLine()
@@ -311,9 +280,7 @@ fun LocationLambdaEditScreen(
                                         selected = actionType == "アプリを開く",
                                         onClick = {
                                             actionType = "アプリを開く"
-                                            if (actionTargetValue.isBlank()) {
-                                                actionTargetLabel = ""
-                                            }
+                                            if (actionTargetValue.isBlank()) actionTargetLabel = ""
                                         }
                                     )
                                     ActionTypeChip(
@@ -329,7 +296,7 @@ fun LocationLambdaEditScreen(
                                 when (actionType) {
                                     "アプリを開く" -> AppPickerRow(
                                         selectedLabel = actionTargetLabel,
-                                        onClick = { showAppDialog = true }
+                                        onClick = { showAppSelectionScreen = true }
                                     )
                                     "なし" -> DisabledTargetRow()
                                     else -> OutlinedTextField(
@@ -431,38 +398,22 @@ private fun DisabledTargetRow() {
 private fun MapSelectorRow(
     name: String,
     address: String,
-    radiusLabel: String,
-    onClick: () -> Unit
+    radiusLabel: String
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(14.dp))
-            .clickable(onClick = onClick)
             .background(Color(0xFFF7F2EA))
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(
-                    text = "地図から場所を選択",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Slate
-                )
-                Text(
-                    text = name.ifBlank { "-" },
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = SlateSoft
-                )
-            }
-            MiniInfoChip(label = "変更")
-        }
+        Text(
+            text = name.ifBlank { "-" },
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = Slate
+        )
         HorizontalDivider(color = Color(0xFFE8DED1))
         Text(
             text = "住所",
@@ -485,129 +436,6 @@ private fun MapSelectorRow(
             color = Slate
         )
     }
-}
-
-@Composable
-private fun MiniInfoChip(label: String) {
-    Box(
-        modifier = Modifier
-            .clip(CircleShape)
-            .background(Color(0xFFF8F4ED))
-            .padding(horizontal = 12.dp, vertical = 8.dp)
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelLarge,
-            color = Slate
-        )
-    }
-}
-
-@Composable
-private fun AppPickerDialog(
-    choices: List<AppChoice>,
-    selectedPackageName: String,
-    onDismiss: () -> Unit,
-    onSelect: (AppChoice) -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {},
-        dismissButton = {
-            InlineActionButton(label = "閉じる", onClick = onDismiss)
-        },
-        title = {
-            Text(text = "アプリを選択")
-        },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                choices.forEach { choice ->
-                    val selected = selectedPackageName == choice.packageName
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(18.dp))
-                            .clickable { onSelect(choice) },
-                        color = if (selected) Color(0xFFEAF3EE) else Color(0xFFF8F3EC),
-                        shape = RoundedCornerShape(18.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Text(
-                                text = choice.name,
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.SemiBold,
-                                color = Slate
-                            )
-                            Text(
-                                text = choice.packageName,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = SlateSoft
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    )
-}
-
-@Composable
-private fun MapPickerDialog(
-    choices: List<MapChoice>,
-    selectedAddress: String,
-    onDismiss: () -> Unit,
-    onSelect: (MapChoice) -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {},
-        dismissButton = {
-            InlineActionButton(label = "閉じる", onClick = onDismiss)
-        },
-        title = {
-            Text(text = "場所を選択")
-        },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                choices.forEach { choice ->
-                    val selected = selectedAddress == choice.address
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(18.dp))
-                            .clickable { onSelect(choice) },
-                        color = if (selected) Color(0xFFEAF3EE) else Color(0xFFF8F3EC),
-                        shape = RoundedCornerShape(18.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Text(
-                                text = choice.name,
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.SemiBold,
-                                color = Slate
-                            )
-                            Text(
-                                text = choice.address,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = SlateSoft
-                            )
-                            Text(
-                                text = choice.radiusLabel,
-                                style = MaterialTheme.typography.labelMedium,
-                                color = Slate
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    )
 }
 
 @Composable
@@ -692,15 +520,10 @@ private fun buildTransitions(onEnter: Boolean, onExit: Boolean): List<Transition
     return transitions
 }
 
-private data class AppChoice(
+data class AppChoice(
     val name: String,
-    val packageName: String
-)
-
-private data class MapChoice(
-    val name: String,
-    val address: String,
-    val radiusLabel: String
+    val packageName: String,
+    val icon: Drawable? = null
 )
 
 @Preview(showBackground = true)
