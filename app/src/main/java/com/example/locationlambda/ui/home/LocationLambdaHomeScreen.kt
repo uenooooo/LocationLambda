@@ -45,6 +45,7 @@ fun LocationLambdaHomeScreen() {
     val sampleRules = listOf(
         LocationRuleUi(
             name = "渋谷駅",
+            addressLabel = "東京都渋谷区道玄坂1-1-1",
             areaLabel = "半径150m",
             transitions = listOf(
                 TransitionUi("到着", EnterBlue)
@@ -55,6 +56,7 @@ fun LocationLambdaHomeScreen() {
         ),
         LocationRuleUi(
             name = "会社",
+            addressLabel = "東京都千代田区丸の内1-1-1",
             areaLabel = "半径200m",
             transitions = listOf(
                 TransitionUi("退出", ExitOrange)
@@ -65,6 +67,7 @@ fun LocationLambdaHomeScreen() {
         ),
         LocationRuleUi(
             name = "ジム",
+            addressLabel = "東京都新宿区西新宿2-2-2",
             areaLabel = "半径120m",
             transitions = listOf(
                 TransitionUi("到着", EnterBlue),
@@ -261,6 +264,11 @@ private fun RuleRow(rule: LocationRuleUi) {
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold
                 )
+                Text(
+                    text = rule.addressLabel,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = SlateSoft
+                )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -375,6 +383,7 @@ private fun TransitionBadge(label: String, color: Color) {
 
 private data class LocationRuleUi(
     val name: String,
+    val addressLabel: String,
     val areaLabel: String,
     val transitions: List<TransitionUi>,
     val actionTypeLabel: String,
