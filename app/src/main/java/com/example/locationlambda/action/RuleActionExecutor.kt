@@ -1,13 +1,18 @@
 package com.example.locationlambda.action
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.example.locationlambda.ui.model.LocationRuleUi
 
 object RuleActionExecutor {
-    fun buildLaunchIntent(rule: LocationRuleUi): Intent? {
+    fun buildLaunchIntent(
+        context: Context,
+        rule: LocationRuleUi
+    ): Intent? {
         return when (rule.actionTypeLabel) {
             "URLを開く" -> buildUrlIntent(rule.actionTargetValue)
+            "アプリを開く" -> buildAppIntent(context, rule.actionTargetValue)
             else -> null
         }
     }
@@ -21,5 +26,16 @@ object RuleActionExecutor {
             addCategory(Intent.CATEGORY_BROWSABLE)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
+    }
+
+    private fun buildAppIntent(
+        context: Context,
+        packageName: String
+    ): Intent? {
+        return context.packageManager
+            .getLaunchIntentForPackage(packageName.trim())
+            ?.apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
     }
 }

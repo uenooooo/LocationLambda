@@ -21,9 +21,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,6 +54,23 @@ fun AppSelectionScreen(
     val context = LocalContext.current
     val apps by produceState(initialValue = emptyList<AppChoice>(), context) {
         value = loadInstalledApps(context)
+    }
+    var query by remember { mutableStateOf("") }
+    val filteredApps = remember(apps, query, selectedPackageName) {
+        val keyword = query.trim().lowercase()
+        val matchedApps = if (keyword.isBlank()) {
+            apps
+        } else {
+            apps.filter { app ->
+                app.name.lowercase().contains(keyword) ||
+                    app.packageName.lowercase().contains(keyword)
+            }
+        }
+
+        matchedApps.sortedWith(
+            compareByDescending<AppChoice> { it.packageName == selectedPackageName }
+                .thenBy { it.name.lowercase() }
+        )
     }
 
     Scaffold(
@@ -98,6 +120,27 @@ fun AppSelectionScreen(
                     )
                 }
             }
+            item {
+                Column(modifier = Modifier.padding(bottom = 20.dp)) {
+                    TextField(
+                        value = query,
+                        onValueChange = { query = it },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        placeholder = {
+                            Text(text = "アプリを検索")
+                        },
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedIndicatorColor = Slate,
+                            unfocusedIndicatorColor = Divider,
+                            cursorColor = Slate
+                        )
+                    )
+                }
+            }
 
             if (apps.isEmpty()) {
                 item {
@@ -108,8 +151,17 @@ fun AppSelectionScreen(
                         color = SlateSoft
                     )
                 }
+            } else if (filteredApps.isEmpty()) {
+                item {
+                    Text(
+                        text = "一致するアプリがありません。",
+                        modifier = Modifier.padding(vertical = 12.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = SlateSoft
+                    )
+                }
             } else {
-                items(apps, key = { it.packageName }) { app ->
+                items(filteredApps, key = { it.packageName }) { app ->
                     AppSelectionRow(
                         app = app,
                         selected = app.packageName == selectedPackageName,
@@ -163,11 +215,6 @@ private fun AppSelectionRow(
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate
-            )
-            Text(
-                text = app.packageName,
-                style = MaterialTheme.typography.bodySmall,
-                color = SlateSoft
             )
         }
 

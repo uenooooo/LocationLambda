@@ -43,7 +43,7 @@ object MockNotificationHelper {
             },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val launchIntent = RuleActionExecutor.buildLaunchIntent(rule)
+        val launchIntent = RuleActionExecutor.buildLaunchIntent(context, rule)
         val actionPendingIntent = launchIntent?.let {
             buildActionPendingIntent(
                 context = context,

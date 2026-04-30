@@ -7,6 +7,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,11 +40,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.example.locationlambda.notification.MockNotificationHelper
 import com.example.locationlambda.ui.model.LocationRuleUi
 import com.example.locationlambda.ui.model.TransitionUi
@@ -296,6 +300,7 @@ fun LocationLambdaEditScreen(
                                 when (actionType) {
                                     "アプリを開く" -> AppPickerRow(
                                         selectedLabel = actionTargetLabel,
+                                        selectedPackageName = actionTargetValue,
                                         onClick = { showAppSelectionScreen = true }
                                     )
                                     "なし" -> DisabledTargetRow()
@@ -347,8 +352,20 @@ private fun DividerLine() {
 @Composable
 private fun AppPickerRow(
     selectedLabel: String,
+    selectedPackageName: String,
     onClick: () -> Unit
 ) {
+    val context = LocalContext.current
+    val appIcon = remember(selectedPackageName) {
+        if (selectedPackageName.isBlank()) {
+            null
+        } else {
+            runCatching {
+                context.packageManager.getApplicationIcon(selectedPackageName)
+            }.getOrNull()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -363,11 +380,26 @@ private fun AppPickerRow(
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
-        Text(
-            text = selectedLabel.ifBlank { "アプリを選択" },
-            style = MaterialTheme.typography.bodyLarge,
-            color = Slate
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val iconBitmap = appIcon?.toBitmap()?.asImageBitmap()
+            if (iconBitmap != null) {
+                Image(
+                    bitmap = iconBitmap,
+                    contentDescription = selectedLabel,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(RoundedCornerShape(9.dp))
+                )
+            }
+            Text(
+                text = selectedLabel.ifBlank { "アプリを選択" },
+                style = MaterialTheme.typography.bodyLarge,
+                color = Slate
+            )
+        }
     }
 }
 

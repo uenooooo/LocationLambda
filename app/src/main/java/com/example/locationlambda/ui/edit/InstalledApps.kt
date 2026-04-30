@@ -1,23 +1,21 @@
 package com.example.locationlambda.ui.edit
 
 import android.content.Context
-import android.content.Intent
+import android.content.pm.LauncherApps
+import android.os.Process
 
 fun loadInstalledApps(context: Context): List<AppChoice> {
-    val packageManager = context.packageManager
-    val launcherIntent = Intent(Intent.ACTION_MAIN).apply {
-        addCategory(Intent.CATEGORY_LAUNCHER)
-    }
+    val launcherApps = context.getSystemService(LauncherApps::class.java)
+    val activities = launcherApps.getActivityList(null, Process.myUserHandle())
 
-    @Suppress("DEPRECATION")
-    return packageManager.queryIntentActivities(launcherIntent, 0)
-        .map { resolveInfo ->
-            val packageName = resolveInfo.activityInfo.packageName
-            val label = resolveInfo.loadLabel(packageManager).toString().ifBlank { packageName }
+    return activities
+        .map { activityInfo ->
+            val packageName = activityInfo.applicationInfo.packageName
+            val label = activityInfo.label.toString().ifBlank { packageName }
             AppChoice(
                 name = label,
                 packageName = packageName,
-                icon = resolveInfo.loadIcon(packageManager)
+                icon = activityInfo.getBadgedIcon(0)
             )
         }
         .distinctBy { it.packageName }
