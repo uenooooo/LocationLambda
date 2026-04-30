@@ -1,5 +1,11 @@
 package com.example.locationlambda.ui.edit
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,9 +38,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import com.example.locationlambda.notification.MockNotificationHelper
 import com.example.locationlambda.ui.model.LocationRuleUi
 import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.theme.CardSurface
@@ -52,6 +61,7 @@ fun LocationLambdaEditScreen(
     onBack: () -> Unit,
     onSave: (LocationRuleUi) -> Unit
 ) {
+    val context = LocalContext.current
     val appChoices = remember {
         listOf(
             AppChoice("Teams", "com.microsoft.teams"),
@@ -86,7 +96,7 @@ fun LocationLambdaEditScreen(
         mutableStateOf(rule.transitions.any { it.label == "退出" })
     }
 
-    val saveChanges = {
+    fun buildEditedRule(): LocationRuleUi {
         val savedTargetLabel = when (actionType) {
             "なし" -> "-"
             "アプリを開く" -> actionTargetLabel.ifBlank { "-" }
@@ -98,18 +108,33 @@ fun LocationLambdaEditScreen(
             else -> actionTargetLabel
         }
 
-        onSave(
-            rule.copy(
-                name = name.ifBlank { "-" },
-                addressLabel = address.ifBlank { "-" },
-                areaLabel = radiusLabel.ifBlank { "-" },
-                transitions = buildTransitions(onEnter, onExit),
-                actionTypeLabel = actionType,
-                actionTargetLabel = savedTargetLabel,
-                actionTargetValue = savedTargetValue,
-                enabled = enabled
-            )
+        return rule.copy(
+            name = name.ifBlank { "-" },
+            addressLabel = address.ifBlank { "-" },
+            areaLabel = radiusLabel.ifBlank { "-" },
+            transitions = buildTransitions(onEnter, onExit),
+            actionTypeLabel = actionType,
+            actionTargetLabel = savedTargetLabel,
+            actionTargetValue = savedTargetValue,
+            enabled = enabled
         )
+    }
+
+    val notificationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            MockNotificationHelper.showRuleNotification(
+                context = context,
+                rule = buildEditedRule()
+            )
+        } else {
+            Toast.makeText(
+                context,
+                "通知権限がないため表示できません",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     if (showAppDialog) {
@@ -152,11 +177,33 @@ fun LocationLambdaEditScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     InlineActionButton(label = "戻る", onClick = onBack)
-                    InlineActionButton(
-                        label = "保存",
-                        primary = true,
-                        onClick = saveChanges
-                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        InlineActionButton(
+                            label = "通知",
+                            onClick = {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                                    ContextCompat.checkSelfPermission(
+                                        context,
+                                        Manifest.permission.POST_NOTIFICATIONS
+                                    ) != PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    notificationPermissionLauncher.launch(
+                                        Manifest.permission.POST_NOTIFICATIONS
+                                    )
+                                } else {
+                                    MockNotificationHelper.showRuleNotification(
+                                        context = context,
+                                        rule = buildEditedRule()
+                                    )
+                                }
+                            }
+                        )
+                        InlineActionButton(
+                            label = "保存",
+                            primary = true,
+                            onClick = { onSave(buildEditedRule()) }
+                        )
+                    }
                 }
             }
         }
