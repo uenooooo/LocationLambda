@@ -10,9 +10,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -20,10 +21,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,19 +49,43 @@ fun LocationLambdaEditScreen(
     onBack: () -> Unit,
     onSave: (LocationRuleUi) -> Unit
 ) {
+    val appChoices = remember {
+        listOf(
+            AppChoice(name = "Teams", packageName = "com.microsoft.teams"),
+            AppChoice(name = "Google Maps", packageName = "com.google.android.apps.maps"),
+            AppChoice(name = "Spotify", packageName = "com.spotify.music"),
+            AppChoice(name = "YouTube", packageName = "com.google.android.youtube")
+        )
+    }
+
+    var showAppDialog by remember { mutableStateOf(false) }
     var name by rememberSaveable(rule.id) { mutableStateOf(rule.name) }
     var address by rememberSaveable(rule.id) { mutableStateOf(rule.addressLabel) }
     var radius by rememberSaveable(rule.id) { mutableStateOf(rule.areaLabel.filter(Char::isDigit)) }
     var actionType by rememberSaveable(rule.id) { mutableStateOf(rule.actionTypeLabel) }
-    var actionTarget by rememberSaveable(rule.id) {
+    var actionTargetLabel by rememberSaveable(rule.id) {
         mutableStateOf(if (rule.actionTargetLabel == "-") "" else rule.actionTargetLabel)
     }
+    var actionTargetValue by rememberSaveable(rule.id) { mutableStateOf(rule.actionTargetValue) }
     var enabled by rememberSaveable(rule.id) { mutableStateOf(rule.enabled) }
     var onEnter by rememberSaveable(rule.id) {
         mutableStateOf(rule.transitions.any { it.label == "到着" })
     }
     var onExit by rememberSaveable(rule.id) {
         mutableStateOf(rule.transitions.any { it.label == "退出" })
+    }
+
+    if (showAppDialog) {
+        AppPickerDialog(
+            choices = appChoices,
+            selectedPackageName = actionTargetValue,
+            onDismiss = { showAppDialog = false },
+            onSelect = { choice ->
+                actionTargetLabel = choice.name
+                actionTargetValue = choice.packageName
+                showAppDialog = false
+            }
+        )
     }
 
     Scaffold(containerColor = MaterialTheme.colorScheme.background) { innerPadding ->
@@ -86,15 +112,26 @@ fun LocationLambdaEditScreen(
                         label = "保存",
                         primary = true,
                         onClick = {
-                            val savedTarget = if (actionType == "なし") "-" else actionTarget.ifBlank { "-" }
+                            val savedTargetLabel = when (actionType) {
+                                "なし" -> "-"
+                                "アプリを開く" -> actionTargetLabel.ifBlank { "-" }
+                                else -> actionTargetLabel.ifBlank { "-" }
+                            }
+                            val savedTargetValue = when (actionType) {
+                                "なし" -> ""
+                                "アプリを開く" -> actionTargetValue
+                                else -> actionTargetLabel
+                            }
+
                             onSave(
                                 rule.copy(
                                     name = name.ifBlank { "-" },
                                     addressLabel = address.ifBlank { "-" },
-                                    areaLabel = if (radius.isBlank()) "-" else "半径${radius}m",
+                                    areaLabel = buildRadiusLabel(radius),
                                     transitions = buildTransitions(onEnter, onExit),
                                     actionTypeLabel = actionType,
-                                    actionTargetLabel = savedTarget,
+                                    actionTargetLabel = savedTargetLabel,
+                                    actionTargetValue = savedTargetValue,
                                     enabled = enabled
                                 )
                             )
@@ -175,32 +212,66 @@ fun LocationLambdaEditScreen(
                             ActionTypeChip(
                                 label = "URLを開く",
                                 selected = actionType == "URLを開く",
-                                onClick = { actionType = "URLを開く" }
+                                onClick = {
+                                    actionType = "URLを開く"
+                                    if (actionTargetLabel == "-") actionTargetLabel = ""
+                                    actionTargetValue = actionTargetLabel
+                                }
                             )
                             ActionTypeChip(
                                 label = "アプリを開く",
                                 selected = actionType == "アプリを開く",
-                                onClick = { actionType = "アプリを開く" }
+                                onClick = {
+                                    actionType = "アプリを開く"
+                                    if (actionTargetValue.isBlank()) {
+                                        actionTargetLabel = ""
+                                    }
+                                }
                             )
                             ActionTypeChip(
                                 label = "なし",
                                 selected = actionType == "なし",
-                                onClick = { actionType = "なし" }
+                                onClick = {
+                                    actionType = "なし"
+                                    actionTargetLabel = ""
+                                    actionTargetValue = ""
+                                }
                             )
                         }
-                        OutlinedTextField(
-                            value = if (actionType == "なし") "" else actionTarget,
-                            onValueChange = { actionTarget = it },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-                            enabled = actionType != "なし",
-                            label = {
-                                Text(text = "対象")
-                            },
-                            placeholder = {
-                                Text(text = if (actionType == "アプリを開く") "Teams" else "https://example.com")
-                            }
-                        )
+                        when (actionType) {
+                            "アプリを開く" -> AppPickerField(
+                                selectedLabel = actionTargetLabel,
+                                onClick = { showAppDialog = true }
+                            )
+                            "なし" -> OutlinedTextField(
+                                value = "",
+                                onValueChange = {},
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                enabled = false,
+                                label = {
+                                    Text(text = "対象")
+                                },
+                                placeholder = {
+                                    Text(text = "対象なし")
+                                }
+                            )
+                            else -> OutlinedTextField(
+                                value = actionTargetLabel,
+                                onValueChange = {
+                                    actionTargetLabel = it
+                                    actionTargetValue = it
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                label = {
+                                    Text(text = "対象")
+                                },
+                                placeholder = {
+                                    Text(text = "https://example.com")
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -249,6 +320,88 @@ private fun FieldSection(
             content()
         }
     }
+}
+
+@Composable
+private fun AppPickerField(
+    selectedLabel: String,
+    onClick: () -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick),
+        color = Color(0xFFF7F2EA),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Text(
+                text = "対象",
+                style = MaterialTheme.typography.labelMedium,
+                color = SlateSoft
+            )
+            Text(
+                text = selectedLabel.ifBlank { "アプリを選択" },
+                style = MaterialTheme.typography.bodyLarge,
+                color = Slate
+            )
+        }
+    }
+}
+
+@Composable
+private fun AppPickerDialog(
+    choices: List<AppChoice>,
+    selectedPackageName: String,
+    onDismiss: () -> Unit,
+    onSelect: (AppChoice) -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {},
+        dismissButton = {
+            InlineActionButton(label = "閉じる", onClick = onDismiss)
+        },
+        title = {
+            Text(text = "アプリを選択")
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                choices.forEach { choice ->
+                    val selected = selectedPackageName == choice.packageName
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(18.dp))
+                            .clickable { onSelect(choice) },
+                        color = if (selected) Color(0xFFEAF3EE) else Color(0xFFF8F3EC),
+                        shape = RoundedCornerShape(18.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Text(
+                                text = choice.name,
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Slate
+                            )
+                            Text(
+                                text = choice.packageName,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = SlateSoft
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    )
 }
 
 @Composable
@@ -325,6 +478,10 @@ private fun InlineActionButton(
     }
 }
 
+private fun buildRadiusLabel(radius: String): String {
+    return if (radius.isBlank()) "-" else "半径${radius}m"
+}
+
 private fun buildTransitions(onEnter: Boolean, onExit: Boolean): List<TransitionUi> {
     val transitions = mutableListOf<TransitionUi>()
     if (onEnter) transitions += TransitionUi("到着", EnterBlue)
@@ -332,6 +489,11 @@ private fun buildTransitions(onEnter: Boolean, onExit: Boolean): List<Transition
     if (transitions.isEmpty()) transitions += TransitionUi("到着", EnterBlue)
     return transitions
 }
+
+private data class AppChoice(
+    val name: String,
+    val packageName: String
+)
 
 @Preview(showBackground = true)
 @Composable
@@ -342,8 +504,9 @@ private fun LocationLambdaEditScreenPreview() {
         addressLabel = "東京都渋谷区道玄坂1-1-1",
         areaLabel = "半径150m",
         transitions = listOf(TransitionUi("到着", EnterBlue)),
-        actionTypeLabel = "URLを開く",
-        actionTargetLabel = "https://example.com",
+        actionTypeLabel = "アプリを開く",
+        actionTargetLabel = "Teams",
+        actionTargetValue = "com.microsoft.teams",
         enabled = true
     )
 

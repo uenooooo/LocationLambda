@@ -10,6 +10,7 @@ data class LocationRuleUi(
     val transitions: List<TransitionUi>,
     val actionTypeLabel: String,
     val actionTargetLabel: String,
+    val actionTargetValue: String,
     val enabled: Boolean
 )
 

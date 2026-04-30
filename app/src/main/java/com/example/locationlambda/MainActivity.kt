@@ -50,6 +50,7 @@ private fun LocationLambdaApp() {
                     transitions = listOf(TransitionUi("到着", EnterBlue)),
                     actionTypeLabel = "URLを開く",
                     actionTargetLabel = "https://example.com",
+                    actionTargetValue = "https://example.com",
                     enabled = true
                 ),
                 LocationRuleUi(
@@ -60,6 +61,7 @@ private fun LocationLambdaApp() {
                     transitions = listOf(TransitionUi("退出", ExitOrange)),
                     actionTypeLabel = "アプリを開く",
                     actionTargetLabel = "Teams",
+                    actionTargetValue = "com.microsoft.teams",
                     enabled = true
                 ),
                 LocationRuleUi(
@@ -73,6 +75,7 @@ private fun LocationLambdaApp() {
                     ),
                     actionTypeLabel = "なし",
                     actionTargetLabel = "-",
+                    actionTargetValue = "",
                     enabled = false
                 )
             )
