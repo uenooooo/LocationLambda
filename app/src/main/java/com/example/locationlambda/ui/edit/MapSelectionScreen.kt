@@ -1,5 +1,6 @@
 package com.example.locationlambda.ui.edit
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,14 +19,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.locationlambda.BuildConfig
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.Circle
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 import com.example.locationlambda.ui.theme.CardSurface
 import com.example.locationlambda.ui.theme.Divider
 import com.example.locationlambda.ui.theme.LocationLambdaTheme
@@ -41,7 +52,10 @@ fun MapSelectionScreen(
     onConfirm: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-        FauxMap(modifier = Modifier.fillMaxSize())
+        RealMap(
+            modifier = Modifier.fillMaxSize(),
+            radiusLabel = radiusLabel
+        )
 
         Surface(
             modifier = Modifier
@@ -113,65 +127,70 @@ fun MapSelectionScreen(
 }
 
 @Composable
-private fun FauxMap(
-    modifier: Modifier = Modifier
+private fun RealMap(
+    modifier: Modifier = Modifier,
+    radiusLabel: String
 ) {
-    Box(
-        modifier = modifier.background(
-            Brush.linearGradient(
-                colors = listOf(
-                    Color(0xFFDCEFE9),
-                    Color(0xFFF5E7D2),
-                    Color(0xFFE5EAF3)
-                )
-            )
-        )
-    ) {
+    val shibuya = remember { LatLng(35.658034, 139.701636) }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(shibuya, 15f)
+    }
+    val markerState = remember { MarkerState(position = shibuya) }
+    val radiusMeters = remember(radiusLabel) {
+        radiusLabel.filter { it.isDigit() }
+            .toDoubleOrNull()
+            ?: 150.0
+    }
+
+    if (BuildConfig.MAPS_API_KEY.isBlank()) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp)
+            modifier = modifier.background(Color(0xFFE6EBF2))
         ) {
-            repeat(7) { row ->
-                repeat(5) { col ->
-                    Box(
-                        modifier = Modifier
-                            .padding(start = (col * 82).dp, top = (row * 86).dp)
-                            .size(width = 56.dp, height = 2.dp)
-                            .background(Color.White.copy(alpha = 0.22f))
+            Surface(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 24.dp),
+                color = Color.White.copy(alpha = 0.92f),
+                shape = RoundedCornerShape(24.dp),
+                border = BorderStroke(1.dp, Color(0xFFD5DDE8))
+            ) {
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 18.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "Maps APIキーを設定すると地図が表示されます。",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Slate
+                    )
+                    Text(
+                        text = "local.properties に MAPS_API_KEY=... を追加してください。",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = SlateSoft
                     )
                 }
             }
         }
+        return
+    }
 
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(220.dp)
-                .clip(CircleShape)
-                .background(Color(0x332D7FF9))
+    GoogleMap(
+        modifier = modifier,
+        cameraPositionState = cameraPositionState,
+        properties = MapProperties(isMyLocationEnabled = false)
+    ) {
+        Marker(
+            state = markerState,
+            title = "渋谷駅"
         )
-        Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .size(28.dp)
-                .clip(CircleShape)
-                .background(Color(0xFF2D7FF9))
+        Circle(
+            center = shibuya,
+            radius = radiusMeters,
+            fillColor = Color(0x332D7FF9),
+            strokeColor = Color(0xFF2D7FF9),
+            strokeWidth = 3f
         )
-        Surface(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(top = 210.dp),
-            color = Color.White.copy(alpha = 0.88f),
-            shape = RoundedCornerShape(16.dp)
-        ) {
-            Text(
-                text = "地図プレビュー",
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                style = MaterialTheme.typography.labelLarge,
-                color = Slate
-            )
-        }
     }
 }
 
