@@ -157,9 +157,10 @@ fun MapSelectionScreen(
                         value = resolvedAddress
                     )
                     HorizontalDivider(color = Divider)
-                    MapInfoRow(
-                        label = "半径",
-                        value = selectedRadiusLabel
+                    Text(
+                        text = "半径",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = SlateSoft
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -360,7 +361,7 @@ private fun normalizeAddressLabel(address: String): String {
 }
 
 private fun normalizeRadiusLabel(radiusLabel: String): String {
-    val meters = radiusLabel.filter { it.isDigit() }.toIntOrNull() ?: 150
+    val meters = radiusLabel.filter { it.isDigit() }.toIntOrNull() ?: 100
     return "${meters}m"
 }
 
