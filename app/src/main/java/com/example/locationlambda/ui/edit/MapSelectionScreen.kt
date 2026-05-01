@@ -82,9 +82,7 @@ fun MapSelectionScreen(
     val detailsCollapsedHeight = 28.dp
     val detailsExpandedHeightPx = with(density) { detailsExpandedHeight.toPx() }
     val detailsCollapsedHeightPx = with(density) { detailsCollapsedHeight.toPx() }
-    var selectedRadiusLabel by remember(radiusLabel) {
-        mutableStateOf(normalizeRadiusLabel(radiusLabel))
-    }
+    var selectedRadiusLabel by remember { mutableStateOf("100m") }
     var searchQuery by remember { mutableStateOf("") }
     var selectedPosition by remember(address) {
         mutableStateOf(parseCoordinates(address) ?: LatLng(35.658034, 139.701636))
