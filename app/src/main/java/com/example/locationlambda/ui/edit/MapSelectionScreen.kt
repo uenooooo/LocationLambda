@@ -78,8 +78,8 @@ fun MapSelectionScreen(
     val density = LocalDensity.current
     val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
-    val detailsExpandedHeight = 278.dp
-    val detailsCollapsedHeight = 28.dp
+    val detailsExpandedHeight = 224.dp
+    val detailsCollapsedHeight = 20.dp
     val detailsExpandedHeightPx = with(density) { detailsExpandedHeight.toPx() }
     val detailsCollapsedHeightPx = with(density) { detailsCollapsedHeight.toPx() }
     var selectedRadiusLabel by remember { mutableStateOf("100m") }
@@ -147,15 +147,17 @@ fun MapSelectionScreen(
                 shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 6.dp, bottom = 0.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .clip(CircleShape)
                             .background(Color(0xFFD5DDE8))
-                            .padding(horizontal = 28.dp, vertical = 2.dp)
+                            .padding(horizontal = 28.dp, vertical = 1.dp)
                     )
 
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -232,7 +234,9 @@ fun MapSelectionScreen(
                 color = CardSurface
             ) {
                 Row(
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 0.dp, bottom = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
