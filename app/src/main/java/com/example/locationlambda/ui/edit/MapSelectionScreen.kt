@@ -1,5 +1,8 @@
 package com.example.locationlambda.ui.edit
 
+import android.location.Address
+import android.location.Geocoder
+import android.os.Build
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,24 +14,36 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.locationlambda.BuildConfig
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.example.locationlambda.ui.theme.CardSurface
+import com.example.locationlambda.ui.theme.Divider
+import com.example.locationlambda.ui.theme.LocationLambdaTheme
+import com.example.locationlambda.ui.theme.Slate
+import com.example.locationlambda.ui.theme.SlateSoft
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Circle
@@ -37,11 +52,12 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.example.locationlambda.ui.theme.CardSurface
-import com.example.locationlambda.ui.theme.Divider
-import com.example.locationlambda.ui.theme.LocationLambdaTheme
-import com.example.locationlambda.ui.theme.Slate
-import com.example.locationlambda.ui.theme.SlateSoft
+import java.util.Locale
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
 
 @Composable
 fun MapSelectionScreen(
@@ -51,36 +67,37 @@ fun MapSelectionScreen(
     onBack: () -> Unit,
     onConfirm: () -> Unit
 ) {
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+    val coroutineScope = rememberCoroutineScope()
+    var selectedRadiusLabel by remember(radiusLabel) {
+        mutableStateOf(normalizeRadiusLabel(radiusLabel))
+    }
+    var searchQuery by remember { mutableStateOf("") }
+    var selectedPosition by remember(address) {
+        mutableStateOf(parseCoordinates(address) ?: LatLng(35.658034, 139.701636))
+    }
+    var searchCameraTarget by remember { mutableStateOf<LatLng?>(null) }
+    var resolvedAddress by remember(address) {
+        mutableStateOf(
+            if (parseCoordinates(address) == null) normalizeAddressLabel(address) else ""
+        )
+    }
+
+    LaunchedEffect(selectedPosition) {
+        val geocoded = reverseGeocode(context, selectedPosition)
+        resolvedAddress = normalizeAddressLabel(geocoded ?: "")
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         RealMap(
             modifier = Modifier.fillMaxSize(),
-            radiusLabel = radiusLabel
+            name = name,
+            radiusLabel = selectedRadiusLabel,
+            selectedPosition = selectedPosition,
+            searchCameraTarget = searchCameraTarget,
+            onMapClick = { selectedPosition = it }
         )
-
-        Surface(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(horizontal = 20.dp, vertical = 20.dp),
-            color = Color.White.copy(alpha = 0.9f),
-            shape = RoundedCornerShape(24.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(horizontal = 18.dp, vertical = 14.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                Text(
-                    text = "地図で選択",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = Slate
-                )
-                Text(
-                    text = "次に本物の地図APIへ置き換えます。",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = SlateSoft
-                )
-            }
-        }
 
         Surface(
             modifier = Modifier
@@ -95,15 +112,67 @@ fun MapSelectionScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        TextField(
+                            value = searchQuery,
+                            onValueChange = { searchQuery = it },
+                            modifier = Modifier.weight(1f),
+                            singleLine = true,
+                            placeholder = {
+                                Text(text = "場所を検索")
+                            },
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedContainerColor = Color.Transparent,
+                                disabledContainerColor = Color.Transparent,
+                                focusedIndicatorColor = Slate,
+                                unfocusedIndicatorColor = Divider,
+                                cursorColor = Slate
+                            )
+                        )
+                        MapActionButton(
+                            label = "検索",
+                            onClick = {
+                                focusManager.clearFocus()
+                                val keyword = searchQuery.trim()
+                                if (keyword.isNotBlank()) {
+                                    coroutineScope.launch {
+                                        val result = geocodeLocationName(context, keyword)
+                                        if (result != null) {
+                                            selectedPosition = result
+                                            searchCameraTarget = result
+                                        }
+                                    }
+                                }
+                            }
+                        )
+                    }
+
                     MapInfoRow(
                         label = "住所",
-                        value = address.ifBlank { "-" }
+                        value = resolvedAddress
                     )
                     HorizontalDivider(color = Divider)
                     MapInfoRow(
                         label = "半径",
-                        value = radiusLabel.ifBlank { "-" }
+                        value = selectedRadiusLabel
                     )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("100m", "150m", "200m", "250m", "300m").forEach { option ->
+                            RadiusChip(
+                                label = option,
+                                selected = selectedRadiusLabel == option,
+                                onClick = { selectedRadiusLabel = option }
+                            )
+                        }
+                    }
                 }
 
                 Row(
@@ -129,17 +198,30 @@ fun MapSelectionScreen(
 @Composable
 private fun RealMap(
     modifier: Modifier = Modifier,
-    radiusLabel: String
+    name: String,
+    radiusLabel: String,
+    selectedPosition: LatLng,
+    searchCameraTarget: LatLng?,
+    onMapClick: (LatLng) -> Unit
 ) {
-    val shibuya = remember { LatLng(35.658034, 139.701636) }
+    val initialPosition = remember { LatLng(35.658034, 139.701636) }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(shibuya, 15f)
+        position = CameraPosition.fromLatLngZoom(initialPosition, 15f)
     }
-    val markerState = remember { MarkerState(position = shibuya) }
+    val markerState = remember { MarkerState(position = selectedPosition) }
+    markerState.position = selectedPosition
     val radiusMeters = remember(radiusLabel) {
         radiusLabel.filter { it.isDigit() }
             .toDoubleOrNull()
             ?: 150.0
+    }
+
+    LaunchedEffect(searchCameraTarget) {
+        val target = searchCameraTarget ?: return@LaunchedEffect
+        cameraPositionState.position = CameraPosition.fromLatLngZoom(
+            target,
+            cameraPositionState.position.zoom
+        )
     }
 
     if (BuildConfig.MAPS_API_KEY.isBlank()) {
@@ -178,14 +260,15 @@ private fun RealMap(
     GoogleMap(
         modifier = modifier,
         cameraPositionState = cameraPositionState,
-        properties = MapProperties(isMyLocationEnabled = false)
+        properties = MapProperties(isMyLocationEnabled = false),
+        onMapClick = onMapClick
     ) {
         Marker(
             state = markerState,
-            title = "渋谷駅"
+            title = name
         )
         Circle(
-            center = shibuya,
+            center = selectedPosition,
             radius = radiusMeters,
             fillColor = Color(0x332D7FF9),
             strokeColor = Color(0xFF2D7FF9),
@@ -206,9 +289,10 @@ private fun MapInfoRow(
             color = SlateSoft
         )
         Text(
-            text = value,
+            text = value.ifBlank { "\n" },
             style = MaterialTheme.typography.bodyLarge,
-            color = Slate
+            color = Slate,
+            minLines = 2
         )
     }
 }
@@ -238,6 +322,101 @@ private fun MapActionButton(
     }
 }
 
+@Composable
+private fun RadiusChip(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    val background = if (selected) Color(0xFF24424D) else Color(0xFFF3EEE5)
+    val textColor = if (selected) CardSurface else Slate
+
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(background)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = textColor
+        )
+    }
+}
+
+private fun parseCoordinates(address: String): LatLng? {
+    val parts = address.split(",").map { it.trim() }
+    if (parts.size != 2) return null
+    val latitude = parts[0].toDoubleOrNull() ?: return null
+    val longitude = parts[1].toDoubleOrNull() ?: return null
+    return LatLng(latitude, longitude)
+}
+
+private fun normalizeAddressLabel(address: String): String {
+    return address.removePrefix("日本、").removePrefix("日本 ").trim()
+}
+
+private fun normalizeRadiusLabel(radiusLabel: String): String {
+    val meters = radiusLabel.filter { it.isDigit() }.toIntOrNull() ?: 150
+    return "${meters}m"
+}
+
+private suspend fun reverseGeocode(
+    context: android.content.Context,
+    position: LatLng
+): String? {
+    val geocoder = Geocoder(context, Locale.JAPAN)
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        suspendCancellableCoroutine { continuation ->
+            geocoder.getFromLocation(position.latitude, position.longitude, 1) { addresses ->
+                continuation.resume(addresses.firstOrNull()?.toDisplayText())
+            }
+        }
+    } else {
+        withContext(Dispatchers.IO) {
+            runCatching {
+                @Suppress("DEPRECATION")
+                geocoder.getFromLocation(position.latitude, position.longitude, 1)
+                    ?.firstOrNull()
+                    ?.toDisplayText()
+            }.getOrNull()
+        }
+    }
+}
+
+private suspend fun geocodeLocationName(
+    context: android.content.Context,
+    query: String
+): LatLng? {
+    val geocoder = Geocoder(context, Locale.JAPAN)
+    val address = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        suspendCancellableCoroutine { continuation ->
+            geocoder.getFromLocationName(query, 1) { addresses ->
+                continuation.resume(addresses.firstOrNull())
+            }
+        }
+    } else {
+        withContext(Dispatchers.IO) {
+            runCatching {
+                @Suppress("DEPRECATION")
+                geocoder.getFromLocationName(query, 1)?.firstOrNull()
+            }.getOrNull()
+        }
+    }
+
+    return address?.let { LatLng(it.latitude, it.longitude) }
+}
+
+private fun Address.toDisplayText(): String {
+    val lines = (0..maxAddressLineIndex)
+        .mapNotNull { getAddressLine(it) }
+        .filter { it.isNotBlank() }
+    return lines.joinToString(" ")
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun MapSelectionScreenPreview() {
@@ -245,7 +424,7 @@ private fun MapSelectionScreenPreview() {
         MapSelectionScreen(
             name = "渋谷駅",
             address = "東京都渋谷区道玄坂1-1-1",
-            radiusLabel = "半径 150m",
+            radiusLabel = "150m",
             onBack = {},
             onConfirm = {}
         )
