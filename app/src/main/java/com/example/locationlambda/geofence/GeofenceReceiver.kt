@@ -3,7 +3,6 @@ package com.example.locationlambda.geofence
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.example.locationlambda.action.RuleActionExecutor
 import com.example.locationlambda.data.LocationRule
 import com.example.locationlambda.data.LocationTransition
 import com.example.locationlambda.notification.MockNotificationHelper
@@ -52,7 +51,6 @@ class GeofenceReceiver : BroadcastReceiver() {
                 transitions = listOf(transition.toTransitionUi())
             )
             MockNotificationHelper.showRuleNotification(context, triggeredRuleUi)
-            RuleActionExecutor.execute(context, triggeredRuleUi)
             hasUpdates = true
             triggeredRule
         }
