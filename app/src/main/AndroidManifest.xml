@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <queries>
         <intent>
@@ -35,6 +38,9 @@
         </activity>
         <receiver
             android:name=".notification.NotificationActionReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".geofence.GeofenceReceiver"
             android:exported="false" />
     </application>
 

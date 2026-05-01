@@ -3,6 +3,7 @@ package com.example.locationlambda.action
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.ui.model.LocationRuleUi
 
 object RuleActionExecutor {
@@ -10,11 +11,21 @@ object RuleActionExecutor {
         context: Context,
         rule: LocationRuleUi
     ): Intent? {
-        return when (rule.actionTypeLabel) {
-            "URLを開く" -> buildUrlIntent(rule.actionTargetValue)
-            "アプリを開く" -> buildAppIntent(context, rule.actionTargetValue)
-            else -> null
+        return when (rule.actionType) {
+            ActionType.URL -> buildUrlIntent(rule.actionTargetValue)
+            ActionType.APP -> buildAppIntent(context, rule.actionTargetValue)
+            ActionType.NOTIFICATION_ONLY -> null
         }
+    }
+
+    fun execute(
+        context: Context,
+        rule: LocationRuleUi
+    ): Boolean {
+        val launchIntent = buildLaunchIntent(context, rule) ?: return false
+        return runCatching {
+            context.startActivity(launchIntent)
+        }.isSuccess
     }
 
     private fun buildUrlIntent(url: String): Intent? {
