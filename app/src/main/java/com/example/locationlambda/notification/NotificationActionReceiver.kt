@@ -1,5 +1,6 @@
 package com.example.locationlambda.notification
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ class NotificationActionReceiver : BroadcastReceiver() {
 
         if (notificationId != -1) {
             NotificationManagerCompat.from(context).cancel(notificationId)
+            context.getSystemService(NotificationManager::class.java)?.cancel(notificationId)
         }
 
         targetIntent?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

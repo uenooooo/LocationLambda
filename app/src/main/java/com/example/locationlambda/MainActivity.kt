@@ -170,7 +170,21 @@ private fun LocationLambdaApp() {
             LocationLambdaHomeScreen(
                 rules = rules.map { it.toUi() },
                 maxRules = maxRules,
-                onEditRule = { rule -> editingRuleId = rule.id }
+                onEditRule = { rule -> editingRuleId = rule.id },
+                onToggleRule = { toggledRule, enabled ->
+                    val updatedRules = rules.map { rule ->
+                        if (rule.id == toggledRule.id) {
+                            rule.copy(enabled = enabled)
+                        } else {
+                            rule
+                        }
+                    }
+                    rules = updatedRules
+                    repository.saveRules(updatedRules)
+                    if (context.hasGeofencePermissions()) {
+                        geofenceManager.reregister(updatedRules)
+                    }
+                }
             )
         }
     }

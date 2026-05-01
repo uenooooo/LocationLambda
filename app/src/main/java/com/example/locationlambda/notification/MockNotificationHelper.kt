@@ -34,7 +34,7 @@ object MockNotificationHelper {
 
         createChannel(context)
 
-        val notificationId = rule.id.hashCode()
+        val notificationId = rule.id.toNotificationId()
         val fallbackPendingIntent = PendingIntent.getActivity(
             context,
             notificationId + 10_000,
@@ -77,8 +77,9 @@ object MockNotificationHelper {
     }
 
     private fun buildTitle(rule: LocationRuleUi): String {
-        val trigger = rule.transitions.joinToString("・") { it.label }
-        return "${rule.name} に $trigger"
+        val trigger = rule.transitions.firstOrNull()?.label ?: "\u5230\u7740"
+        val particle = if (trigger == "\u9000\u51fa") "\u3092" else "\u306b"
+        return "${rule.name} $particle $trigger"
     }
 
     private fun buildBody(rule: LocationRuleUi): String {
@@ -105,6 +106,10 @@ object MockNotificationHelper {
             proxyIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+    }
+
+    private fun String.toNotificationId(): Int {
+        return hashCode() and Int.MAX_VALUE
     }
 
     private fun createChannel(context: Context) {

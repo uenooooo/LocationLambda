@@ -2,6 +2,7 @@ package com.example.locationlambda.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -23,13 +25,18 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
+import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.ui.model.LocationRuleUi
 import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.theme.CardSurface
@@ -46,7 +53,8 @@ import com.example.locationlambda.ui.theme.SuccessGreen
 fun LocationLambdaHomeScreen(
     rules: List<LocationRuleUi>,
     maxRules: Int,
-    onEditRule: (LocationRuleUi) -> Unit
+    onEditRule: (LocationRuleUi) -> Unit,
+    onToggleRule: (LocationRuleUi, Boolean) -> Unit
 ) {
     val ruleSlots = rules.map<LocationRuleUi, LocationRuleUi?> { it } +
         List((maxRules - rules.size).coerceAtLeast(0)) { null }
@@ -68,7 +76,7 @@ fun LocationLambdaHomeScreen(
             ) {
                 item {
                     HomeHeader(
-                        ruleCount = rules.size,
+                        ruleCount = rules.count { it.hasRegisteredLocation() },
                         activeCount = rules.count { it.enabled },
                         maxRules = maxRules
                     )
@@ -76,12 +84,22 @@ fun LocationLambdaHomeScreen(
                 item {
                     RuleList(
                         rules = ruleSlots,
-                        onEditRule = onEditRule
+                        onEditRule = onEditRule,
+                        onToggleRule = onToggleRule
                     )
                 }
             }
         }
     }
+}
+
+private fun LocationRuleUi.hasRegisteredLocation(): Boolean {
+    return latitude != null &&
+        longitude != null &&
+        latitude in -90.0..90.0 &&
+        longitude in -180.0..180.0 &&
+        addressLabel.isNotBlank() &&
+        addressLabel != "-"
 }
 
 @Composable
@@ -119,7 +137,8 @@ private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
 @Composable
 private fun RuleList(
     rules: List<LocationRuleUi?>,
-    onEditRule: (LocationRuleUi) -> Unit
+    onEditRule: (LocationRuleUi) -> Unit,
+    onToggleRule: (LocationRuleUi, Boolean) -> Unit
 ) {
     Surface(
         color = CardSurface,
@@ -132,7 +151,8 @@ private fun RuleList(
                 } else {
                     RuleRow(
                         rule = rule,
-                        onEditRule = onEditRule
+                        onEditRule = onEditRule,
+                        onToggleRule = onToggleRule
                     )
                 }
                 if (index != rules.lastIndex) {
@@ -198,7 +218,7 @@ private fun EmptyRuleRow() {
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "実行アクション",
+                text = "通知後アクション",
                 style = MaterialTheme.typography.labelMedium,
                 color = SlateSoft
             )
@@ -224,11 +244,24 @@ private fun EmptyRuleRow() {
 @Composable
 private fun RuleRow(
     rule: LocationRuleUi,
-    onEditRule: (LocationRuleUi) -> Unit
+    onEditRule: (LocationRuleUi) -> Unit,
+    onToggleRule: (LocationRuleUi, Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+    val appIcon = remember(rule.actionType, rule.actionTargetValue) {
+        if (rule.actionType != ActionType.APP || rule.actionTargetValue.isBlank()) {
+            null
+        } else {
+            runCatching {
+                context.packageManager.getApplicationIcon(rule.actionTargetValue)
+            }.getOrNull()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onEditRule(rule) }
             .padding(horizontal = 16.dp, vertical = 18.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
@@ -271,7 +304,7 @@ private fun RuleRow(
             Spacer(modifier = Modifier.width(12.dp))
             Switch(
                 checked = rule.enabled,
-                onCheckedChange = {},
+                onCheckedChange = { checked -> onToggleRule(rule, checked) },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = CardSurface,
                     checkedTrackColor = SuccessGreen,
@@ -283,7 +316,7 @@ private fun RuleRow(
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "実行アクション",
+                text = "通知後アクション",
                 style = MaterialTheme.typography.labelMedium,
                 color = SlateSoft
             )
@@ -299,35 +332,28 @@ private fun RuleRow(
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                val iconBitmap = appIcon?.toBitmap()?.asImageBitmap()
+                if (iconBitmap != null) {
+                    Image(
+                        bitmap = iconBitmap,
+                        contentDescription = rule.actionTargetLabel,
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color(0xFFF3EEE5))
+                            .padding(2.dp)
+                    )
+                }
                 Text(
                     text = rule.actionTargetLabel,
                     style = MaterialTheme.typography.bodyLarge,
                     color = Slate
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                EditButton(onClick = { onEditRule(rule) })
             }
         }
-    }
-}
-
-@Composable
-private fun EditButton(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .clip(CircleShape)
-            .background(Color(0xFFF3EEE5))
-            .clickable(onClick = onClick)
-            .padding(horizontal = 14.dp, vertical = 10.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "編集",
-            style = MaterialTheme.typography.labelLarge,
-            color = Slate
-        )
     }
 }
 
@@ -414,7 +440,8 @@ private fun LocationLambdaHomePreview() {
             LocationLambdaHomeScreen(
                 rules = previewRules,
                 maxRules = 5,
-                onEditRule = {}
+                onEditRule = {},
+                onToggleRule = { _, _ -> }
             )
         }
     }

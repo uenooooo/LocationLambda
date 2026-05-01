@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -23,13 +24,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -80,11 +82,36 @@ fun LocationLambdaEditScreen(
     var radiusMeters by rememberSaveable(rule.id) { mutableStateOf(rule.radiusMeters) }
     var actionType by rememberSaveable(rule.id) { mutableStateOf(rule.actionTypeLabel) }
     var actionTypeModel by rememberSaveable(rule.id) { mutableStateOf(rule.actionType.name) }
-    var actionTargetLabel by rememberSaveable(rule.id) {
-        mutableStateOf(if (rule.actionTargetLabel == "-") "" else rule.actionTargetLabel)
+    var urlTargetValue by rememberSaveable(rule.id) {
+        mutableStateOf(
+            if (rule.actionType == ActionType.URL) {
+                rule.actionTargetValue.ifBlank {
+                    if (rule.actionTargetLabel == "-") "" else rule.actionTargetLabel
+                }
+            } else {
+                ""
+            }
+        )
     }
-    var actionTargetValue by rememberSaveable(rule.id) { mutableStateOf(rule.actionTargetValue) }
-    var enabled by rememberSaveable(rule.id) { mutableStateOf(rule.enabled) }
+    var appTargetLabel by rememberSaveable(rule.id) {
+        mutableStateOf(
+            if (rule.actionType == ActionType.APP && rule.actionTargetLabel != "-") {
+                rule.actionTargetLabel
+            } else {
+                ""
+            }
+        )
+    }
+    var appTargetValue by rememberSaveable(rule.id) {
+        mutableStateOf(
+            if (rule.actionType == ActionType.APP) {
+                rule.actionTargetValue
+            } else {
+                ""
+            }
+        )
+    }
+    var cooldownMin by rememberSaveable(rule.id) { mutableStateOf(rule.cooldownMin) }
     var onEnter by rememberSaveable(rule.id) {
         mutableStateOf(LocationTransition.includesEnter(rule.transitionType))
     }
@@ -92,17 +119,25 @@ fun LocationLambdaEditScreen(
         mutableStateOf(LocationTransition.includesExit(rule.transitionType))
     }
 
+    BackHandler {
+        when {
+            showAppSelectionScreen -> showAppSelectionScreen = false
+            showMapSelectionScreen -> showMapSelectionScreen = false
+            else -> onBack()
+        }
+    }
+
     fun buildEditedRule(): LocationRuleUi {
         val savedActionType = ActionType.valueOf(actionTypeModel)
         val savedTargetLabel = when (savedActionType) {
             ActionType.NOTIFICATION_ONLY -> "-"
-            ActionType.APP -> actionTargetLabel.ifBlank { "-" }
-            ActionType.URL -> actionTargetLabel.ifBlank { "-" }
+            ActionType.APP -> appTargetLabel.ifBlank { "-" }
+            ActionType.URL -> urlTargetValue.ifBlank { "-" }
         }
         val savedTargetValue = when (savedActionType) {
             ActionType.NOTIFICATION_ONLY -> ""
-            ActionType.APP -> actionTargetValue
-            ActionType.URL -> actionTargetLabel
+            ActionType.APP -> appTargetValue
+            ActionType.URL -> urlTargetValue
         }
 
         return rule.copy(
@@ -113,12 +148,13 @@ fun LocationLambdaEditScreen(
             actionTypeLabel = actionType,
             actionTargetLabel = savedTargetLabel,
             actionTargetValue = savedTargetValue,
-            enabled = enabled,
+            enabled = rule.enabled,
             latitude = latitude,
             longitude = longitude,
             radiusMeters = radiusMeters,
             transitionType = LocationTransition.fromFlags(onEnter, onExit),
-            actionType = savedActionType
+            actionType = savedActionType,
+            cooldownMin = cooldownMin
         )
     }
 
@@ -141,11 +177,11 @@ fun LocationLambdaEditScreen(
 
     if (showAppSelectionScreen) {
         AppSelectionScreen(
-            selectedPackageName = actionTargetValue,
+            selectedPackageName = appTargetValue,
             onBack = { showAppSelectionScreen = false },
             onSelect = { choice ->
-                actionTargetLabel = choice.name
-                actionTargetValue = choice.packageName
+                appTargetLabel = choice.name
+                appTargetValue = choice.packageName
                 showAppSelectionScreen = false
             }
         )
@@ -250,30 +286,11 @@ fun LocationLambdaEditScreen(
                 ) {
                     Column {
                         SeamlessSection(title = "名前") {
-                            OutlinedTextField(
+                            TitleNameEditor(
                                 value = name,
                                 onValueChange = { name = it },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true
+                                modifier = Modifier.fillMaxWidth()
                             )
-                        }
-                        DividerLine()
-                        SeamlessSection(title = "有効") {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = "このロケラムを有効にする",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    color = Slate
-                                )
-                                Switch(
-                                    checked = enabled,
-                                    onCheckedChange = { enabled = it }
-                                )
-                            }
                         }
                         DividerLine()
                         SeamlessSection(title = "場所と通知半径") {
@@ -311,52 +328,56 @@ fun LocationLambdaEditScreen(
                             }
                         }
                         DividerLine()
-                        SeamlessSection(title = "実行アクション") {
+                        SeamlessSection(title = "通知クールダウン") {
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                listOf(0, 5, 15, 30, 60).forEach { option ->
+                                    CooldownChip(
+                                        minutes = option,
+                                        selected = cooldownMin == option,
+                                        onClick = { cooldownMin = option }
+                                    )
+                                }
+                            }
+                        }
+                        DividerLine()
+                        SeamlessSection(title = "通知後アクション") {
                             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                     ActionTypeChip(
                                         label = "URLを開く",
-                                        selected = actionType == "URLを開く",
+                                        selected = actionTypeModel == ActionType.URL.name,
                                         onClick = {
                                             actionType = "URLを開く"
                                             actionTypeModel = ActionType.URL.name
-                                            if (actionTargetLabel == "-") actionTargetLabel = ""
-                                            actionTargetValue = actionTargetLabel
                                         }
                                     )
                                     ActionTypeChip(
                                         label = "アプリを開く",
-                                        selected = actionType == "アプリを開く",
+                                        selected = actionTypeModel == ActionType.APP.name,
                                         onClick = {
                                             actionType = "アプリを開く"
                                             actionTypeModel = ActionType.APP.name
-                                            if (actionTargetValue.isBlank()) actionTargetLabel = ""
                                         }
                                     )
                                     ActionTypeChip(
                                         label = "なし",
-                                        selected = actionType == "なし",
+                                        selected = actionTypeModel == ActionType.NOTIFICATION_ONLY.name,
                                         onClick = {
                                             actionType = "なし"
                                             actionTypeModel = ActionType.NOTIFICATION_ONLY.name
-                                            actionTargetLabel = ""
-                                            actionTargetValue = ""
                                         }
                                     )
                                 }
-                                when (actionType) {
-                                    "アプリを開く" -> AppPickerRow(
-                                        selectedLabel = actionTargetLabel,
-                                        selectedPackageName = actionTargetValue,
+                                when (actionTypeModel) {
+                                    ActionType.APP.name -> AppPickerRow(
+                                        selectedLabel = appTargetLabel,
+                                        selectedPackageName = appTargetValue,
                                         onClick = { showAppSelectionScreen = true }
                                     )
-                                    "なし" -> DisabledTargetRow()
+                                    ActionType.NOTIFICATION_ONLY.name -> DisabledTargetRow()
                                     else -> OutlinedTextField(
-                                        value = actionTargetLabel,
-                                        onValueChange = {
-                                            actionTargetLabel = it
-                                            actionTargetValue = it
-                                        },
+                                        value = urlTargetValue,
+                                        onValueChange = { urlTargetValue = it },
                                         modifier = Modifier.fillMaxWidth(),
                                         singleLine = true,
                                         label = { Text(text = "対象") },
@@ -399,6 +420,43 @@ private fun SeamlessSection(
 @Composable
 private fun DividerLine() {
     HorizontalDivider(color = Divider)
+}
+
+@Composable
+private fun TitleNameEditor(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier.padding(vertical = 4.dp),
+        singleLine = true,
+        textStyle = MaterialTheme.typography.headlineSmall.copy(
+            fontWeight = FontWeight.Bold,
+            color = Slate
+        ),
+        cursorBrush = SolidColor(Slate),
+        decorationBox = { innerTextField ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 6.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                if (value.isBlank()) {
+                    Text(
+                        text = "名前を入力",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = PlaceholderGray
+                    )
+                }
+                innerTextField()
+            }
+        }
+    )
 }
 
 @Composable
@@ -471,7 +529,7 @@ private fun DisabledTargetRow() {
             color = SlateSoft
         )
         Text(
-            text = "対象なし",
+            text = "通知のみ",
             style = MaterialTheme.typography.bodyLarge,
             color = SlateSoft
         )
@@ -492,13 +550,6 @@ private fun MapSelectorRow(
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Text(
-            text = name.ifBlank { "-" },
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold,
-            color = Slate
-        )
-        HorizontalDivider(color = Color(0xFFE8DED1))
         Text(
             text = "住所",
             style = MaterialTheme.typography.labelMedium,
@@ -545,6 +596,21 @@ private fun SelectChip(
             color = textColor
         )
     }
+}
+
+@Composable
+private fun CooldownChip(
+    minutes: Int,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    val label = if (minutes == 0) "\u306a\u3057" else "${minutes}\u5206"
+    SelectChip(
+        label = label,
+        selected = selected,
+        selectedColor = SuccessGreen,
+        onClick = onClick
+    )
 }
 
 @Composable
@@ -605,7 +671,7 @@ private fun FullWidthActionButton(
         modifier = Modifier
             .fillMaxWidth()
             .clip(CircleShape)
-            .background(Color(0xFFF3EEE5))
+            .background(Color(0xFF2F7D62))
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
@@ -613,7 +679,7 @@ private fun FullWidthActionButton(
         Text(
             text = label,
             style = MaterialTheme.typography.labelLarge,
-            color = Slate
+            color = CardSurface
         )
     }
 }
