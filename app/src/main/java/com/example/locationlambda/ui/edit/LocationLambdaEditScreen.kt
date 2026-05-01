@@ -68,6 +68,7 @@ fun LocationLambdaEditScreen(
     val context = LocalContext.current
 
     var showAppSelectionScreen by remember { mutableStateOf(false) }
+    var showMapSelectionScreen by remember { mutableStateOf(false) }
     var name by rememberSaveable(rule.id) { mutableStateOf(rule.name) }
     var address by rememberSaveable(rule.id) { mutableStateOf(rule.addressLabel) }
     var radiusLabel by rememberSaveable(rule.id) { mutableStateOf(rule.areaLabel) }
@@ -134,6 +135,17 @@ fun LocationLambdaEditScreen(
                 actionTargetValue = choice.packageName
                 showAppSelectionScreen = false
             }
+        )
+        return
+    }
+
+    if (showMapSelectionScreen) {
+        MapSelectionScreen(
+            name = name,
+            address = address,
+            radiusLabel = radiusLabel,
+            onBack = { showMapSelectionScreen = false },
+            onConfirm = { showMapSelectionScreen = false }
         )
         return
     }
@@ -243,11 +255,17 @@ fun LocationLambdaEditScreen(
                         }
                         DividerLine()
                         SeamlessSection(title = "場所と半径") {
-                            MapSelectorRow(
-                                name = name,
-                                address = address,
-                                radiusLabel = radiusLabel
-                            )
+                            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                InlineActionButton(
+                                    label = "地図で選択",
+                                    onClick = { showMapSelectionScreen = true }
+                                )
+                                MapSelectorRow(
+                                    name = name,
+                                    address = address,
+                                    radiusLabel = radiusLabel
+                                )
+                            }
                         }
                         DividerLine()
                         SeamlessSection(title = "タイミング") {
