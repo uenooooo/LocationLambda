@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,6 +47,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,6 +75,7 @@ fun LocationLambdaEditScreen(
     onSave: (LocationRuleUi) -> Unit
 ) {
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
 
     var showAppSelectionScreen by remember { mutableStateOf(false) }
     var showMapSelectionScreen by remember { mutableStateOf(false) }
@@ -256,6 +260,9 @@ fun LocationLambdaEditScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = { focusManager.clearFocus() })
+                }
                 .background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(
                 start = 20.dp,
@@ -383,7 +390,15 @@ fun LocationLambdaEditScreen(
                                             .fillMaxWidth()
                                             .heightIn(min = ActionTargetMinHeight),
                                         singleLine = true,
-                                        label = { Text(text = "対象") },
+                                        label = {
+                                            Text(
+                                                text = if (urlTargetValue.isBlank()) {
+                                                    "URLを入力"
+                                                } else {
+                                                    "対象"
+                                                }
+                                            )
+                                        },
                                         placeholder = { Text(text = "https://example.com") },
                                         colors = OutlinedTextFieldDefaults.colors(
                                             focusedPlaceholderColor = PlaceholderGray,

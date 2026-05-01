@@ -8,6 +8,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -117,14 +119,23 @@ fun MapSelectionScreen(
         resolvedAddress = normalizeAddressLabel(geocoded ?: "")
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { focusManager.clearFocus() })
+            }
+    ) {
         RealMap(
             modifier = Modifier.fillMaxSize(),
             name = name,
             radiusLabel = selectedRadiusLabel,
             selectedPosition = selectedPosition,
             searchCameraTarget = searchCameraTarget,
-            onMapClick = { selectedPosition = it }
+            onMapClick = {
+                focusManager.clearFocus()
+                selectedPosition = it
+            }
         )
 
         Column(
