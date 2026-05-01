@@ -265,7 +265,7 @@ fun MapSelectionScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     MapActionButton(
-                        label = "戻る",
+                        label = "キャンセル",
                         onClick = onBack
                     )
                     MapActionButton(

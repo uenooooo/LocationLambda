@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,17 +21,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,6 +40,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -49,6 +52,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,6 +71,8 @@ import com.example.locationlambda.ui.theme.LocationLambdaTheme
 import com.example.locationlambda.ui.theme.Slate
 import com.example.locationlambda.ui.theme.SlateSoft
 import com.example.locationlambda.ui.theme.SuccessGreen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun LocationLambdaEditScreen(
@@ -225,7 +231,7 @@ fun LocationLambdaEditScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    InlineActionButton(label = "戻る", onClick = onBack)
+                    InlineActionButton(label = "キャンセル", onClick = onBack)
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         InlineActionButton(
                             label = "通知",
@@ -260,6 +266,7 @@ fun LocationLambdaEditScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .imePadding()
                 .pointerInput(Unit) {
                     detectTapGestures(onTap = { focusManager.clearFocus() })
                 }
@@ -268,7 +275,7 @@ fun LocationLambdaEditScreen(
                 start = 20.dp,
                 top = innerPadding.calculateTopPadding() + 20.dp,
                 end = 20.dp,
-                bottom = innerPadding.calculateBottomPadding() + 20.dp
+                bottom = innerPadding.calculateBottomPadding() + 56.dp
             ),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -383,28 +390,10 @@ fun LocationLambdaEditScreen(
                                         onClick = { showAppSelectionScreen = true }
                                     )
                                     ActionType.NOTIFICATION_ONLY.name -> DisabledTargetRow()
-                                    else -> OutlinedTextField(
+                                    else -> UrlTargetRow(
                                         value = urlTargetValue,
                                         onValueChange = { urlTargetValue = it },
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .heightIn(min = ActionTargetMinHeight),
-                                        singleLine = true,
-                                        label = {
-                                            Text(
-                                                text = if (urlTargetValue.isBlank()) {
-                                                    "URLを入力"
-                                                } else {
-                                                    "対象"
-                                                }
-                                            )
-                                        },
-                                        placeholder = { Text(text = "https://example.com") },
-                                        colors = OutlinedTextFieldDefaults.colors(
-                                            focusedPlaceholderColor = PlaceholderGray,
-                                            unfocusedPlaceholderColor = PlaceholderGray,
-                                            disabledPlaceholderColor = PlaceholderGray
-                                        )
+                                        modifier = Modifier.fillMaxWidth()
                                     )
                                 }
                             }
@@ -533,6 +522,65 @@ private fun AppPickerRow(
 }
 
 @Composable
+@OptIn(ExperimentalFoundationApi::class)
+private fun UrlTargetRow(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val coroutineScope = rememberCoroutineScope()
+
+    Column(
+        modifier = modifier
+            .bringIntoViewRequester(bringIntoViewRequester)
+            .heightIn(min = ActionTargetMinHeight)
+            .clip(RoundedCornerShape(14.dp))
+            .background(Color(0xFFF7F2EA))
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = if (value.isBlank()) "\u0055\u0052\u004c\u3092\u5165\u529b" else "\u5bfe\u8c61",
+            style = MaterialTheme.typography.labelMedium,
+            color = SlateSoft
+        )
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { focusState ->
+                    if (focusState.isFocused) {
+                        coroutineScope.launch {
+                            delay(250)
+                            bringIntoViewRequester.bringIntoView()
+                        }
+                    }
+                },
+            singleLine = true,
+            textStyle = MaterialTheme.typography.bodyLarge.copy(color = Slate),
+            cursorBrush = SolidColor(Slate),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    if (value.isBlank()) {
+                        Text(
+                            text = "https://example.com",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = PlaceholderGray
+                        )
+                    }
+                    innerTextField()
+                }
+            }
+        )
+    }
+}
+
+@Composable
 private fun DisabledTargetRow() {
     Column(
         modifier = Modifier
@@ -544,7 +592,12 @@ private fun DisabledTargetRow() {
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
-            text = "通知のみ",
+            text = "対象",
+            style = MaterialTheme.typography.labelMedium,
+            color = SlateSoft
+        )
+        Text(
+            text = "-",
             style = MaterialTheme.typography.bodyLarge,
             color = SlateSoft
         )

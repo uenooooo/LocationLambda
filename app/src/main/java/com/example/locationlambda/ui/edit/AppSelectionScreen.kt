@@ -245,7 +245,7 @@ private fun BackPillButton(
     onClick: () -> Unit
 ) {
     Text(
-        text = "戻る",
+        text = "キャンセル",
         modifier = Modifier
             .clip(CircleShape)
             .background(Color(0xFFF3EEE5))
