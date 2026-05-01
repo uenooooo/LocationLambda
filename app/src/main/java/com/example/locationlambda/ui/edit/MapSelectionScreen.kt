@@ -147,18 +147,18 @@ fun MapSelectionScreen(
                 shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp)
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 6.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .clip(CircleShape)
                             .background(Color(0xFFD5DDE8))
-                            .padding(horizontal = 28.dp, vertical = 3.dp)
+                            .padding(horizontal = 28.dp, vertical = 2.dp)
                     )
 
-                    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -232,7 +232,7 @@ fun MapSelectionScreen(
                 color = CardSurface
             ) {
                 Row(
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 18.dp),
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
