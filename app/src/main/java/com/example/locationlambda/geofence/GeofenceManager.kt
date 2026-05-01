@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.core.content.ContextCompat
 import com.example.locationlambda.data.LocationRule
 import com.example.locationlambda.data.LocationTransition
@@ -20,7 +21,7 @@ class GeofenceManager(context: Context) {
     fun reregister(rules: List<LocationRule>) {
         val pendingIntent = buildPendingIntent()
         geofencingClient.removeGeofences(pendingIntent).addOnCompleteListener {
-            if (!hasForegroundLocationPermission()) return@addOnCompleteListener
+            if (!hasGeofencePermissions()) return@addOnCompleteListener
 
             val geofences = rules
                 .asSequence()
@@ -77,11 +78,19 @@ class GeofenceManager(context: Context) {
         return googleTransitionTypes
     }
 
-    private fun hasForegroundLocationPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
+    private fun hasGeofencePermissions(): Boolean {
+        val hasFineLocation = ContextCompat.checkSelfPermission(
             appContext,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
+
+        val hasBackgroundLocation = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
+            ContextCompat.checkSelfPermission(
+                appContext,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+
+        return hasFineLocation && hasBackgroundLocation
     }
 
     private fun buildPendingIntent(): PendingIntent {
