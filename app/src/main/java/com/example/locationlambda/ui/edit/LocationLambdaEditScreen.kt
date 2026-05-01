@@ -524,11 +524,6 @@ private fun DisabledTargetRow() {
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
-            text = "対象",
-            style = MaterialTheme.typography.labelMedium,
-            color = SlateSoft
-        )
-        Text(
             text = "通知のみ",
             style = MaterialTheme.typography.bodyLarge,
             color = SlateSoft
@@ -566,11 +561,16 @@ private fun MapSelectorRow(
             color = SlateSoft
         )
         Text(
-            text = radiusLabel.ifBlank { "-" },
+            text = radiusLabel.toRadiusValueLabel(),
             style = MaterialTheme.typography.bodyLarge,
             color = Slate
         )
     }
+}
+
+private fun String.toRadiusValueLabel(): String {
+    val meters = filter { it.isDigit() }
+    return if (meters.isBlank()) "-" else "${meters}m"
 }
 
 @Composable

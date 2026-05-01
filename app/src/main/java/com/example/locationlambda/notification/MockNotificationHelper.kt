@@ -84,7 +84,7 @@ object MockNotificationHelper {
 
     private fun buildBody(rule: LocationRuleUi): String {
         return if (rule.actionTargetLabel == "-") {
-            rule.actionTypeLabel
+            "\u901a\u77e5\u306e\u307f"
         } else {
             rule.actionTargetLabel
         }

@@ -297,9 +297,8 @@ private fun RealMap(
     searchCameraTarget: LatLng?,
     onMapClick: (LatLng) -> Unit
 ) {
-    val initialPosition = remember { LatLng(35.658034, 139.701636) }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(initialPosition, 15f)
+        position = CameraPosition.fromLatLngZoom(selectedPosition, 15f)
     }
     val markerState = remember { MarkerState(position = selectedPosition) }
     markerState.position = selectedPosition
