@@ -371,7 +371,7 @@ private fun LocationLambdaHomePreview() {
             id = "1",
             name = "渋谷駅",
             addressLabel = "東京都渋谷区道玄坂1-1-1",
-            areaLabel = "半径150m",
+            areaLabel = "通知半径150m",
             transitions = listOf(TransitionUi("到着", EnterBlue)),
             actionTypeLabel = "URLを開く",
             actionTargetLabel = "https://example.com",
@@ -382,7 +382,7 @@ private fun LocationLambdaHomePreview() {
             id = "2",
             name = "会社",
             addressLabel = "東京都千代田区丸の内1-1-1",
-            areaLabel = "半径200m",
+            areaLabel = "通知半径200m",
             transitions = listOf(TransitionUi("退出", ExitOrange)),
             actionTypeLabel = "アプリを開く",
             actionTargetLabel = "Teams",
@@ -393,7 +393,7 @@ private fun LocationLambdaHomePreview() {
             id = "3",
             name = "ジム",
             addressLabel = "東京都新宿区西新宿2-2-2",
-            areaLabel = "半径120m",
+            areaLabel = "通知半径120m",
             transitions = listOf(
                 TransitionUi("到着", EnterBlue),
                 TransitionUi("退出", ExitOrange)

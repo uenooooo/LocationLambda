@@ -71,8 +71,10 @@ fun MapSelectionScreen(
     name: String,
     address: String,
     radiusLabel: String,
+    latitude: Double? = null,
+    longitude: Double? = null,
     onBack: () -> Unit,
-    onConfirm: () -> Unit
+    onConfirm: (MapSelectionResult) -> Unit
 ) {
     val context = LocalContext.current
     val density = LocalDensity.current
@@ -82,10 +84,18 @@ fun MapSelectionScreen(
     val detailsCollapsedHeight = 20.dp
     val detailsExpandedHeightPx = with(density) { detailsExpandedHeight.toPx() }
     val detailsCollapsedHeightPx = with(density) { detailsCollapsedHeight.toPx() }
-    var selectedRadiusLabel by remember { mutableStateOf("100m") }
+    var selectedRadiusLabel by remember(radiusLabel) {
+        mutableStateOf(normalizeRadiusLabel(radiusLabel))
+    }
     var searchQuery by remember { mutableStateOf("") }
-    var selectedPosition by remember(address) {
-        mutableStateOf(parseCoordinates(address) ?: LatLng(35.658034, 139.701636))
+    var selectedPosition by remember(latitude, longitude, address) {
+        mutableStateOf(
+            if (latitude != null && longitude != null) {
+                LatLng(latitude, longitude)
+            } else {
+                parseCoordinates(address) ?: LatLng(35.658034, 139.701636)
+            }
+        )
     }
     var searchCameraTarget by remember { mutableStateOf<LatLng?>(null) }
     var detailsPanelHeightPx by remember {
@@ -180,6 +190,9 @@ fun MapSelectionScreen(
                                     disabledContainerColor = Color.Transparent,
                                     focusedIndicatorColor = Slate,
                                     unfocusedIndicatorColor = Divider,
+                                    focusedPlaceholderColor = PlaceholderGray,
+                                    unfocusedPlaceholderColor = PlaceholderGray,
+                                    disabledPlaceholderColor = PlaceholderGray,
                                     cursorColor = Slate
                                 )
                             )
@@ -207,7 +220,7 @@ fun MapSelectionScreen(
                         )
                         HorizontalDivider(color = Divider)
                         Text(
-                            text = "半径",
+                            text = "通知半径",
                             style = MaterialTheme.typography.labelMedium,
                             color = SlateSoft
                         )
@@ -247,13 +260,33 @@ fun MapSelectionScreen(
                     MapActionButton(
                         label = "この場所を使う",
                         primary = true,
-                        onClick = onConfirm
+                        onClick = {
+                            onConfirm(
+                                MapSelectionResult(
+                                    latitude = selectedPosition.latitude,
+                                    longitude = selectedPosition.longitude,
+                                    address = resolvedAddress,
+                                    radiusMeters = selectedRadiusLabel.toMetersFloat(),
+                                    radiusLabel = selectedRadiusLabel
+                                )
+                            )
+                        }
                     )
                 }
             }
         }
     }
 }
+
+data class MapSelectionResult(
+    val latitude: Double,
+    val longitude: Double,
+    val address: String,
+    val radiusMeters: Float,
+    val radiusLabel: String
+)
+
+private val PlaceholderGray = Color(0xFF9AA6AD)
 
 @Composable
 private fun RealMap(
@@ -422,6 +455,10 @@ private fun normalizeAddressLabel(address: String): String {
 private fun normalizeRadiusLabel(radiusLabel: String): String {
     val meters = radiusLabel.filter { it.isDigit() }.toIntOrNull() ?: 100
     return "${meters}m"
+}
+
+private fun String.toMetersFloat(): Float {
+    return filter { it.isDigit() }.toFloatOrNull() ?: 100f
 }
 
 private suspend fun reverseGeocode(

@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -47,6 +48,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.example.locationlambda.data.ActionType
+import com.example.locationlambda.data.LocationTransition
 import com.example.locationlambda.notification.MockNotificationHelper
 import com.example.locationlambda.ui.model.LocationRuleUi
 import com.example.locationlambda.ui.model.TransitionUi
@@ -72,29 +75,34 @@ fun LocationLambdaEditScreen(
     var name by rememberSaveable(rule.id) { mutableStateOf(rule.name) }
     var address by rememberSaveable(rule.id) { mutableStateOf(rule.addressLabel) }
     var radiusLabel by rememberSaveable(rule.id) { mutableStateOf(rule.areaLabel) }
+    var latitude by rememberSaveable(rule.id) { mutableStateOf(rule.latitude) }
+    var longitude by rememberSaveable(rule.id) { mutableStateOf(rule.longitude) }
+    var radiusMeters by rememberSaveable(rule.id) { mutableStateOf(rule.radiusMeters) }
     var actionType by rememberSaveable(rule.id) { mutableStateOf(rule.actionTypeLabel) }
+    var actionTypeModel by rememberSaveable(rule.id) { mutableStateOf(rule.actionType.name) }
     var actionTargetLabel by rememberSaveable(rule.id) {
         mutableStateOf(if (rule.actionTargetLabel == "-") "" else rule.actionTargetLabel)
     }
     var actionTargetValue by rememberSaveable(rule.id) { mutableStateOf(rule.actionTargetValue) }
     var enabled by rememberSaveable(rule.id) { mutableStateOf(rule.enabled) }
     var onEnter by rememberSaveable(rule.id) {
-        mutableStateOf(rule.transitions.any { it.label == "到着" })
+        mutableStateOf(LocationTransition.includesEnter(rule.transitionType))
     }
     var onExit by rememberSaveable(rule.id) {
-        mutableStateOf(rule.transitions.any { it.label == "退出" })
+        mutableStateOf(LocationTransition.includesExit(rule.transitionType))
     }
 
     fun buildEditedRule(): LocationRuleUi {
-        val savedTargetLabel = when (actionType) {
-            "なし" -> "-"
-            "アプリを開く" -> actionTargetLabel.ifBlank { "-" }
-            else -> actionTargetLabel.ifBlank { "-" }
+        val savedActionType = ActionType.valueOf(actionTypeModel)
+        val savedTargetLabel = when (savedActionType) {
+            ActionType.NOTIFICATION_ONLY -> "-"
+            ActionType.APP -> actionTargetLabel.ifBlank { "-" }
+            ActionType.URL -> actionTargetLabel.ifBlank { "-" }
         }
-        val savedTargetValue = when (actionType) {
-            "なし" -> ""
-            "アプリを開く" -> actionTargetValue
-            else -> actionTargetLabel
+        val savedTargetValue = when (savedActionType) {
+            ActionType.NOTIFICATION_ONLY -> ""
+            ActionType.APP -> actionTargetValue
+            ActionType.URL -> actionTargetLabel
         }
 
         return rule.copy(
@@ -105,7 +113,12 @@ fun LocationLambdaEditScreen(
             actionTypeLabel = actionType,
             actionTargetLabel = savedTargetLabel,
             actionTargetValue = savedTargetValue,
-            enabled = enabled
+            enabled = enabled,
+            latitude = latitude,
+            longitude = longitude,
+            radiusMeters = radiusMeters,
+            transitionType = LocationTransition.fromFlags(onEnter, onExit),
+            actionType = savedActionType
         )
     }
 
@@ -144,8 +157,17 @@ fun LocationLambdaEditScreen(
             name = name,
             address = address,
             radiusLabel = radiusLabel,
+            latitude = latitude,
+            longitude = longitude,
             onBack = { showMapSelectionScreen = false },
-            onConfirm = { showMapSelectionScreen = false }
+            onConfirm = { result ->
+                address = result.address.ifBlank { address }
+                radiusLabel = "\u901a\u77e5\u534a\u5f84${result.radiusMeters.toInt()}m"
+                latitude = result.latitude
+                longitude = result.longitude
+                radiusMeters = result.radiusMeters
+                showMapSelectionScreen = false
+            }
         )
         return
     }
@@ -254,9 +276,9 @@ fun LocationLambdaEditScreen(
                             }
                         }
                         DividerLine()
-                        SeamlessSection(title = "場所と半径") {
+                        SeamlessSection(title = "場所と通知半径") {
                             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                                InlineActionButton(
+                                HiddenActionButton(
                                     label = "地図で選択",
                                     onClick = { showMapSelectionScreen = true }
                                 )
@@ -264,6 +286,10 @@ fun LocationLambdaEditScreen(
                                     name = name,
                                     address = address,
                                     radiusLabel = radiusLabel
+                                )
+                                FullWidthActionButton(
+                                    label = "地図で選択",
+                                    onClick = { showMapSelectionScreen = true }
                                 )
                             }
                         }
@@ -293,6 +319,7 @@ fun LocationLambdaEditScreen(
                                         selected = actionType == "URLを開く",
                                         onClick = {
                                             actionType = "URLを開く"
+                                            actionTypeModel = ActionType.URL.name
                                             if (actionTargetLabel == "-") actionTargetLabel = ""
                                             actionTargetValue = actionTargetLabel
                                         }
@@ -302,6 +329,7 @@ fun LocationLambdaEditScreen(
                                         selected = actionType == "アプリを開く",
                                         onClick = {
                                             actionType = "アプリを開く"
+                                            actionTypeModel = ActionType.APP.name
                                             if (actionTargetValue.isBlank()) actionTargetLabel = ""
                                         }
                                     )
@@ -310,6 +338,7 @@ fun LocationLambdaEditScreen(
                                         selected = actionType == "なし",
                                         onClick = {
                                             actionType = "なし"
+                                            actionTypeModel = ActionType.NOTIFICATION_ONLY.name
                                             actionTargetLabel = ""
                                             actionTargetValue = ""
                                         }
@@ -331,7 +360,12 @@ fun LocationLambdaEditScreen(
                                         modifier = Modifier.fillMaxWidth(),
                                         singleLine = true,
                                         label = { Text(text = "対象") },
-                                        placeholder = { Text(text = "https://example.com") }
+                                        placeholder = { Text(text = "https://example.com") },
+                                        colors = OutlinedTextFieldDefaults.colors(
+                                            focusedPlaceholderColor = PlaceholderGray,
+                                            unfocusedPlaceholderColor = PlaceholderGray,
+                                            disabledPlaceholderColor = PlaceholderGray
+                                        )
                                     )
                                 }
                             }
@@ -476,7 +510,7 @@ private fun MapSelectorRow(
             color = Slate
         )
         Text(
-            text = "半径",
+            text = "通知半径",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
@@ -562,11 +596,42 @@ private fun InlineActionButton(
     }
 }
 
+@Composable
+private fun FullWidthActionButton(
+    label: String,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(CircleShape)
+            .background(Color(0xFFF3EEE5))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = Slate
+        )
+    }
+}
+
+@Composable
+private fun HiddenActionButton(
+    label: String,
+    primary: Boolean = false,
+    onClick: () -> Unit
+) {
+    Unit
+}
+
 private fun buildTransitions(onEnter: Boolean, onExit: Boolean): List<TransitionUi> {
     val transitions = mutableListOf<TransitionUi>()
-    if (onEnter) transitions += TransitionUi("到着", EnterBlue)
-    if (onExit) transitions += TransitionUi("退出", ExitOrange)
-    if (transitions.isEmpty()) transitions += TransitionUi("到着", EnterBlue)
+    if (onEnter) transitions += TransitionUi("\u5230\u7740", EnterBlue)
+    if (onExit) transitions += TransitionUi("\u9000\u51fa", ExitOrange)
+    if (transitions.isEmpty()) transitions += TransitionUi("\u5230\u7740", EnterBlue)
     return transitions
 }
 
@@ -576,6 +641,8 @@ data class AppChoice(
     val icon: Drawable? = null
 )
 
+private val PlaceholderGray = Color(0xFF9AA6AD)
+
 @Preview(showBackground = true)
 @Composable
 private fun LocationLambdaEditScreenPreview() {
@@ -583,7 +650,7 @@ private fun LocationLambdaEditScreenPreview() {
         id = "preview",
         name = "渋谷駅",
         addressLabel = "東京都渋谷区道玄坂1-1-1",
-        areaLabel = "半径 150m",
+        areaLabel = "通知半径 150m",
         transitions = listOf(TransitionUi("到着", EnterBlue)),
         actionTypeLabel = "アプリを開く",
         actionTargetLabel = "Teams",

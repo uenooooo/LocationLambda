@@ -136,6 +136,9 @@ fun AppSelectionScreen(
                             disabledContainerColor = Color.Transparent,
                             focusedIndicatorColor = Slate,
                             unfocusedIndicatorColor = Divider,
+                            focusedPlaceholderColor = PlaceholderGray,
+                            unfocusedPlaceholderColor = PlaceholderGray,
+                            disabledPlaceholderColor = PlaceholderGray,
                             cursorColor = Slate
                         )
                     )
@@ -173,6 +176,8 @@ fun AppSelectionScreen(
         }
     }
 }
+
+private val PlaceholderGray = Color(0xFF9AA6AD)
 
 @Composable
 private fun AppSelectionRow(
