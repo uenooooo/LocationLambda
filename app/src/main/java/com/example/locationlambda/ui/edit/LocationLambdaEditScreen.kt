@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -378,7 +379,9 @@ fun LocationLambdaEditScreen(
                                     else -> OutlinedTextField(
                                         value = urlTargetValue,
                                         onValueChange = { urlTargetValue = it },
-                                        modifier = Modifier.fillMaxWidth(),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .heightIn(min = ActionTargetMinHeight),
                                         singleLine = true,
                                         label = { Text(text = "対象") },
                                         placeholder = { Text(text = "https://example.com") },
@@ -479,6 +482,7 @@ private fun AppPickerRow(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .heightIn(min = ActionTargetMinHeight)
             .clip(RoundedCornerShape(14.dp))
             .clickable(onClick = onClick)
             .background(Color(0xFFF7F2EA))
@@ -518,6 +522,7 @@ private fun DisabledTargetRow() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .heightIn(min = ActionTargetMinHeight)
             .clip(RoundedCornerShape(14.dp))
             .background(Color(0xFFF3EFE8))
             .padding(horizontal = 16.dp, vertical = 14.dp),
@@ -708,6 +713,7 @@ data class AppChoice(
 )
 
 private val PlaceholderGray = Color(0xFF9AA6AD)
+private val ActionTargetMinHeight = 86.dp
 
 @Preview(showBackground = true)
 @Composable
