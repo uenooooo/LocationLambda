@@ -182,7 +182,7 @@ private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
             Image(
                 painter = painterResource(id = R.drawable.location_lambda_icon),
                 contentDescription = "Location Lambda",
-                modifier = Modifier.size(44.dp)
+                modifier = Modifier.size(70.dp)
             )
             Text(
                 text = "ロケーションラムダ",
