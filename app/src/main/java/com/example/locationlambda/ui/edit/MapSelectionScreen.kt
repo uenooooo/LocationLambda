@@ -48,6 +48,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -423,12 +424,14 @@ private fun MapInfoRow(
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
-        Text(
-            text = value.ifBlank { "\n" },
-            style = MaterialTheme.typography.bodyLarge,
-            color = Slate,
-            minLines = 2
-        )
+        SelectionContainer {
+            Text(
+                text = value.ifBlank { "\n" },
+                style = MaterialTheme.typography.bodyLarge,
+                color = Slate,
+                minLines = 2
+            )
+        }
     }
 }
 
