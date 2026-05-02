@@ -32,7 +32,7 @@ fun LocationLambdaSplashScreen(
             painter = painterResource(id = R.drawable.location_lambda_icon),
             contentDescription = "Location Lambda",
             modifier = Modifier
-                .size(170.dp)
+                .size(200.dp)
                 .offset(y = (-24).dp)
         )
     }
