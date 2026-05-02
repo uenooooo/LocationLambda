@@ -259,7 +259,7 @@ fun LocationLambdaEditScreen(
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column {
-                        SeamlessSection(title = "名前") {
+                        CompactSeamlessSection(title = "\u540d\u524d") {
                             TitleNameEditor(
                                 value = name,
                                 onValueChange = { name = it },
@@ -370,6 +370,25 @@ fun LocationLambdaEditScreen(
 }
 
 @Composable
+private fun CompactSeamlessSection(
+    title: String,
+    content: @Composable () -> Unit
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = 18.dp, vertical = 10.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = Slate
+        )
+        content()
+    }
+}
+
+@Composable
 private fun SeamlessSection(
     title: String,
     content: @Composable () -> Unit
@@ -402,9 +421,9 @@ private fun TitleNameEditor(
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.padding(vertical = 4.dp),
+        modifier = modifier,
         singleLine = true,
-        textStyle = MaterialTheme.typography.headlineSmall.copy(
+        textStyle = MaterialTheme.typography.titleLarge.copy(
             fontWeight = FontWeight.Bold,
             color = Slate
         ),
@@ -413,13 +432,13 @@ private fun TitleNameEditor(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 6.dp),
+                    .padding(vertical = 2.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
                 if (value.isBlank()) {
                     Text(
                         text = "名前を入力",
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = PlaceholderGray
                     )
