@@ -179,13 +179,13 @@ private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(id = R.drawable.location_lambda_icon),
                 contentDescription = "Location Lambda",
-                modifier = Modifier.size(36.dp)
+                modifier = Modifier.size(44.dp)
             )
             Text(
                 text = "ロケーションラムダ",
