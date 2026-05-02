@@ -2,7 +2,6 @@ package com.example.locationlambda.ui.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -18,14 +17,11 @@ import com.example.locationlambda.R
 import com.example.locationlambda.ui.theme.LocationLambdaTheme
 
 @Composable
-fun LocationLambdaSplashScreen(
-    onDismiss: () -> Unit = {}
-) {
+fun LocationLambdaSplashScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFEFEFE))
-            .clickable(onClick = onDismiss),
+            .background(Color(0xFFFEFEFE)),
         contentAlignment = Alignment.Center
     ) {
         Image(
