@@ -103,7 +103,7 @@ fun MapSelectionScreen(
             if (hasRegisteredPosition && latitude != null && longitude != null) {
                 LatLng(latitude, longitude)
             } else {
-                parseCoordinates(address) ?: LatLng(35.658034, 139.701636)
+                parseCoordinates(address)
             }
         )
     }
@@ -123,7 +123,8 @@ fun MapSelectionScreen(
     val animatedDetailsPanelHeight = with(density) { animatedDetailsPanelHeightPx.toDp() }
 
     LaunchedEffect(selectedPosition) {
-        val geocoded = reverseGeocode(context, selectedPosition)
+        val position = selectedPosition ?: return@LaunchedEffect
+        val geocoded = reverseGeocode(context, position)
         resolvedAddress = normalizeAddressLabel(geocoded ?: "")
     }
 
@@ -141,17 +142,22 @@ fun MapSelectionScreen(
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
     ) {
-        RealMap(
-            modifier = Modifier.fillMaxSize(),
-            name = name,
-            radiusLabel = selectedRadiusLabel,
-            selectedPosition = selectedPosition,
-            searchCameraTarget = searchCameraTarget,
-            onMapClick = {
-                focusManager.clearFocus()
-                selectedPosition = it
-            }
-        )
+        val currentSelectedPosition = selectedPosition
+        if (currentSelectedPosition == null) {
+            MapLoadingPlaceholder(modifier = Modifier.fillMaxSize())
+        } else {
+            RealMap(
+                modifier = Modifier.fillMaxSize(),
+                name = name,
+                radiusLabel = selectedRadiusLabel,
+                selectedPosition = currentSelectedPosition,
+                searchCameraTarget = searchCameraTarget,
+                onMapClick = {
+                    focusManager.clearFocus()
+                    selectedPosition = it
+                }
+            )
+        }
 
         Column(
             modifier = Modifier
@@ -289,8 +295,8 @@ fun MapSelectionScreen(
                         onClick = {
                             onConfirm(
                                 MapSelectionResult(
-                                    latitude = selectedPosition.latitude,
-                                    longitude = selectedPosition.longitude,
+                                    latitude = selectedPosition?.latitude ?: return@MapActionButton,
+                                    longitude = selectedPosition?.longitude ?: return@MapActionButton,
                                     address = resolvedAddress,
                                     radiusMeters = selectedRadiusLabel.toMetersFloat(),
                                     radiusLabel = selectedRadiusLabel
@@ -313,6 +319,13 @@ data class MapSelectionResult(
 )
 
 private val PlaceholderGray = Color(0xFF9AA6AD)
+
+@Composable
+private fun MapLoadingPlaceholder(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.background(Color(0xFFE6EBF2))
+    )
+}
 
 @Composable
 private fun RealMap(
