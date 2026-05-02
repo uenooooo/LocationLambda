@@ -382,8 +382,18 @@ private fun RuleRow(
                             color = transition.color
                         )
                     }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = rule.areaLabel,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = SlateSoft
+                    )
+                    Text(
+                        text = rule.cooldownMin.toCooldownLabel(),
                         style = MaterialTheme.typography.bodyMedium,
                         color = SlateSoft
                     )
@@ -455,6 +465,18 @@ private fun RuleRow(
             }
         }
     }
+}
+
+private fun Int.toCooldownLabel(): String {
+    if (this <= 0) return "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u306a\u3057"
+    val hours = this / 60
+    val minutes = this % 60
+    val timeLabel = when {
+        hours == 0 -> "${minutes}\u5206"
+        minutes == 0 -> "${hours}\u6642\u9593"
+        else -> "${hours}\u6642\u9593${minutes}\u5206"
+    }
+    return "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3$timeLabel"
 }
 
 @Composable
