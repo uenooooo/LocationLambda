@@ -32,10 +32,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import com.example.locationlambda.R
 import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.storage.GeofenceStatus
 import com.example.locationlambda.ui.model.LocationRuleUi
@@ -176,12 +178,22 @@ private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
         modifier = Modifier.padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text(
-            text = "ロケラム一覧",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            color = Slate
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.location_lambda_icon),
+                contentDescription = "Location Lambda",
+                modifier = Modifier.size(36.dp)
+            )
+            Text(
+                text = "ロケーションラムダ",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = Slate
+            )
+        }
         Text(
             text = "場所に入る・出るときに通知（＋アクション）を設定できます。",
             style = MaterialTheme.typography.bodyMedium,
@@ -378,17 +390,28 @@ private fun RuleRow(
                 }
             }
             Spacer(modifier = Modifier.width(12.dp))
-            Switch(
-                checked = rule.enabled,
-                onCheckedChange = { checked -> onToggleRule(rule, checked) },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = CardSurface,
-                    checkedTrackColor = SuccessGreen,
-                    uncheckedThumbColor = CardSurface,
-                    uncheckedTrackColor = Divider,
-                    uncheckedBorderColor = Color.Transparent
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = if (rule.enabled) "ON" else "OFF",
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = if (rule.enabled) SuccessGreen else SlateSoft
                 )
-            )
+                Switch(
+                    checked = rule.enabled,
+                    onCheckedChange = { checked -> onToggleRule(rule, checked) },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = CardSurface,
+                        checkedTrackColor = SuccessGreen,
+                        uncheckedThumbColor = CardSurface,
+                        uncheckedTrackColor = Divider,
+                        uncheckedBorderColor = Color.Transparent
+                    )
+                )
+            }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
