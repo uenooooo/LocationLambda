@@ -94,9 +94,6 @@ fun LocationLambdaHomeScreen(
                         onToggleRule = onToggleRule
                     )
                 }
-                item {
-                    GeofenceStatusPanel(status = geofenceStatus)
-                }
             }
         }
     }
