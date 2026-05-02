@@ -105,8 +105,10 @@ private fun LocationLambdaApp() {
     }
 
     LaunchedEffect(Unit) {
-        delay(1_500)
-        showSplash = false
+        if (!BuildConfig.DEBUG) {
+            delay(1_500)
+            showSplash = false
+        }
     }
 
     LaunchedEffect(showSplash) {
@@ -167,7 +169,13 @@ private fun LocationLambdaApp() {
     }
 
     if (showSplash) {
-        LocationLambdaSplashScreen()
+        LocationLambdaSplashScreen(
+            onDismiss = {
+                if (BuildConfig.DEBUG) {
+                    showSplash = false
+                }
+            }
+        )
     } else {
         val editingRule = rules.firstOrNull { it.id == editingRuleId } ?: editingDraftRule
         if (editingRule != null) {
