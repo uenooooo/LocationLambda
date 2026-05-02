@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.data.LocationRule
 import com.example.locationlambda.data.LocationTransition
@@ -44,6 +46,8 @@ import kotlinx.coroutines.delay
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.navigationBarColor = Color.rgb(244, 240, 232)
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = true
         setContent {
             LocationLambdaTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {

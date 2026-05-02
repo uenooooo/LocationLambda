@@ -249,7 +249,7 @@ fun LocationLambdaEditScreen(
                 start = 20.dp,
                 top = innerPadding.calculateTopPadding() + 20.dp,
                 end = 20.dp,
-                bottom = innerPadding.calculateBottomPadding() + 56.dp
+                bottom = innerPadding.calculateBottomPadding() + 20.dp
             ),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
