@@ -55,7 +55,7 @@ object MockNotificationHelper {
 
         val body = buildBody(rule)
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.location_lambda_notification_icon)
             .setContentTitle(buildTitle(rule))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
