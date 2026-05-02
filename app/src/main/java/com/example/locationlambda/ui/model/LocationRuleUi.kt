@@ -58,7 +58,7 @@ fun LocationRule.toUi(): LocationRuleUi {
 
 fun LocationRuleUi.toDomain(previous: LocationRule? = null): LocationRule {
     val resolvedActionValue = when (actionType) {
-        ActionType.URL -> actionTargetValue.ifBlank { actionTargetLabel }
+        ActionType.URL -> actionTargetValue
         ActionType.APP -> actionTargetValue
         ActionType.NOTIFICATION_ONLY -> ""
     }

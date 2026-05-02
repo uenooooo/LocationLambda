@@ -308,7 +308,8 @@ private fun EmptyRuleRow(
             Text(
                 text = "通知後アクション",
                 style = MaterialTheme.typography.labelMedium,
-                color = SlateSoft
+                fontWeight = FontWeight.SemiBold,
+                color = Slate
             )
             Text(
                 text = "-",
@@ -318,7 +319,8 @@ private fun EmptyRuleRow(
             Text(
                 text = "対象",
                 style = MaterialTheme.typography.labelMedium,
-                color = SlateSoft
+                fontWeight = FontWeight.SemiBold,
+                color = Slate
             )
             Text(
                 text = "-",
@@ -384,18 +386,16 @@ private fun RuleRow(
                     }
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = rule.areaLabel,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = SlateSoft
+                    InlineInfo(
+                        label = "\u534a\u5f84",
+                        value = rule.areaLabel.toRadiusValueLabel()
                     )
-                    Text(
-                        text = rule.cooldownMin.toCooldownLabel(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = SlateSoft
+                    InlineInfo(
+                        label = "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3",
+                        value = rule.cooldownMin.toCooldownValueLabel()
                     )
                 }
             }
@@ -428,17 +428,19 @@ private fun RuleRow(
             Text(
                 text = "通知後アクション",
                 style = MaterialTheme.typography.labelMedium,
-                color = SlateSoft
+                fontWeight = FontWeight.SemiBold,
+                color = Slate
             )
             Text(
                 text = rule.actionTypeLabel,
                 style = MaterialTheme.typography.bodyLarge,
-                color = Slate
+                color = SlateSoft
             )
             Text(
                 text = "対象",
                 style = MaterialTheme.typography.labelMedium,
-                color = SlateSoft
+                fontWeight = FontWeight.SemiBold,
+                color = Slate
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -460,23 +462,46 @@ private fun RuleRow(
                 Text(
                     text = rule.actionTargetLabel,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Slate
+                    color = SlateSoft
                 )
             }
         }
     }
 }
 
-private fun Int.toCooldownLabel(): String {
-    if (this <= 0) return "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u306a\u3057"
+@Composable
+private fun InlineInfo(label: String, value: String) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = Slate
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyMedium,
+            color = SlateSoft
+        )
+    }
+}
+
+private fun String.toRadiusValueLabel(): String {
+    return replace("\u901a\u77e5\u534a\u5f84", "").ifBlank { "-" }
+}
+
+private fun Int.toCooldownValueLabel(): String {
+    if (this <= 0) return "\u306a\u3057"
     val hours = this / 60
     val minutes = this % 60
-    val timeLabel = when {
+    return when {
         hours == 0 -> "${minutes}\u5206"
         minutes == 0 -> "${hours}\u6642\u9593"
         else -> "${hours}\u6642\u9593${minutes}\u5206"
     }
-    return "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3$timeLabel"
 }
 
 @Composable

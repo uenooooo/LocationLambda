@@ -185,7 +185,7 @@ private fun LocationLambdaApp() {
                     editingRuleId = null
                     editingDraftRule = null
                 },
-                onSave = { updatedRule ->
+                onRuleChange = { updatedRule ->
                     val updatedDomainRule = updatedRule.toDomain(editingRule)
                     val updatedRules = if (rules.any { it.id == updatedDomainRule.id }) {
                         rules.map { rule ->
@@ -199,8 +199,6 @@ private fun LocationLambdaApp() {
                     if (context.hasGeofencePermissions()) {
                         geofenceManager.reregister(updatedRules)
                     }
-                    editingRuleId = null
-                    editingDraftRule = null
                 }
             )
         } else {

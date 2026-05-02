@@ -1,13 +1,7 @@
 package com.example.locationlambda.ui.edit
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.os.Build
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,11 +52,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.data.LocationTransition
-import com.example.locationlambda.notification.MockNotificationHelper
 import com.example.locationlambda.ui.model.LocationRuleUi
 import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.theme.CardSurface
@@ -83,9 +75,8 @@ private const val maxCustomCooldownMinutes = 12 * 60
 fun LocationLambdaEditScreen(
     rule: LocationRuleUi,
     onBack: () -> Unit,
-    onSave: (LocationRuleUi) -> Unit
+    onRuleChange: (LocationRuleUi) -> Unit
 ) {
-    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
     var showAppSelectionScreen by remember { mutableStateOf(false) }
@@ -101,7 +92,7 @@ fun LocationLambdaEditScreen(
     var urlTargetValue by rememberSaveable(rule.id) {
         mutableStateOf(
             if (rule.actionType == ActionType.URL) {
-                rule.actionTargetValue.ifBlank {
+                rule.actionTargetValue.takeUnless { it == "-" }.orEmpty().ifBlank {
                     if (rule.actionTargetLabel == "-") "" else rule.actionTargetLabel
                 }
             } else {
@@ -169,9 +160,9 @@ fun LocationLambdaEditScreen(
         }
 
         return rule.copy(
-            name = name.ifBlank { "-" },
-            addressLabel = address.ifBlank { "-" },
-            areaLabel = radiusLabel.ifBlank { "-" },
+            name = name,
+            addressLabel = address,
+            areaLabel = radiusLabel,
             transitions = buildTransitions(onEnter, onExit),
             actionTypeLabel = actionType,
             actionTargetLabel = savedTargetLabel,
@@ -186,25 +177,6 @@ fun LocationLambdaEditScreen(
         )
     }
 
-    fun canSaveRule(): Boolean {
-        return when (ActionType.valueOf(actionTypeModel)) {
-            ActionType.URL -> urlTargetValue.isNotBlank()
-            ActionType.APP -> appTargetValue.isNotBlank()
-            ActionType.NOTIFICATION_ONLY -> true
-        }
-    }
-
-    fun showSaveError() {
-        val message = when (ActionType.valueOf(actionTypeModel)) {
-            ActionType.URL -> "URLを入力してください"
-            ActionType.APP -> "アプリを選択してください"
-            ActionType.NOTIFICATION_ONLY -> ""
-        }
-        if (message.isNotBlank()) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     fun updateCustomCooldown(input: String) {
         val filtered = input.filter { it.isDigit() }.take(3)
         val minutes = filtered.toIntOrNull()?.coerceAtMost(maxCustomCooldownMinutes)
@@ -212,21 +184,23 @@ fun LocationLambdaEditScreen(
         cooldownMin = minutes ?: 0
     }
 
-    val notificationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) {
-            MockNotificationHelper.showRuleNotification(
-                context = context,
-                rule = buildEditedRule()
-            )
-        } else {
-            Toast.makeText(
-                context,
-                "通知権限がないため表示できません",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+    LaunchedEffect(
+        name,
+        address,
+        radiusLabel,
+        latitude,
+        longitude,
+        radiusMeters,
+        actionType,
+        actionTypeModel,
+        urlTargetValue,
+        appTargetLabel,
+        appTargetValue,
+        cooldownMin,
+        onEnter,
+        onExit
+    ) {
+        onRuleChange(buildEditedRule())
     }
 
     if (showAppSelectionScreen) {
@@ -262,56 +236,7 @@ fun LocationLambdaEditScreen(
         return
     }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        bottomBar = {
-            Surface(color = CardSurface) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .navigationBarsPadding()
-                        .padding(horizontal = 20.dp, vertical = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    InlineActionButton(label = "キャンセル", onClick = onBack)
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        InlineActionButton(
-                            label = "通知",
-                            onClick = {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                                    ContextCompat.checkSelfPermission(
-                                        context,
-                                        Manifest.permission.POST_NOTIFICATIONS
-                                    ) != PackageManager.PERMISSION_GRANTED
-                                ) {
-                                    notificationPermissionLauncher.launch(
-                                        Manifest.permission.POST_NOTIFICATIONS
-                                    )
-                                } else {
-                                    MockNotificationHelper.showRuleNotification(
-                                        context = context,
-                                        rule = buildEditedRule()
-                                    )
-                                }
-                            }
-                        )
-                        InlineActionButton(
-                            label = "保存",
-                            primary = true,
-                            onClick = {
-                                if (canSaveRule()) {
-                                    onSave(buildEditedRule())
-                                } else {
-                                    showSaveError()
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-        }
-    ) { innerPadding ->
+    Scaffold(containerColor = MaterialTheme.colorScheme.background) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -328,21 +253,6 @@ fun LocationLambdaEditScreen(
             ),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            item {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(
-                        text = "ロケラム編集",
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = Slate
-                    )
-                    Text(
-                        text = "場所とアクションを画面内でまとめて調整できます。",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = SlateSoft
-                    )
-                }
-            }
             item {
                 Surface(
                     color = CardSurface,
@@ -897,31 +807,6 @@ private fun ActionTypeChip(
 }
 
 @Composable
-private fun InlineActionButton(
-    label: String,
-    primary: Boolean = false,
-    onClick: () -> Unit
-) {
-    val background = if (primary) SuccessGreen else Color(0xFFF3EEE5)
-    val textColor = if (primary) CardSurface else Slate
-
-    Box(
-        modifier = Modifier
-            .clip(CircleShape)
-            .background(background)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 10.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelLarge,
-            color = textColor
-        )
-    }
-}
-
-@Composable
 private fun FullWidthActionButton(
     label: String,
     onClick: () -> Unit
@@ -988,7 +873,7 @@ private fun LocationLambdaEditScreenPreview() {
         LocationLambdaEditScreen(
             rule = previewRule,
             onBack = {},
-            onSave = {}
+            onRuleChange = {}
         )
     }
 }
