@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.example.locationlambda.data.ActionType
+import com.example.locationlambda.storage.GeofenceStatus
 import com.example.locationlambda.ui.model.LocationRuleUi
 import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.theme.CardSurface
@@ -52,8 +53,10 @@ import com.example.locationlambda.ui.theme.SuccessGreen
 @Composable
 fun LocationLambdaHomeScreen(
     rules: List<LocationRuleUi>,
+    geofenceStatus: GeofenceStatus,
     maxRules: Int,
     onEditRule: (LocationRuleUi) -> Unit,
+    onEditEmptyRule: (Int) -> Unit,
     onToggleRule: (LocationRuleUi, Boolean) -> Unit
 ) {
     val ruleSlots = rules.map<LocationRuleUi, LocationRuleUi?> { it } +
@@ -85,8 +88,12 @@ fun LocationLambdaHomeScreen(
                     RuleList(
                         rules = ruleSlots,
                         onEditRule = onEditRule,
+                        onEditEmptyRule = onEditEmptyRule,
                         onToggleRule = onToggleRule
                     )
+                }
+                item {
+                    GeofenceStatusPanel(status = geofenceStatus)
                 }
             }
         }
@@ -100,6 +107,67 @@ private fun LocationRuleUi.hasRegisteredLocation(): Boolean {
         longitude in -180.0..180.0 &&
         addressLabel.isNotBlank() &&
         addressLabel != "-"
+}
+
+@Composable
+private fun GeofenceStatusPanel(status: GeofenceStatus) {
+    Surface(
+        modifier = Modifier.padding(horizontal = 20.dp),
+        color = Color(0xFFF3EEE5),
+        shape = RoundedCornerShape(22.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "ジオフェンス状態",
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = Slate
+            )
+            StatusLine(
+                label = "登録",
+                value = "${status.registrationText} / ${status.registeredCount}件"
+            )
+            StatusLine(
+                label = "最終登録",
+                value = status.formattedLastRegisteredAt()
+            )
+            StatusLine(
+                label = "最終発火",
+                value = status.lastEventText
+            )
+            StatusLine(
+                label = "発火時刻",
+                value = status.formattedLastEventAt()
+            )
+        }
+    }
+}
+
+@Composable
+private fun StatusLine(
+    label: String,
+    value: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = label,
+            modifier = Modifier.width(72.dp),
+            style = MaterialTheme.typography.labelMedium,
+            color = SlateSoft
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Slate
+        )
+    }
 }
 
 @Composable
@@ -138,6 +206,7 @@ private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
 private fun RuleList(
     rules: List<LocationRuleUi?>,
     onEditRule: (LocationRuleUi) -> Unit,
+    onEditEmptyRule: (Int) -> Unit,
     onToggleRule: (LocationRuleUi, Boolean) -> Unit
 ) {
     Surface(
@@ -147,7 +216,9 @@ private fun RuleList(
         Column {
             rules.forEachIndexed { index, rule ->
                 if (rule == null) {
-                    EmptyRuleRow()
+                    EmptyRuleRow(
+                        onClick = { onEditEmptyRule(index + 1) }
+                    )
                 } else {
                     RuleRow(
                         rule = rule,
@@ -164,10 +235,13 @@ private fun RuleList(
 }
 
 @Composable
-private fun EmptyRuleRow() {
+private fun EmptyRuleRow(
+    onClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 18.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
@@ -210,8 +284,10 @@ private fun EmptyRuleRow() {
                 colors = SwitchDefaults.colors(
                     uncheckedThumbColor = CardSurface,
                     uncheckedTrackColor = Divider,
+                    uncheckedBorderColor = Color.Transparent,
                     disabledUncheckedThumbColor = CardSurface,
-                    disabledUncheckedTrackColor = Divider
+                    disabledUncheckedTrackColor = Divider,
+                    disabledUncheckedBorderColor = Color.Transparent
                 )
             )
         }
@@ -309,7 +385,8 @@ private fun RuleRow(
                     checkedThumbColor = CardSurface,
                     checkedTrackColor = SuccessGreen,
                     uncheckedThumbColor = CardSurface,
-                    uncheckedTrackColor = Divider
+                    uncheckedTrackColor = Divider,
+                    uncheckedBorderColor = Color.Transparent
                 )
             )
         }
@@ -439,8 +516,16 @@ private fun LocationLambdaHomePreview() {
         ) {
             LocationLambdaHomeScreen(
                 rules = previewRules,
+                geofenceStatus = GeofenceStatus(
+                    registrationText = "登録成功",
+                    registeredCount = 2,
+                    lastRegisteredAt = System.currentTimeMillis(),
+                    lastEventText = "会社 を 退出",
+                    lastEventAt = System.currentTimeMillis()
+                ),
                 maxRules = 5,
                 onEditRule = {},
+                onEditEmptyRule = {},
                 onToggleRule = { _, _ -> }
             )
         }

@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.locationlambda.MainActivity
 import com.example.locationlambda.R
 import com.example.locationlambda.action.RuleActionExecutor
+import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.ui.model.LocationRuleUi
 
 object MockNotificationHelper {
@@ -52,14 +53,19 @@ object MockNotificationHelper {
             )
         }
 
+        val body = buildBody(rule)
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(buildTitle(rule))
-            .setContentText(buildBody(rule))
-            .setStyle(NotificationCompat.BigTextStyle().bigText(buildBody(rule)))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(actionPendingIntent ?: fallbackPendingIntent)
+
+        if (body != null) {
+            notificationBuilder
+                .setContentText(body)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(body))
+        }
 
         if (actionPendingIntent != null) {
             notificationBuilder.addAction(
@@ -82,11 +88,11 @@ object MockNotificationHelper {
         return "${rule.name} $particle $trigger"
     }
 
-    private fun buildBody(rule: LocationRuleUi): String {
-        return if (rule.actionTargetLabel == "-") {
-            "\u901a\u77e5\u306e\u307f"
-        } else {
-            rule.actionTargetLabel
+    private fun buildBody(rule: LocationRuleUi): String? {
+        return when (rule.actionType) {
+            ActionType.URL -> "URL\u3092\u958b\u304f\uff1a${rule.actionTargetValue}"
+            ActionType.APP -> "\u30a2\u30d7\u30ea\u3092\u958b\u304f\uff1a${rule.actionTargetLabel}"
+            ActionType.NOTIFICATION_ONLY -> null
         }
     }
 

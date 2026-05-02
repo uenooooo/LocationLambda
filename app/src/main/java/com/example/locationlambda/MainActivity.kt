@@ -18,6 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +27,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import com.example.locationlambda.data.ActionType
+import com.example.locationlambda.data.LocationRule
+import com.example.locationlambda.data.LocationTransition
 import com.example.locationlambda.geofence.GeofenceManager
+import com.example.locationlambda.storage.GeofenceStatusRepository
 import com.example.locationlambda.storage.RuleRepository
 import com.example.locationlambda.ui.edit.LocationLambdaEditScreen
 import com.example.locationlambda.ui.home.LocationLambdaHomeScreen
@@ -58,13 +63,29 @@ class MainActivity : ComponentActivity() {
 private fun LocationLambdaApp() {
     val context = LocalContext.current
     val repository = remember(context) { RuleRepository(context) }
-    val geofenceManager = remember(context) { GeofenceManager(context) }
+    val statusRepository = remember(context) { GeofenceStatusRepository(context) }
+    var geofenceStatus by remember(context) { mutableStateOf(statusRepository.loadStatus()) }
+    val geofenceManager = remember(context) {
+        GeofenceManager(context) { status ->
+            geofenceStatus = status
+        }
+    }
     var showSplash by remember { mutableStateOf(true) }
     var rules by remember { mutableStateOf(repository.loadRules()) }
     var editingRuleId by remember { mutableStateOf<String?>(null) }
+    var editingDraftRule by remember { mutableStateOf<LocationRule?>(null) }
     var permissionStep by remember { mutableStateOf(PermissionStep.Idle) }
     var showBackgroundLocationDialog by remember { mutableStateOf(false) }
     val maxRules = 5
+
+    DisposableEffect(statusRepository) {
+        val listener = statusRepository.registerListener { status ->
+            geofenceStatus = status
+        }
+        onDispose {
+            statusRepository.unregisterListener(listener)
+        }
+    }
 
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -148,15 +169,22 @@ private fun LocationLambdaApp() {
     if (showSplash) {
         LocationLambdaSplashScreen()
     } else {
-        val editingRule = rules.firstOrNull { it.id == editingRuleId }
+        val editingRule = rules.firstOrNull { it.id == editingRuleId } ?: editingDraftRule
         if (editingRule != null) {
             LocationLambdaEditScreen(
                 rule = editingRule.toUi(),
-                onBack = { editingRuleId = null },
+                onBack = {
+                    editingRuleId = null
+                    editingDraftRule = null
+                },
                 onSave = { updatedRule ->
                     val updatedDomainRule = updatedRule.toDomain(editingRule)
-                    val updatedRules = rules.map { rule ->
-                        if (rule.id == updatedDomainRule.id) updatedDomainRule else rule
+                    val updatedRules = if (rules.any { it.id == updatedDomainRule.id }) {
+                        rules.map { rule ->
+                            if (rule.id == updatedDomainRule.id) updatedDomainRule else rule
+                        }
+                    } else {
+                        (rules + updatedDomainRule).take(maxRules)
                     }
                     rules = updatedRules
                     repository.saveRules(updatedRules)
@@ -164,13 +192,23 @@ private fun LocationLambdaApp() {
                         geofenceManager.reregister(updatedRules)
                     }
                     editingRuleId = null
+                    editingDraftRule = null
                 }
             )
         } else {
             LocationLambdaHomeScreen(
                 rules = rules.map { it.toUi() },
+                geofenceStatus = geofenceStatus,
                 maxRules = maxRules,
                 onEditRule = { rule -> editingRuleId = rule.id },
+                onEditEmptyRule = { slotNumber ->
+                    val draftRule = createBlankRule(
+                        slotNumber = slotNumber,
+                        existingRules = rules
+                    )
+                    editingDraftRule = draftRule
+                    editingRuleId = draftRule.id
+                },
                 onToggleRule = { toggledRule, enabled ->
                     val updatedRules = rules.map { rule ->
                         if (rule.id == toggledRule.id) {
@@ -188,6 +226,32 @@ private fun LocationLambdaApp() {
             )
         }
     }
+}
+
+private fun createBlankRule(
+    slotNumber: Int,
+    existingRules: List<LocationRule>
+): LocationRule {
+    val id = (1..5)
+        .map { it.toString() }
+        .firstOrNull { candidate -> existingRules.none { it.id == candidate } }
+        ?: "rule-$slotNumber"
+
+    return LocationRule(
+        id = id,
+        name = "",
+        address = "-",
+        latitude = 0.0,
+        longitude = 0.0,
+        radiusMeters = 100f,
+        transitionType = LocationTransition.ENTER,
+        actionType = ActionType.NOTIFICATION_ONLY,
+        actionValue = "",
+        actionLabel = "",
+        cooldownMin = 5,
+        enabled = false,
+        lastTriggeredAt = 0L
+    )
 }
 
 @Composable

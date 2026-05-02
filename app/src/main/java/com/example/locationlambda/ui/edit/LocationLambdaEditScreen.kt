@@ -169,6 +169,25 @@ fun LocationLambdaEditScreen(
         )
     }
 
+    fun canSaveRule(): Boolean {
+        return when (ActionType.valueOf(actionTypeModel)) {
+            ActionType.URL -> urlTargetValue.isNotBlank()
+            ActionType.APP -> appTargetValue.isNotBlank()
+            ActionType.NOTIFICATION_ONLY -> true
+        }
+    }
+
+    fun showSaveError() {
+        val message = when (ActionType.valueOf(actionTypeModel)) {
+            ActionType.URL -> "URLを入力してください"
+            ActionType.APP -> "アプリを選択してください"
+            ActionType.NOTIFICATION_ONLY -> ""
+        }
+        if (message.isNotBlank()) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { granted ->
@@ -256,7 +275,13 @@ fun LocationLambdaEditScreen(
                         InlineActionButton(
                             label = "保存",
                             primary = true,
-                            onClick = { onSave(buildEditedRule()) }
+                            onClick = {
+                                if (canSaveRule()) {
+                                    onSave(buildEditedRule())
+                                } else {
+                                    showSaveError()
+                                }
+                            }
                         )
                     }
                 }
@@ -494,7 +519,11 @@ private fun AppPickerRow(
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
-            text = "対象",
+            text = if (selectedLabel.isBlank()) {
+                "\u30a2\u30d7\u30ea\u3092\u9078\u629e"
+            } else {
+                "\u5bfe\u8c61"
+            },
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )

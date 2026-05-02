@@ -6,6 +6,7 @@ import android.content.Intent
 import com.example.locationlambda.data.LocationRule
 import com.example.locationlambda.data.LocationTransition
 import com.example.locationlambda.notification.MockNotificationHelper
+import com.example.locationlambda.storage.GeofenceStatusRepository
 import com.example.locationlambda.storage.RuleRepository
 import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.model.toUi
@@ -17,12 +18,17 @@ import com.google.android.gms.location.GeofencingEvent
 class GeofenceReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val event = GeofencingEvent.fromIntent(intent) ?: return
-        if (event.hasError()) return
+        val statusRepository = GeofenceStatusRepository(context)
+        if (event.hasError()) {
+            statusRepository.markIgnored("ジオフェンス", "受信エラー")
+            return
+        }
 
         val transition = event.geofenceTransition
         if (transition != Geofence.GEOFENCE_TRANSITION_ENTER &&
             transition != Geofence.GEOFENCE_TRANSITION_EXIT
         ) {
+            statusRepository.markIgnored("ジオフェンス", "対象外イベント")
             return
         }
 
@@ -30,7 +36,10 @@ class GeofenceReceiver : BroadcastReceiver() {
             ?.map { it.requestId }
             ?.toSet()
             .orEmpty()
-        if (triggeredIds.isEmpty()) return
+        if (triggeredIds.isEmpty()) {
+            statusRepository.markIgnored("ジオフェンス", "対象なし")
+            return
+        }
 
         val repository = RuleRepository(context)
         val rules = repository.loadRules()
@@ -38,11 +47,19 @@ class GeofenceReceiver : BroadcastReceiver() {
         var hasUpdates = false
 
         val updatedRules = rules.map { rule ->
-            if (!triggeredIds.contains(rule.id) ||
-                !rule.enabled ||
-                !rule.matchesTransition(transition) ||
-                !rule.isCooldownReady(now)
-            ) {
+            if (!triggeredIds.contains(rule.id)) {
+                return@map rule
+            }
+            if (!rule.enabled) {
+                statusRepository.markIgnored(rule.name, "無効")
+                return@map rule
+            }
+            if (!rule.matchesTransition(transition)) {
+                statusRepository.markIgnored(rule.name, "条件不一致")
+                return@map rule
+            }
+            if (!rule.isCooldownReady(now)) {
+                statusRepository.markIgnored(rule.name, "クールダウン中")
                 return@map rule
             }
 
@@ -51,6 +68,7 @@ class GeofenceReceiver : BroadcastReceiver() {
                 transitions = listOf(transition.toTransitionUi())
             )
             MockNotificationHelper.showRuleNotification(context, triggeredRuleUi)
+            statusRepository.markTriggered(rule.name, transition.toTransitionLabel())
             hasUpdates = true
             triggeredRule
         }
@@ -81,6 +99,13 @@ class GeofenceReceiver : BroadcastReceiver() {
                 TransitionUi("\u9000\u51fa", ExitOrange)
             else ->
                 TransitionUi("\u5230\u7740", EnterBlue)
+        }
+    }
+
+    private fun Int.toTransitionLabel(): String {
+        return when (this) {
+            Geofence.GEOFENCE_TRANSITION_EXIT -> "\u9000\u51fa"
+            else -> "\u5230\u7740"
         }
     }
 }

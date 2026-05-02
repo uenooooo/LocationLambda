@@ -10,18 +10,27 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 import com.example.locationlambda.data.LocationRule
 import com.example.locationlambda.data.LocationTransition
+import com.example.locationlambda.storage.GeofenceStatus
+import com.example.locationlambda.storage.GeofenceStatusRepository
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 
-class GeofenceManager(context: Context) {
+class GeofenceManager(
+    context: Context,
+    private val onStatusChanged: ((GeofenceStatus) -> Unit)? = null
+) {
     private val appContext = context.applicationContext
     private val geofencingClient = LocationServices.getGeofencingClient(appContext)
+    private val statusRepository = GeofenceStatusRepository(appContext)
 
     fun reregister(rules: List<LocationRule>) {
         val pendingIntent = buildPendingIntent()
         geofencingClient.removeGeofences(pendingIntent).addOnCompleteListener {
-            if (!hasGeofencePermissions()) return@addOnCompleteListener
+            if (!hasGeofencePermissions()) {
+                notifyStatus(statusRepository.markPermissionMissing())
+                return@addOnCompleteListener
+            }
 
             val geofences = rules
                 .asSequence()
@@ -31,7 +40,10 @@ class GeofenceManager(context: Context) {
                 .mapNotNull { it.toGeofence() }
                 .toList()
 
-            if (geofences.isEmpty()) return@addOnCompleteListener
+            if (geofences.isEmpty()) {
+                notifyStatus(statusRepository.markNoRules())
+                return@addOnCompleteListener
+            }
             addGeofences(geofences, pendingIntent)
         }
     }
@@ -50,9 +62,13 @@ class GeofenceManager(context: Context) {
             .addGeofences(geofences)
             .build()
 
-        runCatching {
-            geofencingClient.addGeofences(request, pendingIntent)
-        }
+        geofencingClient.addGeofences(request, pendingIntent)
+            .addOnSuccessListener {
+                notifyStatus(statusRepository.markRegistrationSucceeded(geofences.size))
+            }
+            .addOnFailureListener { error ->
+                notifyStatus(statusRepository.markRegistrationFailed(error.message))
+            }
     }
 
     private fun LocationRule.toGeofence(): Geofence? {
@@ -103,6 +119,10 @@ class GeofenceManager(context: Context) {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
+    }
+
+    private fun notifyStatus(status: GeofenceStatus) {
+        onStatusChanged?.invoke(status)
     }
 
     companion object {

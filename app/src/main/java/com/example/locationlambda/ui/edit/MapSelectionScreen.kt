@@ -1,5 +1,7 @@
 package com.example.locationlambda.ui.edit
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
@@ -47,6 +49,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import com.example.locationlambda.BuildConfig
 import com.example.locationlambda.ui.theme.CardSurface
 import com.example.locationlambda.ui.theme.Divider
@@ -55,6 +58,8 @@ import com.example.locationlambda.ui.theme.Slate
 import com.example.locationlambda.ui.theme.SlateSoft
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -90,9 +95,12 @@ fun MapSelectionScreen(
         mutableStateOf(normalizeRadiusLabel(radiusLabel))
     }
     var searchQuery by remember { mutableStateOf("") }
+    val hasRegisteredPosition = remember(latitude, longitude, address) {
+        hasRegisteredPosition(latitude, longitude, address)
+    }
     var selectedPosition by remember(latitude, longitude, address) {
         mutableStateOf(
-            if (latitude != null && longitude != null) {
+            if (hasRegisteredPosition && latitude != null && longitude != null) {
                 LatLng(latitude, longitude)
             } else {
                 parseCoordinates(address) ?: LatLng(35.658034, 139.701636)
@@ -117,6 +125,13 @@ fun MapSelectionScreen(
     LaunchedEffect(selectedPosition) {
         val geocoded = reverseGeocode(context, selectedPosition)
         resolvedAddress = normalizeAddressLabel(geocoded ?: "")
+    }
+
+    LaunchedEffect(hasRegisteredPosition) {
+        if (hasRegisteredPosition) return@LaunchedEffect
+        val currentPosition = getCurrentPosition(context) ?: return@LaunchedEffect
+        selectedPosition = currentPosition
+        searchCameraTarget = currentPosition
     }
 
     Box(
@@ -458,6 +473,20 @@ private fun parseCoordinates(address: String): LatLng? {
     return LatLng(latitude, longitude)
 }
 
+private fun hasRegisteredPosition(
+    latitude: Double?,
+    longitude: Double?,
+    address: String
+): Boolean {
+    return latitude != null &&
+        longitude != null &&
+        latitude in -90.0..90.0 &&
+        longitude in -180.0..180.0 &&
+        !(latitude == 0.0 && longitude == 0.0) &&
+        address.isNotBlank() &&
+        address != "-"
+}
+
 private fun normalizeAddressLabel(address: String): String {
     return address.removePrefix("日本、").removePrefix("日本 ").trim()
 }
@@ -469,6 +498,35 @@ private fun normalizeRadiusLabel(radiusLabel: String): String {
 
 private fun String.toMetersFloat(): Float {
     return filter { it.isDigit() }.toFloatOrNull() ?: 100f
+}
+
+private suspend fun getCurrentPosition(context: android.content.Context): LatLng? {
+    val hasFineLocation = ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
+    val hasCoarseLocation = ContextCompat.checkSelfPermission(
+        context,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    ) == PackageManager.PERMISSION_GRANTED
+    if (!hasFineLocation && !hasCoarseLocation) return null
+
+    val locationClient = LocationServices.getFusedLocationProviderClient(context)
+    return runCatching {
+        suspendCancellableCoroutine { continuation ->
+            @Suppress("MissingPermission")
+            locationClient.getCurrentLocation(
+                Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                null
+            ).addOnSuccessListener { location ->
+                continuation.resume(location?.let { LatLng(it.latitude, it.longitude) })
+            }.addOnFailureListener {
+                continuation.resume(null)
+            }.addOnCanceledListener {
+                continuation.resume(null)
+            }
+        }
+    }.getOrNull()
 }
 
 private suspend fun reverseGeocode(
