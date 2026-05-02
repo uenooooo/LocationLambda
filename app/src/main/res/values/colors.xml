@@ -4,6 +4,7 @@
     <color name="sand_500">#C89D6F</color>
     <color name="slate_300">#8E9FAA</color>
     <color name="slate_700">#24424D</color>
+    <color name="icon_background">#FCFCFC</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
