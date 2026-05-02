@@ -24,7 +24,7 @@ fun LocationLambdaSplashScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFCFCFC))
+            .background(Color(0xFFFEFEFE))
             .clickable(onClick = onDismiss),
         contentAlignment = Alignment.Center
     ) {
