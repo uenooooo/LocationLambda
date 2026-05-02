@@ -304,6 +304,18 @@ fun LocationLambdaEditScreen(
                                     label = "地図で選択",
                                     onClick = { showMapSelectionScreen = true }
                                 )
+                                FullWidthActionButton(
+                                    label = "\u9078\u629e\u3092\u524a\u9664",
+                                    destructive = true,
+                                    onClick = {
+                                        address = "-"
+                                        radiusLabel = "\u901a\u77e5\u534a\u5f84100m"
+                                        latitude = null
+                                        longitude = null
+                                        radiusMeters = 100f
+                                        enabled = false
+                                    }
+                                )
                             }
                         }
                         DividerLine()
@@ -850,13 +862,17 @@ private fun ActionTypeChip(
 @Composable
 private fun FullWidthActionButton(
     label: String,
+    destructive: Boolean = false,
     onClick: () -> Unit
 ) {
+    val background = if (destructive) Color(0xFFF4EFE7) else Color(0xFF2F7D62)
+    val textColor = if (destructive) Slate else CardSurface
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .clip(CircleShape)
-            .background(Color(0xFF2F7D62))
+            .background(background)
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         contentAlignment = Alignment.Center
@@ -864,7 +880,7 @@ private fun FullWidthActionButton(
         Text(
             text = label,
             style = MaterialTheme.typography.labelLarge,
-            color = CardSurface
+            color = textColor
         )
     }
 }
