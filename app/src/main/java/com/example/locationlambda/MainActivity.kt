@@ -214,7 +214,7 @@ private fun LocationLambdaApp() {
                 onToggleRule = { toggledRule, enabled ->
                     val updatedRules = rules.map { rule ->
                         if (rule.id == toggledRule.id) {
-                            rule.copy(enabled = enabled)
+                            rule.copy(enabled = enabled && rule.hasRegisteredLocation())
                         } else {
                             rule
                         }
@@ -228,6 +228,13 @@ private fun LocationLambdaApp() {
             )
         }
     }
+}
+
+private fun LocationRule.hasRegisteredLocation(): Boolean {
+    return latitude in -90.0..90.0 &&
+        longitude in -180.0..180.0 &&
+        address.isNotBlank() &&
+        address != "-"
 }
 
 private fun createBlankRule(

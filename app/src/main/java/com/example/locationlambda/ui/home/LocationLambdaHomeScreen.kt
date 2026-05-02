@@ -335,6 +335,7 @@ private fun RuleRow(
     onToggleRule: (LocationRuleUi, Boolean) -> Unit
 ) {
     val context = LocalContext.current
+    val canEnable = rule.hasRegisteredLocation()
     val appIcon = remember(rule.actionType, rule.actionTargetValue) {
         if (rule.actionType != ActionType.APP || rule.actionTargetValue.isBlank()) {
             null
@@ -409,13 +410,21 @@ private fun RuleRow(
                 )
                 Switch(
                     checked = rule.enabled,
-                    onCheckedChange = { checked -> onToggleRule(rule, checked) },
+                    onCheckedChange = { checked ->
+                        if (!checked || canEnable) {
+                            onToggleRule(rule, checked)
+                        }
+                    },
+                    enabled = rule.enabled || canEnable,
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = CardSurface,
                         checkedTrackColor = SuccessGreen,
                         uncheckedThumbColor = CardSurface,
                         uncheckedTrackColor = Divider,
-                        uncheckedBorderColor = Color.Transparent
+                        uncheckedBorderColor = Color.Transparent,
+                        disabledUncheckedThumbColor = CardSurface,
+                        disabledUncheckedTrackColor = Divider,
+                        disabledUncheckedBorderColor = Color.Transparent
                     )
                 )
             }

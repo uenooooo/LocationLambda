@@ -71,6 +71,19 @@ import kotlinx.coroutines.launch
 private val cooldownPresetMinutes = listOf(0, 5, 15, 30)
 private const val maxCustomCooldownMinutes = 12 * 60
 
+private fun hasRegisteredLocation(
+    latitude: Double?,
+    longitude: Double?,
+    address: String
+): Boolean {
+    return latitude != null &&
+        longitude != null &&
+        latitude in -90.0..90.0 &&
+        longitude in -180.0..180.0 &&
+        address.isNotBlank() &&
+        address != "-"
+}
+
 @Composable
 fun LocationLambdaEditScreen(
     rule: LocationRuleUi,
@@ -87,6 +100,7 @@ fun LocationLambdaEditScreen(
     var latitude by rememberSaveable(rule.id) { mutableStateOf(rule.latitude) }
     var longitude by rememberSaveable(rule.id) { mutableStateOf(rule.longitude) }
     var radiusMeters by rememberSaveable(rule.id) { mutableStateOf(rule.radiusMeters) }
+    var enabled by rememberSaveable(rule.id) { mutableStateOf(rule.enabled) }
     var actionType by rememberSaveable(rule.id) { mutableStateOf(rule.actionTypeLabel) }
     var actionTypeModel by rememberSaveable(rule.id) { mutableStateOf(rule.actionType.name) }
     var urlTargetValue by rememberSaveable(rule.id) {
@@ -167,7 +181,7 @@ fun LocationLambdaEditScreen(
             actionTypeLabel = actionType,
             actionTargetLabel = savedTargetLabel,
             actionTargetValue = savedTargetValue,
-            enabled = rule.enabled,
+            enabled = enabled,
             latitude = latitude,
             longitude = longitude,
             radiusMeters = radiusMeters,
@@ -191,6 +205,7 @@ fun LocationLambdaEditScreen(
         latitude,
         longitude,
         radiusMeters,
+        enabled,
         actionType,
         actionTypeModel,
         urlTargetValue,
@@ -225,11 +240,18 @@ fun LocationLambdaEditScreen(
             longitude = longitude,
             onBack = { showMapSelectionScreen = false },
             onConfirm = { result ->
-                address = result.address.ifBlank { address }
+                val hadRegisteredLocation = hasRegisteredLocation(latitude, longitude, address)
+                val selectedAddress = result.address.ifBlank { address }
+                address = selectedAddress
                 radiusLabel = "\u901a\u77e5\u534a\u5f84${result.radiusMeters.toInt()}m"
                 latitude = result.latitude
                 longitude = result.longitude
                 radiusMeters = result.radiusMeters
+                if (!hadRegisteredLocation &&
+                    hasRegisteredLocation(result.latitude, result.longitude, selectedAddress)
+                ) {
+                    enabled = true
+                }
                 showMapSelectionScreen = false
             }
         )
