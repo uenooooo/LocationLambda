@@ -58,7 +58,7 @@ class GeofenceManager(
         pendingIntent: PendingIntent
     ) {
         val request = GeofencingRequest.Builder()
-            .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            .setInitialTrigger(0)
             .addGeofences(geofences)
             .build()
 
