@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -323,8 +324,11 @@ private val PlaceholderGray = Color(0xFF9AA6AD)
 @Composable
 private fun MapLoadingPlaceholder(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier.background(Color(0xFFE6EBF2))
-    )
+        modifier = modifier.background(Color(0xFFE6EBF2)),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(color = Slate)
+    }
 }
 
 @Composable
