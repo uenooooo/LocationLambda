@@ -98,7 +98,7 @@ internal fun LocationLambdaApp() {
     }
 
     LaunchedEffect(Unit) {
-        delay(1_500)
+        delay(1_000)
         showSplash = false
     }
 
