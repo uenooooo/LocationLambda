@@ -23,6 +23,11 @@ class DebugLogRepository(context: Context) {
         }.getOrElse { emptyList() }
     }
 
+    fun loadVisibleLogs(): List<DebugLogEntry> {
+        val hiddenBeforeMillis = prefs.getLong(KEY_HIDDEN_BEFORE_MILLIS, 0L)
+        return loadLogs().filter { it.timestampMillis > hiddenBeforeMillis }
+    }
+
     fun append(type: DebugLogType, title: String, detail: String = "") {
         if (!BuildConfig.SHOW_DEBUG_TOOLS) return
 
@@ -40,6 +45,14 @@ class DebugLogRepository(context: Context) {
             type = DebugLogType.MARKER,
             title = "$LOG_MARKER_LINE $label $LOG_MARKER_LINE"
         )
+    }
+
+    fun hideLogsBeforeNow() {
+        if (!BuildConfig.SHOW_DEBUG_TOOLS) return
+
+        prefs.edit()
+            .putLong(KEY_HIDDEN_BEFORE_MILLIS, System.currentTimeMillis())
+            .apply()
     }
 
     private fun saveLogs(logs: List<DebugLogEntry>) {
@@ -72,6 +85,7 @@ class DebugLogRepository(context: Context) {
 
     private companion object {
         const val KEY_LOGS = "logs"
+        const val KEY_HIDDEN_BEFORE_MILLIS = "hidden_before_millis"
         const val MAX_LOG_COUNT = 2_000
         const val LOG_MARKER_LINE = "------------------------------------------------------------"
     }

@@ -50,7 +50,7 @@ import java.util.Locale
 fun DebugLogScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val repository = remember(context) { DebugLogRepository(context) }
-    var logs by remember { mutableStateOf(repository.loadLogs().asReversed()) }
+    var logs by remember { mutableStateOf(repository.loadVisibleLogs().asReversed()) }
     var showLogHelp by remember { mutableStateOf(false) }
 
     BackHandler(onBack = onBack)
@@ -59,9 +59,11 @@ fun DebugLogScreen(onBack: () -> Unit) {
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             Surface(color = CardSurface) {
+                val bottomScrollState = rememberScrollState()
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .horizontalScroll(bottomScrollState)
                         .navigationBarsPadding()
                         .padding(horizontal = 20.dp, vertical = 14.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -72,7 +74,13 @@ fun DebugLogScreen(onBack: () -> Unit) {
                     LogMarkerButton(
                         onClick = {
                             repository.appendMarker()
-                            logs = repository.loadLogs().asReversed()
+                            logs = repository.loadVisibleLogs().asReversed()
+                        }
+                    )
+                    LogDisplayClearButton(
+                        onClick = {
+                            repository.hideLogsBeforeNow()
+                            logs = repository.loadVisibleLogs().asReversed()
                         }
                     )
                 }
@@ -98,7 +106,7 @@ fun DebugLogScreen(onBack: () -> Unit) {
         ) {
             if (logs.isEmpty()) {
                 Text(
-                    text = "\u30ed\u30b0\u306f\u307e\u3060\u3042\u308a\u307e\u305b\u3093\u3002",
+                    text = "\u8868\u793a\u4e2d\u306e\u30ed\u30b0\u306f\u3042\u308a\u307e\u305b\u3093\u3002",
                     style = MaterialTheme.typography.bodyMedium,
                     color = SlateSoft
                 )
@@ -219,6 +227,24 @@ private fun LogMarkerButton(onClick: () -> Unit) {
             text = "\u533a\u5207\u308b",
             style = MaterialTheme.typography.labelLarge,
             color = Color(0xFF8A5A00)
+        )
+    }
+}
+
+@Composable
+private fun LogDisplayClearButton(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(Color(0xFFF6E8E8))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "\u8868\u793a\u30af\u30ea\u30a2",
+            style = MaterialTheme.typography.labelLarge,
+            color = Color(0xFF9F1D1D)
         )
     }
 }
