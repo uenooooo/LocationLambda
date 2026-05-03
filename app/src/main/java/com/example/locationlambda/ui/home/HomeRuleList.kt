@@ -15,7 +15,9 @@ internal fun RuleList(
     rules: List<LocationRuleUi?>,
     onEditRule: (LocationRuleUi) -> Unit,
     onEditEmptyRule: (Int) -> Unit,
-    onToggleRule: (LocationRuleUi, Boolean) -> Unit
+    onToggleRule: (LocationRuleUi, Boolean) -> Unit,
+    showDebugTools: Boolean,
+    onDebugNotify: (LocationRuleUi) -> Unit
 ) {
     Surface(
         color = CardSurface,
@@ -31,7 +33,9 @@ internal fun RuleList(
                     RuleRow(
                         rule = rule,
                         onEditRule = onEditRule,
-                        onToggleRule = onToggleRule
+                        onToggleRule = onToggleRule,
+                        showDebugTools = showDebugTools,
+                        onDebugNotify = onDebugNotify
                     )
                 }
                 if (index != rules.lastIndex) {

@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import com.example.locationlambda.BuildConfig
 import com.example.locationlambda.data.LocationRule
 import com.example.locationlambda.data.createBlankRule
 import com.example.locationlambda.data.hasRegisteredLocation
@@ -26,8 +27,10 @@ import com.example.locationlambda.permissions.needsNotificationPermission
 import com.example.locationlambda.permissions.openAppSettings
 import com.example.locationlambda.permissions.openNotificationSettings
 import com.example.locationlambda.storage.RuleRepository
+import com.example.locationlambda.notification.GeofenceNotificationHelper
 import com.example.locationlambda.ui.edit.LocationLambdaEditScreen
 import com.example.locationlambda.ui.home.LocationLambdaHomeScreen
+import com.example.locationlambda.ui.log.DebugLogScreen
 import com.example.locationlambda.ui.model.toDomain
 import com.example.locationlambda.ui.model.toUi
 import com.example.locationlambda.ui.splash.LocationLambdaSplashScreen
@@ -39,6 +42,7 @@ internal fun LocationLambdaApp() {
     val repository = remember(context) { RuleRepository(context) }
     val geofenceManager = remember(context) { GeofenceManager(context) }
     var showSplash by remember { mutableStateOf(true) }
+    var showDebugLogScreen by remember { mutableStateOf(false) }
     var rules by remember { mutableStateOf(repository.loadRules()) }
     var editingRuleId by remember { mutableStateOf<String?>(null) }
     var editingDraftRule by remember { mutableStateOf<LocationRule?>(null) }
@@ -173,6 +177,11 @@ internal fun LocationLambdaApp() {
         return
     }
 
+    if (BuildConfig.SHOW_DEBUG_TOOLS && showDebugLogScreen) {
+        DebugLogScreen(onBack = { showDebugLogScreen = false })
+        return
+    }
+
     val editingRule = rules.firstOrNull { it.id == editingRuleId } ?: editingDraftRule
     if (editingRule != null) {
         LocationLambdaEditScreen(
@@ -197,6 +206,12 @@ internal fun LocationLambdaApp() {
         LocationLambdaHomeScreen(
             rules = rules.map { it.toUi() },
             maxRules = maxRules,
+            showDebugTools = BuildConfig.SHOW_DEBUG_TOOLS,
+            onOpenLog = {
+                if (BuildConfig.SHOW_DEBUG_TOOLS) {
+                    showDebugLogScreen = true
+                }
+            },
             onEditRule = { rule -> editingRuleId = rule.id },
             onEditEmptyRule = { slotNumber ->
                 val draftRule = createBlankRule(
@@ -215,6 +230,11 @@ internal fun LocationLambdaApp() {
                     }
                 }
                 saveRules(updatedRules)
+            },
+            onDebugNotify = { rule ->
+                if (BuildConfig.SHOW_DEBUG_TOOLS) {
+                    GeofenceNotificationHelper.showRuleNotification(context, rule)
+                }
             }
         )
     }

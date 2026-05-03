@@ -15,6 +15,8 @@ import com.example.locationlambda.MainActivity
 import com.example.locationlambda.R
 import com.example.locationlambda.action.RuleActionExecutor
 import com.example.locationlambda.data.ActionType
+import com.example.locationlambda.debug.DebugLogRepository
+import com.example.locationlambda.debug.DebugLogType
 import com.example.locationlambda.ui.model.LocationRuleUi
 
 object GeofenceNotificationHelper {
@@ -49,14 +51,17 @@ object GeofenceNotificationHelper {
             buildActionPendingIntent(
                 context = context,
                 notificationId = notificationId,
-                targetIntent = it
+                targetIntent = it,
+                logTitle = rule.actionTypeLabel,
+                logDetail = buildActionDetail(rule)
             )
         }
 
+        val title = buildTitle(rule)
         val body = buildBody(rule)
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.location_lambda_notification_icon)
-            .setContentTitle(buildTitle(rule))
+            .setContentTitle(title)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(actionPendingIntent ?: fallbackPendingIntent)
@@ -79,6 +84,11 @@ object GeofenceNotificationHelper {
             notificationId,
             notificationBuilder.build()
         )
+        DebugLogRepository(context).append(
+            type = DebugLogType.NOTIFICATION,
+            title = title,
+            detail = body.orEmpty()
+        )
         return true
     }
 
@@ -96,14 +106,26 @@ object GeofenceNotificationHelper {
         }
     }
 
+    private fun buildActionDetail(rule: LocationRuleUi): String {
+        return when (rule.actionType) {
+            ActionType.URL -> rule.actionTargetValue
+            ActionType.APP -> rule.actionTargetLabel
+            ActionType.NOTIFICATION_ONLY -> ""
+        }
+    }
+
     private fun buildActionPendingIntent(
         context: Context,
         notificationId: Int,
-        targetIntent: Intent
+        targetIntent: Intent,
+        logTitle: String,
+        logDetail: String
     ): PendingIntent {
         val proxyIntent = Intent(context, NotificationActionReceiver::class.java).apply {
             putExtra(NotificationActionReceiver.EXTRA_NOTIFICATION_ID, notificationId)
             putExtra(NotificationActionReceiver.EXTRA_TARGET_INTENT, targetIntent)
+            putExtra(NotificationActionReceiver.EXTRA_LOG_TITLE, logTitle)
+            putExtra(NotificationActionReceiver.EXTRA_LOG_DETAIL, logDetail)
         }
 
         return PendingIntent.getBroadcast(

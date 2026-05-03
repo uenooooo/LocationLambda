@@ -24,9 +24,12 @@ import com.example.locationlambda.ui.theme.SandBackground
 fun LocationLambdaHomeScreen(
     rules: List<LocationRuleUi>,
     maxRules: Int,
+    showDebugTools: Boolean,
+    onOpenLog: () -> Unit,
     onEditRule: (LocationRuleUi) -> Unit,
     onEditEmptyRule: (Int) -> Unit,
-    onToggleRule: (LocationRuleUi, Boolean) -> Unit
+    onToggleRule: (LocationRuleUi, Boolean) -> Unit,
+    onDebugNotify: (LocationRuleUi) -> Unit
 ) {
     val ruleSlots = rules.map<LocationRuleUi, LocationRuleUi?> { it } +
         List((maxRules - rules.size).coerceAtLeast(0)) { null }
@@ -46,6 +49,11 @@ fun LocationLambdaHomeScreen(
                 ),
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
+                if (showDebugTools) {
+                    item {
+                        HomeLogButton(onClick = onOpenLog)
+                    }
+                }
                 item {
                     HomeHeader(
                         ruleCount = rules.count { it.hasRegisteredLocation() },
@@ -58,7 +66,9 @@ fun LocationLambdaHomeScreen(
                         rules = ruleSlots,
                         onEditRule = onEditRule,
                         onEditEmptyRule = onEditEmptyRule,
-                        onToggleRule = onToggleRule
+                        onToggleRule = onToggleRule,
+                        showDebugTools = showDebugTools,
+                        onDebugNotify = onDebugNotify
                     )
                 }
             }
@@ -117,9 +127,12 @@ private fun LocationLambdaHomePreview() {
             LocationLambdaHomeScreen(
                 rules = previewRules,
                 maxRules = 5,
+                showDebugTools = true,
+                onOpenLog = {},
                 onEditRule = {},
                 onEditEmptyRule = {},
-                onToggleRule = { _, _ -> }
+                onToggleRule = { _, _ -> },
+                onDebugNotify = {}
             )
         }
     }

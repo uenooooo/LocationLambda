@@ -30,8 +30,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("Boolean", "SHOW_DEBUG_TOOLS", "true")
+        }
         release {
             isMinifyEnabled = false
+            buildConfigField("Boolean", "SHOW_DEBUG_TOOLS", "false")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

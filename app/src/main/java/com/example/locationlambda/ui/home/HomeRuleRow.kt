@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -39,7 +41,9 @@ import com.example.locationlambda.ui.theme.SuccessGreen
 internal fun RuleRow(
     rule: LocationRuleUi,
     onEditRule: (LocationRuleUi) -> Unit,
-    onToggleRule: (LocationRuleUi, Boolean) -> Unit
+    onToggleRule: (LocationRuleUi, Boolean) -> Unit,
+    showDebugTools: Boolean,
+    onDebugNotify: (LocationRuleUi) -> Unit
 ) {
     val context = LocalContext.current
     val canEnable = rule.hasRegisteredLocation()
@@ -66,6 +70,16 @@ internal fun RuleRow(
             onToggleRule = onToggleRule
         )
         RuleActionSummary(rule = rule, appIcon = appIcon)
+        if (showDebugTools) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                DebugNotifyButton(
+                    onClick = { onDebugNotify(rule) }
+                )
+            }
+        }
     }
 }
 
@@ -150,6 +164,25 @@ private fun RuleSummary(
                 )
             )
         }
+    }
+}
+
+@Composable
+private fun DebugNotifyButton(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(Color(0xFFF3EEE5))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "\u901a\u77e5",
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = Slate
+        )
     }
 }
 
