@@ -15,6 +15,8 @@ import com.example.locationlambda.data.createBlankRule
 import com.example.locationlambda.data.hasRegisteredLocation
 import com.example.locationlambda.geofence.GeofenceManager
 import com.example.locationlambda.permissions.BackgroundLocationDialog
+import com.example.locationlambda.permissions.ForegroundLocationDialog
+import com.example.locationlambda.permissions.LocationPermissionDeniedDialog
 import com.example.locationlambda.permissions.PermissionStep
 import com.example.locationlambda.permissions.hasFineLocationPermission
 import com.example.locationlambda.permissions.hasBackgroundLocationPermission
@@ -39,6 +41,8 @@ internal fun LocationLambdaApp() {
     var editingRuleId by remember { mutableStateOf<String?>(null) }
     var editingDraftRule by remember { mutableStateOf<LocationRule?>(null) }
     var permissionStep by remember { mutableStateOf(PermissionStep.Idle) }
+    var showForegroundLocationDialog by remember { mutableStateOf(false) }
+    var showLocationPermissionDeniedDialog by remember { mutableStateOf(false) }
     var showBackgroundLocationDialog by remember { mutableStateOf(false) }
     val maxRules = 5
 
@@ -60,6 +64,7 @@ internal fun LocationLambdaApp() {
         permissionStep = if (fineGranted) {
             PermissionStep.BackgroundLocation
         } else {
+            showLocationPermissionDeniedDialog = true
             PermissionStep.Idle
         }
     }
@@ -89,12 +94,7 @@ internal fun LocationLambdaApp() {
             PermissionStep.ForegroundLocation -> {
                 permissionStep = PermissionStep.Idle
                 if (!context.hasFineLocationPermission()) {
-                    locationPermissionLauncher.launch(
-                        arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        )
-                    )
+                    showForegroundLocationDialog = true
                 } else {
                     permissionStep = PermissionStep.BackgroundLocation
                 }
@@ -115,6 +115,31 @@ internal fun LocationLambdaApp() {
             delay(1_000)
             geofenceManager.reregister(rules)
         }
+    }
+
+    if (showForegroundLocationDialog) {
+        ForegroundLocationDialog(
+            onDismiss = { showForegroundLocationDialog = false },
+            onRequestPermission = {
+                showForegroundLocationDialog = false
+                locationPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+            }
+        )
+    }
+
+    if (showLocationPermissionDeniedDialog) {
+        LocationPermissionDeniedDialog(
+            onDismiss = { showLocationPermissionDeniedDialog = false },
+            onOpenSettings = {
+                showLocationPermissionDeniedDialog = false
+                context.openAppSettings()
+            }
+        )
     }
 
     if (showBackgroundLocationDialog) {

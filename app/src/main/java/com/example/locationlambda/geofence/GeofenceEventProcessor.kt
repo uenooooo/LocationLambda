@@ -3,7 +3,7 @@ package com.example.locationlambda.geofence
 import android.content.Context
 import com.example.locationlambda.data.LocationRule
 import com.example.locationlambda.data.LocationTransition
-import com.example.locationlambda.notification.MockNotificationHelper
+import com.example.locationlambda.notification.GeofenceNotificationHelper
 import com.example.locationlambda.storage.GeofenceStatusRepository
 import com.example.locationlambda.storage.RuleRepository
 import com.example.locationlambda.ui.model.TransitionUi
@@ -77,7 +77,7 @@ internal class GeofenceEventProcessor(
                 val triggeredRuleUi = triggeredRule.toUi().copy(
                     transitions = listOf(transition.toTransitionUi())
                 )
-                MockNotificationHelper.showRuleNotification(appContext, triggeredRuleUi)
+                GeofenceNotificationHelper.showRuleNotification(appContext, triggeredRuleUi)
                 statusRepository.markTriggered(rule.name, transition.toTransitionLabel())
             }
         }

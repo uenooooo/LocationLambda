@@ -17,7 +17,7 @@ import com.example.locationlambda.action.RuleActionExecutor
 import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.ui.model.LocationRuleUi
 
-object MockNotificationHelper {
+object GeofenceNotificationHelper {
     private const val channelId = "geofence_channel"
 
     fun showRuleNotification(
@@ -124,9 +124,11 @@ object MockNotificationHelper {
         val manager = context.getSystemService(NotificationManager::class.java)
         val channel = NotificationChannel(
             channelId,
-            "Geofence Notifications",
+            "\u30ed\u30b1\u30e9\u30e0\u901a\u77e5",
             NotificationManager.IMPORTANCE_HIGH
-        )
+        ).apply {
+            description = "\u5834\u6240\u306b\u5165\u308b\u30fb\u51fa\u308b\u3068\u304d\u306e\u901a\u77e5"
+        }
         manager.createNotificationChannel(channel)
     }
 }
