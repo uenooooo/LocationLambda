@@ -9,7 +9,6 @@ data class DebugLogEntry(
 
 enum class DebugLogType(val label: String) {
     NOTIFICATION("noti"),
-    ACTION("acti"),
     GEOFENCE("geof"),
     IGNORED("igno"),
     REGISTRATION("regi"),
