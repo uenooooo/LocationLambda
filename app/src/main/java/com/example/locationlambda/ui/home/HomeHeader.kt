@@ -48,7 +48,7 @@ internal fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
             )
         }
         Text(
-            text = "\u5834\u6240\u306b\u5165\u308b\u30fb\u51fa\u308b\u3068\u304d\u306b\u901a\u77e5\uff08\uff0b\u30a2\u30af\u30b7\u30e7\u30f3\uff09\u3092\u8a2d\u5b9a\u3067\u304d\u307e\u3059\u3002",
+            text = "\u5834\u6240\u306b\u5230\u7740\u30fb\u9000\u51fa\u3057\u305f\u3068\u304d\u306b\u901a\u77e5\u3068\u30a2\u30af\u30b7\u30e7\u30f3\u3092\u8a2d\u5b9a\u3067\u304d\u307e\u3059\u3002",
             style = MaterialTheme.typography.bodyMedium,
             color = SlateSoft
         )
