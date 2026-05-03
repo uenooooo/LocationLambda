@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import com.example.locationlambda.R
 import com.example.locationlambda.data.ActionType
-import com.example.locationlambda.storage.GeofenceStatus
 import com.example.locationlambda.ui.model.LocationRuleUi
 import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.theme.CardSurface
@@ -55,7 +54,6 @@ import com.example.locationlambda.ui.theme.SuccessGreen
 @Composable
 fun LocationLambdaHomeScreen(
     rules: List<LocationRuleUi>,
-    geofenceStatus: GeofenceStatus,
     maxRules: Int,
     onEditRule: (LocationRuleUi) -> Unit,
     onEditEmptyRule: (Int) -> Unit,
@@ -108,66 +106,6 @@ private fun LocationRuleUi.hasRegisteredLocation(): Boolean {
         addressLabel != "-"
 }
 
-@Composable
-private fun GeofenceStatusPanel(status: GeofenceStatus) {
-    Surface(
-        modifier = Modifier.padding(horizontal = 20.dp),
-        color = Color(0xFFF3EEE5),
-        shape = RoundedCornerShape(22.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "ジオフェンス状態",
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = Slate
-            )
-            StatusLine(
-                label = "登録",
-                value = "${status.registrationText} / ${status.registeredCount}件"
-            )
-            StatusLine(
-                label = "最終登録",
-                value = status.formattedLastRegisteredAt()
-            )
-            StatusLine(
-                label = "最終発火",
-                value = status.lastEventText
-            )
-            StatusLine(
-                label = "発火時刻",
-                value = status.formattedLastEventAt()
-            )
-        }
-    }
-}
-
-@Composable
-private fun StatusLine(
-    label: String,
-    value: String
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = label,
-            modifier = Modifier.width(72.dp),
-            style = MaterialTheme.typography.labelMedium,
-            color = SlateSoft
-        )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            color = Slate
-        )
-    }
-}
 
 @Composable
 private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
@@ -185,25 +123,25 @@ private fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
                 modifier = Modifier.size(70.dp)
             )
             Text(
-                text = "ロケーションラムダ",
+                text = "\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u30e9\u30e0\u30c0",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = Slate
             )
         }
         Text(
-            text = "場所に入る・出るときに通知（＋アクション）を設定できます。",
+            text = "\u5834\u6240\u306b\u5165\u308b\u30fb\u51fa\u308b\u3068\u304d\u306b\u901a\u77e5\uff08\uff0b\u30a2\u30af\u30b7\u30e7\u30f3\uff09\u3092\u8a2d\u5b9a\u3067\u304d\u307e\u3059\u3002",
             style = MaterialTheme.typography.bodyMedium,
             color = SlateSoft
         )
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             StatPill(
-                label = "設定 ${ruleCount}/${maxRules}件",
+                label = "\u8a2d\u5b9a ${ruleCount}/${maxRules}\u4ef6",
                 color = Slate,
                 textColor = CardSurface
             )
             StatPill(
-                label = "有効${activeCount}件",
+                label = "\u6709\u52b9${activeCount}\u4ef6",
                 color = SuccessGreen,
                 textColor = CardSurface
             )
@@ -303,7 +241,7 @@ private fun EmptyRuleRow(
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "通知後アクション",
+                text = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3",
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate
@@ -314,7 +252,7 @@ private fun EmptyRuleRow(
                 color = Divider
             )
             Text(
-                text = "対象",
+                text = "\u5bfe\u8c61",
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate
@@ -432,7 +370,7 @@ private fun RuleRow(
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "通知後アクション",
+                text = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3",
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate
@@ -443,7 +381,7 @@ private fun RuleRow(
                 color = SlateSoft
             )
             Text(
-                text = "対象",
+                text = "\u5bfe\u8c61",
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate
@@ -548,36 +486,36 @@ private fun LocationLambdaHomePreview() {
     val previewRules = listOf(
         LocationRuleUi(
             id = "1",
-            name = "渋谷駅",
-            addressLabel = "東京都渋谷区道玄坂1-1-1",
-            areaLabel = "通知半径150m",
-            transitions = listOf(TransitionUi("到着", EnterBlue)),
-            actionTypeLabel = "URLを開く",
+            name = "\u6e0b\u8c37\u99c5",
+            addressLabel = "\u6771\u4eac\u90fd\u6e0b\u8c37\u533a\u9053\u7384\u57421-1-1",
+            areaLabel = "\u901a\u77e5\u534a\u5f84150m",
+            transitions = listOf(TransitionUi("\u5230\u7740", EnterBlue)),
+            actionTypeLabel = "URL\u3092\u958b\u304f",
             actionTargetLabel = "https://example.com",
             actionTargetValue = "https://example.com",
             enabled = true
         ),
         LocationRuleUi(
             id = "2",
-            name = "会社",
-            addressLabel = "東京都千代田区丸の内1-1-1",
-            areaLabel = "通知半径200m",
-            transitions = listOf(TransitionUi("退出", ExitOrange)),
-            actionTypeLabel = "アプリを開く",
+            name = "\u4f1a\u793e",
+            addressLabel = "\u6771\u4eac\u90fd\u5343\u4ee3\u7530\u533a\u4e38\u306e\u51851-1-1",
+            areaLabel = "\u901a\u77e5\u534a\u5f84200m",
+            transitions = listOf(TransitionUi("\u9000\u51fa", ExitOrange)),
+            actionTypeLabel = "\u30a2\u30d7\u30ea\u3092\u958b\u304f",
             actionTargetLabel = "Teams",
             actionTargetValue = "com.microsoft.teams",
             enabled = true
         ),
         LocationRuleUi(
             id = "3",
-            name = "ジム",
-            addressLabel = "東京都新宿区西新宿2-2-2",
-            areaLabel = "通知半径120m",
+            name = "\u30b8\u30e0",
+            addressLabel = "\u6771\u4eac\u90fd\u65b0\u5bbf\u533a\u897f\u65b0\u5bbf2-2-2",
+            areaLabel = "\u901a\u77e5\u534a\u5f84120m",
             transitions = listOf(
-                TransitionUi("到着", EnterBlue),
-                TransitionUi("退出", ExitOrange)
+                TransitionUi("\u5230\u7740", EnterBlue),
+                TransitionUi("\u9000\u51fa", ExitOrange)
             ),
-            actionTypeLabel = "なし",
+            actionTypeLabel = "\u306a\u3057",
             actionTargetLabel = "-",
             actionTargetValue = "",
             enabled = false
@@ -592,13 +530,6 @@ private fun LocationLambdaHomePreview() {
         ) {
             LocationLambdaHomeScreen(
                 rules = previewRules,
-                geofenceStatus = GeofenceStatus(
-                    registrationText = "登録成功",
-                    registeredCount = 2,
-                    lastRegisteredAt = System.currentTimeMillis(),
-                    lastEventText = "会社 を 退出",
-                    lastEventAt = System.currentTimeMillis()
-                ),
                 maxRules = 5,
                 onEditRule = {},
                 onEditEmptyRule = {},

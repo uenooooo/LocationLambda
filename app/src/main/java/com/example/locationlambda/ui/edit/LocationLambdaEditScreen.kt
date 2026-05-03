@@ -289,19 +289,14 @@ fun LocationLambdaEditScreen(
                             )
                         }
                         DividerLine()
-                        SeamlessSection(title = "場所と通知半径") {
+                        SeamlessSection(title = "\u5834\u6240\u3068\u901a\u77e5\u534a\u5f84") {
                             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                                HiddenActionButton(
-                                    label = "地図で選択",
-                                    onClick = { showMapSelectionScreen = true }
-                                )
                                 MapSelectorRow(
-                                    name = name,
                                     address = address,
                                     radiusLabel = radiusLabel
                                 )
                                 FullWidthActionButton(
-                                    label = "地図で選択",
+                                    label = "\u5730\u56f3\u3067\u9078\u629e",
                                     onClick = { showMapSelectionScreen = true }
                                 )
                                 FullWidthActionButton(
@@ -319,16 +314,16 @@ fun LocationLambdaEditScreen(
                             }
                         }
                         DividerLine()
-                        SeamlessSection(title = "タイミング") {
+                        SeamlessSection(title = "\u30bf\u30a4\u30df\u30f3\u30b0") {
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 SelectChip(
-                                    label = "到着",
+                                    label = "\u5230\u7740",
                                     selected = onEnter,
                                     selectedColor = EnterBlue,
                                     onClick = { onEnter = !onEnter }
                                 )
                                 SelectChip(
-                                    label = "退出",
+                                    label = "\u9000\u51fa",
                                     selected = onExit,
                                     selectedColor = ExitOrange,
                                     onClick = { onExit = !onExit }
@@ -336,7 +331,7 @@ fun LocationLambdaEditScreen(
                             }
                         }
                         DividerLine()
-                        SeamlessSection(title = "通知クールダウン") {
+                        SeamlessSection(title = "\u901a\u77e5\u30af\u30fc\u30eb\u30c0\u30a6\u30f3") {
                             CooldownSelector(
                                 cooldownMin = cooldownMin,
                                 isCustomCooldown = isCustomCooldown,
@@ -353,30 +348,30 @@ fun LocationLambdaEditScreen(
                             )
                         }
                         DividerLine()
-                        SeamlessSection(title = "通知後アクション") {
+                        SeamlessSection(title = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3") {
                             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                     ActionTypeChip(
-                                        label = "URLを開く",
+                                        label = "URL\u3092\u958b\u304f",
                                         selected = actionTypeModel == ActionType.URL.name,
                                         onClick = {
-                                            actionType = "URLを開く"
+                                            actionType = "URL\u3092\u958b\u304f"
                                             actionTypeModel = ActionType.URL.name
                                         }
                                     )
                                     ActionTypeChip(
-                                        label = "アプリを開く",
+                                        label = "\u30a2\u30d7\u30ea\u3092\u958b\u304f",
                                         selected = actionTypeModel == ActionType.APP.name,
                                         onClick = {
-                                            actionType = "アプリを開く"
+                                            actionType = "\u30a2\u30d7\u30ea\u3092\u958b\u304f"
                                             actionTypeModel = ActionType.APP.name
                                         }
                                     )
                                     ActionTypeChip(
-                                        label = "なし",
+                                        label = "\u306a\u3057",
                                         selected = actionTypeModel == ActionType.NOTIFICATION_ONLY.name,
                                         onClick = {
-                                            actionType = "なし"
+                                            actionType = "\u306a\u3057"
                                             actionTypeModel = ActionType.NOTIFICATION_ONLY.name
                                         }
                                     )
@@ -471,7 +466,7 @@ private fun TitleNameEditor(
             ) {
                 if (value.isBlank()) {
                     Text(
-                        text = "名前を入力",
+                        text = "\u540d\u524d\u3092\u5165\u529b",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = PlaceholderGray
@@ -534,7 +529,7 @@ private fun AppPickerRow(
                 )
             }
             Text(
-                text = selectedLabel.ifBlank { "アプリを選択" },
+                text = selectedLabel.ifBlank { "\u30a2\u30d7\u30ea\u3092\u9078\u629e" },
                 style = MaterialTheme.typography.bodyLarge,
                 color = Slate
             )
@@ -613,7 +608,7 @@ private fun DisabledTargetRow() {
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
-            text = "対象",
+            text = "\u5bfe\u8c61",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
@@ -627,7 +622,6 @@ private fun DisabledTargetRow() {
 
 @Composable
 private fun MapSelectorRow(
-    name: String,
     address: String,
     radiusLabel: String
 ) {
@@ -640,7 +634,7 @@ private fun MapSelectorRow(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text(
-            text = "住所",
+            text = "\u4f4f\u6240",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
@@ -650,7 +644,7 @@ private fun MapSelectorRow(
             color = Slate
         )
         Text(
-            text = "通知半径",
+            text = "\u901a\u77e5\u534a\u5f84",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
@@ -767,7 +761,7 @@ private fun CustomCooldownField(
                         Box(modifier = Modifier.weight(1f)) {
                             if (value.isBlank()) {
                                 Text(
-                                    text = "1〜720",
+                                    text = "1\u301c720",
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = SlateSoft.copy(alpha = 0.55f)
                                 )
@@ -885,15 +879,6 @@ private fun FullWidthActionButton(
     }
 }
 
-@Composable
-private fun HiddenActionButton(
-    label: String,
-    primary: Boolean = false,
-    onClick: () -> Unit
-) {
-    Unit
-}
-
 private fun buildTransitions(onEnter: Boolean, onExit: Boolean): List<TransitionUi> {
     val transitions = mutableListOf<TransitionUi>()
     if (onEnter) transitions += TransitionUi("\u5230\u7740", EnterBlue)
@@ -916,11 +901,11 @@ private val ActionTargetMinHeight = 86.dp
 private fun LocationLambdaEditScreenPreview() {
     val previewRule = LocationRuleUi(
         id = "preview",
-        name = "渋谷駅",
-        addressLabel = "東京都渋谷区道玄坂1-1-1",
-        areaLabel = "通知半径 150m",
-        transitions = listOf(TransitionUi("到着", EnterBlue)),
-        actionTypeLabel = "アプリを開く",
+        name = "\u6e0b\u8c37\u99c5",
+        addressLabel = "\u6771\u4eac\u90fd\u6e0b\u8c37\u533a\u9053\u7384\u57421-1-1",
+        areaLabel = "\u901a\u77e5\u534a\u5f84150m",
+        transitions = listOf(TransitionUi("\u5230\u7740", EnterBlue)),
+        actionTypeLabel = "\u30a2\u30d7\u30ea\u3092\u958b\u304f",
         actionTargetLabel = "Teams",
         actionTargetValue = "com.microsoft.teams",
         enabled = true
@@ -934,3 +919,4 @@ private fun LocationLambdaEditScreenPreview() {
         )
     }
 }
+
