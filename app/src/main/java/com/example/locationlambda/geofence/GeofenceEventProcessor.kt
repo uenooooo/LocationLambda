@@ -85,6 +85,14 @@ internal class GeofenceEventProcessor(
                 statusRepository.markIgnored(rule.name, "\u6761\u4ef6\u4e0d\u4e00\u81f4")
                 return@map rule
             }
+            if (rule.isBoundaryJitter(transition, now)) {
+                logIgnored(
+                    rule.name,
+                    "\u5883\u754c\u63fa\u308c \u524d\u56de=${rule.lastTriggeredTransition.toTransitionLabel()} \u4eca\u56de=${transition.toTransitionLabel()} ${rule.boundaryJitterElapsedSeconds(now)}s"
+                )
+                statusRepository.markIgnored(rule.name, "\u5883\u754c\u63fa\u308c")
+                return@map rule
+            }
             if (!rule.isCooldownReady(now)) {
                 logIgnored(rule.name, "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u4e2d remaining=${rule.cooldownRemainingSeconds(now)}s")
                 statusRepository.markIgnored(rule.name, "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u4e2d")
@@ -92,7 +100,10 @@ internal class GeofenceEventProcessor(
             }
 
             hasUpdates = true
-            rule.copy(lastTriggeredAt = now).also { triggeredRule ->
+            rule.copy(
+                lastTriggeredAt = now,
+                lastTriggeredTransition = transition
+            ).also { triggeredRule ->
                 val triggeredRuleUi = triggeredRule.toUi().copy(
                     transitions = listOf(transition.toTransitionUi())
                 )
@@ -141,10 +152,34 @@ internal class GeofenceEventProcessor(
         return cooldownMillis == 0L || now - lastTriggeredAt > cooldownMillis
     }
 
+    private fun LocationRule.isBoundaryJitter(
+        googleTransition: Int,
+        now: Long
+    ): Boolean {
+        if (lastTriggeredAt <= 0L) return false
+        if (!lastTriggeredTransition.isSupportedTransition()) return false
+        if (!lastTriggeredTransition.isOppositeTransitionOf(googleTransition)) return false
+
+        // 電車は5秒で100m前後進むことがある
+        // 0.1秒間隔でinout通知が誤爆することがあるから5秒クールダウン
+        return now - lastTriggeredAt <= BOUNDARY_JITTER_GUARD_MILLIS
+    }
+
+    private fun LocationRule.boundaryJitterElapsedSeconds(now: Long): Long {
+        return ((now - lastTriggeredAt).coerceAtLeast(0L) + 999L) / 1_000L
+    }
+
     private fun LocationRule.cooldownRemainingSeconds(now: Long): Long {
         val cooldownMillis = cooldownMin.coerceAtLeast(0) * 60_000L
         val remainingMillis = cooldownMillis - (now - lastTriggeredAt)
         return ((remainingMillis.coerceAtLeast(0L) + 999L) / 1_000L)
+    }
+
+    private fun Int.isOppositeTransitionOf(other: Int): Boolean {
+        return this == Geofence.GEOFENCE_TRANSITION_ENTER &&
+            other == Geofence.GEOFENCE_TRANSITION_EXIT ||
+            this == Geofence.GEOFENCE_TRANSITION_EXIT &&
+            other == Geofence.GEOFENCE_TRANSITION_ENTER
     }
 
     private fun Int.toTransitionUi(): TransitionUi {
@@ -162,5 +197,9 @@ internal class GeofenceEventProcessor(
             Geofence.GEOFENCE_TRANSITION_EXIT -> "\u9000\u51fa"
             else -> "\u5230\u7740"
         }
+    }
+
+    private companion object {
+        private const val BOUNDARY_JITTER_GUARD_MILLIS = 5_000L
     }
 }

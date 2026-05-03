@@ -47,7 +47,8 @@ class RuleRepository(context: Context) {
             actionLabel = optString("actionLabel", ""),
             cooldownMin = optInt("cooldownMin", 0),
             enabled = optBoolean("enabled", true),
-            lastTriggeredAt = optLong("lastTriggeredAt", 0L)
+            lastTriggeredAt = optLong("lastTriggeredAt", 0L),
+            lastTriggeredTransition = optInt("lastTriggeredTransition", 0)
         )
     }
 
@@ -66,6 +67,7 @@ class RuleRepository(context: Context) {
             .put("cooldownMin", cooldownMin)
             .put("enabled", enabled)
             .put("lastTriggeredAt", lastTriggeredAt)
+            .put("lastTriggeredTransition", lastTriggeredTransition)
     }
 
     private fun defaultRules(): List<LocationRule> {

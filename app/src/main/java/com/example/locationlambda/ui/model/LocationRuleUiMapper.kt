@@ -53,6 +53,7 @@ fun LocationRuleUi.toDomain(previous: LocationRule? = null): LocationRule {
         actionLabel = resolvedActionLabel,
         cooldownMin = cooldownMin,
         enabled = enabled,
-        lastTriggeredAt = lastTriggeredAt
+        lastTriggeredAt = lastTriggeredAt,
+        lastTriggeredTransition = previous?.lastTriggeredTransition ?: 0
     )
 }

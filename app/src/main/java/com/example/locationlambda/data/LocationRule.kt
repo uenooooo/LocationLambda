@@ -13,5 +13,6 @@ data class LocationRule(
     val actionLabel: String,
     val cooldownMin: Int,
     val enabled: Boolean,
-    val lastTriggeredAt: Long
+    val lastTriggeredAt: Long,
+    val lastTriggeredTransition: Int = 0
 )
