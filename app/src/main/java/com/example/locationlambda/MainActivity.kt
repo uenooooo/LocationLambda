@@ -9,8 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import com.example.locationlambda.app.LocationLambdaApp
-import com.example.locationlambda.geofence.GeofenceManager
-import com.example.locationlambda.storage.RuleRepository
 import com.example.locationlambda.ui.theme.LocationLambdaTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,10 +23,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        GeofenceManager(this).reregister(RuleRepository(this).loadRules())
     }
 }

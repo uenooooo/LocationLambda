@@ -55,15 +55,31 @@ internal fun LocationLambdaApp() {
     var showForegroundLocationDialog by remember { mutableStateOf(false) }
     var showLocationPermissionDeniedDialog by remember { mutableStateOf(false) }
     var showBackgroundLocationDialog by remember { mutableStateOf(false) }
-    var geofenceRegistrationReady by remember { mutableStateOf(false) }
-    val geofenceRegistrationKey = remember(rules) { rules.toGeofenceRegistrationKey() }
+    var geofenceRegistrationRequest by remember { mutableStateOf<GeofenceRegistrationRequest?>(null) }
+    var geofenceRegistrationRequestSequence by remember { mutableStateOf(0L) }
+    var hadGeofencePermissions by remember { mutableStateOf(context.hasGeofencePermissions()) }
     val maxRules = 5
+
+    fun scheduleGeofenceReregistration(updatedRules: List<LocationRule>) {
+        if (!context.hasGeofencePermissions()) return
+
+        geofenceRegistrationRequestSequence += 1L
+        geofenceRegistrationRequest = GeofenceRegistrationRequest(
+            id = geofenceRegistrationRequestSequence,
+            key = updatedRules.toGeofenceRegistrationKey()
+        )
+    }
 
     fun saveRules(updatedRules: List<LocationRule>) {
         val previousRules = rules
+        val shouldReregisterGeofences =
+            previousRules.toGeofenceRegistrationKey() != updatedRules.toGeofenceRegistrationKey()
         rules = updatedRules
         repository.saveRules(updatedRules)
         debugLogRepository.logRuleChanges(previousRules, updatedRules)
+        if (shouldReregisterGeofences) {
+            scheduleGeofenceReregistration(updatedRules)
+        }
     }
 
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
@@ -115,7 +131,7 @@ internal fun LocationLambdaApp() {
             PermissionStep.ForegroundLocation -> {
                 permissionStep = PermissionStep.Idle
                 if (!context.hasFineLocationPermission()) {
-                    geofenceRegistrationReady = false
+                    hadGeofencePermissions = false
                     showForegroundLocationDialog = true
                 } else {
                     permissionStep = PermissionStep.BackgroundLocation
@@ -124,21 +140,30 @@ internal fun LocationLambdaApp() {
             PermissionStep.BackgroundLocation -> {
                 permissionStep = PermissionStep.Idle
                 if (!context.hasBackgroundLocationPermission()) {
-                    geofenceRegistrationReady = false
+                    hadGeofencePermissions = false
                     DebugDeviceStatusLogger.logPermissions(context, "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u672a\u8a31\u53ef")
                     showBackgroundLocationDialog = true
                 } else {
                     DebugDeviceStatusLogger.logPermissions(context, "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u8a31\u53ef")
-                    geofenceRegistrationReady = true
+                    if (!hadGeofencePermissions) {
+                        scheduleGeofenceReregistration(rules)
+                    }
+                    hadGeofencePermissions = true
                 }
             }
         }
     }
 
-    LaunchedEffect(geofenceRegistrationReady, geofenceRegistrationKey) {
-        if (geofenceRegistrationReady && context.hasGeofencePermissions()) {
-            delay(1_000)
-            geofenceManager.reregister(rules)
+    LaunchedEffect(geofenceRegistrationRequest) {
+        val request = geofenceRegistrationRequest ?: return@LaunchedEffect
+        delay(1_000)
+
+        val latestRules = repository.loadRules()
+        if (
+            context.hasGeofencePermissions() &&
+            latestRules.toGeofenceRegistrationKey() == request.key
+        ) {
+            geofenceManager.reregister(latestRules)
         }
     }
 
@@ -252,6 +277,11 @@ internal fun LocationLambdaApp() {
 
 private data class GeofenceRegistrationKey(
     val rules: List<GeofenceRuleRegistrationKey>
+)
+
+private data class GeofenceRegistrationRequest(
+    val id: Long,
+    val key: GeofenceRegistrationKey
 )
 
 private data class GeofenceRuleRegistrationKey(
