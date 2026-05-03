@@ -81,9 +81,7 @@ object GeofenceNotificationHelper {
             buildActionPendingIntent(
                 context = context,
                 notificationId = notificationId,
-                targetIntent = it,
-                logTitle = rule.actionTypeLabel,
-                logDetail = buildActionDetail(rule)
+                targetIntent = it
             )
         }
 
@@ -157,21 +155,13 @@ object GeofenceNotificationHelper {
     private fun buildActionPendingIntent(
         context: Context,
         notificationId: Int,
-        targetIntent: Intent,
-        logTitle: String,
-        logDetail: String
+        targetIntent: Intent
     ): PendingIntent {
-        val proxyIntent = Intent(context, NotificationActionReceiver::class.java).apply {
-            putExtra(NotificationActionReceiver.EXTRA_NOTIFICATION_ID, notificationId)
-            putExtra(NotificationActionReceiver.EXTRA_TARGET_INTENT, targetIntent)
-            putExtra(NotificationActionReceiver.EXTRA_LOG_TITLE, logTitle)
-            putExtra(NotificationActionReceiver.EXTRA_LOG_DETAIL, logDetail)
-        }
-
-        return PendingIntent.getBroadcast(
+        targetIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        return PendingIntent.getActivity(
             context,
             notificationId,
-            proxyIntent,
+            targetIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
