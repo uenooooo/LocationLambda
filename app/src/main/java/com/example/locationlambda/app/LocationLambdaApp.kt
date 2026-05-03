@@ -11,9 +11,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.example.locationlambda.BuildConfig
+import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.data.LocationRule
+import com.example.locationlambda.data.LocationTransition
 import com.example.locationlambda.data.createBlankRule
 import com.example.locationlambda.data.hasRegisteredLocation
+import com.example.locationlambda.debug.DebugDeviceStatusLogger
+import com.example.locationlambda.debug.DebugLogRepository
+import com.example.locationlambda.debug.DebugLogType
 import com.example.locationlambda.geofence.GeofenceManager
 import com.example.locationlambda.permissions.BackgroundLocationDialog
 import com.example.locationlambda.permissions.ForegroundLocationDialog
@@ -40,6 +45,7 @@ import kotlinx.coroutines.delay
 internal fun LocationLambdaApp() {
     val context = LocalContext.current
     val repository = remember(context) { RuleRepository(context) }
+    val debugLogRepository = remember(context) { DebugLogRepository(context) }
     val geofenceManager = remember(context) { GeofenceManager(context) }
     var showSplash by remember { mutableStateOf(true) }
     var showDebugLogScreen by remember { mutableStateOf(false) }
@@ -54,13 +60,19 @@ internal fun LocationLambdaApp() {
     val maxRules = 5
 
     fun saveRules(updatedRules: List<LocationRule>) {
+        val previousRules = rules
         rules = updatedRules
         repository.saveRules(updatedRules)
+        debugLogRepository.logRuleChanges(previousRules, updatedRules)
     }
 
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { granted ->
+        DebugDeviceStatusLogger.logPermissions(
+            context = context,
+            title = if (granted) "\u901a\u77e5\u6a29\u9650\u8a31\u53ef" else "\u901a\u77e5\u6a29\u9650\u672a\u8a31\u53ef"
+        )
         if (!granted && context.needsNotificationPermission()) {
             showNotificationPermissionDeniedDialog = true
         }
@@ -71,6 +83,10 @@ internal fun LocationLambdaApp() {
     ) { permissions ->
         val fineGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
             context.hasFineLocationPermission()
+        DebugDeviceStatusLogger.logPermissions(
+            context = context,
+            title = if (fineGranted) "\u524d\u666f\u4f4d\u7f6e\u6a29\u9650\u8a31\u53ef" else "\u524d\u666f\u4f4d\u7f6e\u6a29\u9650\u672a\u8a31\u53ef"
+        )
         permissionStep = if (fineGranted) {
             PermissionStep.BackgroundLocation
         } else {
@@ -86,6 +102,8 @@ internal fun LocationLambdaApp() {
 
     LaunchedEffect(showSplash) {
         if (!showSplash) {
+            DebugDeviceStatusLogger.logPermissions(context, "\u8d77\u52d5\u6642")
+            DebugDeviceStatusLogger.logStatus(context, "\u8d77\u52d5\u6642")
             permissionStep = PermissionStep.Notification
         }
     }
@@ -112,8 +130,10 @@ internal fun LocationLambdaApp() {
             PermissionStep.BackgroundLocation -> {
                 permissionStep = PermissionStep.Idle
                 if (!context.hasBackgroundLocationPermission()) {
+                    DebugDeviceStatusLogger.logPermissions(context, "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u672a\u8a31\u53ef")
                     showBackgroundLocationDialog = true
                 } else {
+                    DebugDeviceStatusLogger.logPermissions(context, "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u8a31\u53ef")
                     geofenceManager.reregister(rules)
                 }
             }
@@ -238,4 +258,80 @@ internal fun LocationLambdaApp() {
             }
         )
     }
+}
+
+private fun DebugLogRepository.logRuleChanges(
+    previousRules: List<LocationRule>,
+    updatedRules: List<LocationRule>
+) {
+    if (!BuildConfig.SHOW_DEBUG_TOOLS) return
+
+    val previousById = previousRules.associateBy { it.id }
+    updatedRules.forEach { rule ->
+        val previousRule = previousById[rule.id]
+        if (previousRule == rule) return@forEach
+
+        append(
+            type = DebugLogType.RULE,
+            title = if (previousRule == null) {
+                "${rule.name.ifBlank { rule.id }} \u65b0\u898f\u4fdd\u5b58"
+            } else {
+                "${rule.name.ifBlank { rule.id }} \u4fdd\u5b58"
+            },
+            detail = rule.toRuleLogDetail()
+        )
+    }
+
+    previousRules
+        .filter { previous -> updatedRules.none { it.id == previous.id } }
+        .forEach { deletedRule ->
+            append(
+                type = DebugLogType.RULE,
+                title = deletedRule.name.ifBlank { deletedRule.id },
+                detail = "\u524a\u9664"
+            )
+        }
+}
+
+private fun LocationRule.toRuleLogDetail(): String {
+    return listOf(
+        "enabled=${enabled.toOnOffLabel()}",
+        "location=${if (hasRegisteredLocation()) "\u3042\u308a" else "\u306a\u3057"}",
+        "radius=${radiusMeters.toInt()}m",
+        "transition=${transitionType.toRuleTransitionLabel()}",
+        "cooldown=${cooldownMin.toCooldownLabel()}",
+        "action=${actionType.toRuleActionLabel()}",
+        "target=${toActionTargetLogLabel()}"
+    ).joinToString(" ")
+}
+
+private fun Int.toRuleTransitionLabel(): String {
+    val labels = mutableListOf<String>()
+    if (LocationTransition.includesEnter(this)) labels += "\u5230\u7740"
+    if (LocationTransition.includesExit(this)) labels += "\u9000\u51fa"
+    return labels.joinToString("/").ifBlank { "-" }
+}
+
+private fun ActionType.toRuleActionLabel(): String {
+    return when (this) {
+        ActionType.URL -> "URL\u3092\u958b\u304f"
+        ActionType.APP -> "\u30a2\u30d7\u30ea\u3092\u958b\u304f"
+        ActionType.NOTIFICATION_ONLY -> "\u901a\u77e5\u306e\u307f"
+    }
+}
+
+private fun LocationRule.toActionTargetLogLabel(): String {
+    return when (actionType) {
+        ActionType.URL -> actionValue.ifBlank { "-" }
+        ActionType.APP -> actionLabel.ifBlank { actionValue.ifBlank { "-" } }
+        ActionType.NOTIFICATION_ONLY -> "-"
+    }
+}
+
+private fun Int.toCooldownLabel(): String {
+    return if (this <= 0) "\u306a\u3057" else "${this}\u5206"
+}
+
+private fun Boolean.toOnOffLabel(): String {
+    return if (this) "ON" else "OFF"
 }

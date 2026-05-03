@@ -20,7 +20,7 @@ import com.example.locationlambda.debug.DebugLogType
 import com.example.locationlambda.ui.model.LocationRuleUi
 
 object GeofenceNotificationHelper {
-    private const val channelId = "geofence_channel"
+    const val CHANNEL_ID = "geofence_channel"
 
     fun showRuleNotification(
         context: Context,
@@ -32,10 +32,33 @@ object GeofenceNotificationHelper {
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            DebugLogRepository(context).append(
+                type = DebugLogType.NOTIFICATION,
+                title = "\u901a\u77e5\u5931\u6557",
+                detail = "\u901a\u77e5\u6a29\u9650\u306a\u3057"
+            )
             return false
         }
 
         createChannel(context)
+
+        val notificationManager = NotificationManagerCompat.from(context)
+        if (!notificationManager.areNotificationsEnabled()) {
+            DebugLogRepository(context).append(
+                type = DebugLogType.NOTIFICATION,
+                title = "\u901a\u77e5\u5931\u6557",
+                detail = "\u30a2\u30d7\u30ea\u901a\u77e5OFF"
+            )
+            return false
+        }
+        if (!isChannelEnabled(context)) {
+            DebugLogRepository(context).append(
+                type = DebugLogType.NOTIFICATION,
+                title = "\u901a\u77e5\u5931\u6557",
+                detail = "\u901a\u77e5\u30c1\u30e3\u30f3\u30cd\u30ebOFF"
+            )
+            return false
+        }
 
         val notificationId = rule.id.toNotificationId()
         val fallbackPendingIntent = PendingIntent.getActivity(
@@ -47,6 +70,13 @@ object GeofenceNotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val launchIntent = RuleActionExecutor.buildLaunchIntent(context, rule)
+        if (launchIntent == null && rule.actionType != ActionType.NOTIFICATION_ONLY) {
+            DebugLogRepository(context).append(
+                type = DebugLogType.ACTION,
+                title = "\u30a2\u30af\u30b7\u30e7\u30f3\u6e96\u5099\u5931\u6557",
+                detail = "${rule.actionTypeLabel} ${buildActionDetail(rule)}"
+            )
+        }
         val actionPendingIntent = launchIntent?.let {
             buildActionPendingIntent(
                 context = context,
@@ -59,7 +89,7 @@ object GeofenceNotificationHelper {
 
         val title = buildTitle(rule)
         val body = buildBody(rule)
-        val notificationBuilder = NotificationCompat.Builder(context, channelId)
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.location_lambda_notification_icon)
             .setContentTitle(title)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -80,16 +110,26 @@ object GeofenceNotificationHelper {
             )
         }
 
-        NotificationManagerCompat.from(context).notify(
-            notificationId,
-            notificationBuilder.build()
-        )
-        DebugLogRepository(context).append(
-            type = DebugLogType.NOTIFICATION,
-            title = title,
-            detail = body.orEmpty()
-        )
-        return true
+        val result = runCatching {
+            notificationManager.notify(
+                notificationId,
+                notificationBuilder.build()
+            )
+        }
+        if (result.isSuccess) {
+            DebugLogRepository(context).append(
+                type = DebugLogType.NOTIFICATION,
+                title = title,
+                detail = body.orEmpty()
+            )
+        } else {
+            DebugLogRepository(context).append(
+                type = DebugLogType.NOTIFICATION,
+                title = "\u901a\u77e5\u5931\u6557",
+                detail = result.exceptionOrNull()?.message.orEmpty()
+            )
+        }
+        return result.isSuccess
     }
 
     private fun buildTitle(rule: LocationRuleUi): String {
@@ -140,12 +180,20 @@ object GeofenceNotificationHelper {
         return hashCode() and Int.MAX_VALUE
     }
 
+    private fun isChannelEnabled(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return true
+
+        val manager = context.getSystemService(NotificationManager::class.java) ?: return true
+        val channel = manager.getNotificationChannel(CHANNEL_ID) ?: return true
+        return channel.importance != NotificationManager.IMPORTANCE_NONE
+    }
+
     private fun createChannel(context: Context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
         val manager = context.getSystemService(NotificationManager::class.java)
         val channel = NotificationChannel(
-            channelId,
+            CHANNEL_ID,
             "\u30ed\u30b1\u30e9\u30e0\u901a\u77e5",
             NotificationManager.IMPORTANCE_HIGH
         ).apply {

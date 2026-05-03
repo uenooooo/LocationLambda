@@ -11,5 +11,12 @@ enum class DebugLogType(val label: String) {
     NOTIFICATION("noti"),
     ACTION("acti"),
     GEOFENCE("geof"),
-    IGNORED("igno")
+    IGNORED("igno"),
+    REGISTRATION("regi"),
+    PERMISSION("perm"),
+    RECEIVED("recv"),
+    SUPPRESSED("supp"),
+    RULE("rule"),
+    STATUS("stat"),
+    RESTORE("boot")
 }

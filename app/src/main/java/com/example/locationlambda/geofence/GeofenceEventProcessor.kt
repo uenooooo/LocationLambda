@@ -26,7 +26,7 @@ internal class GeofenceEventProcessor(
 
     fun process(event: GeofencingEvent) {
         if (event.hasError()) {
-            logIgnored("\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9", "\u53d7\u4fe1\u30a8\u30e9\u30fc")
+            logIgnored("\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9", "\u53d7\u4fe1\u30a8\u30e9\u30fc code=${event.errorCode}")
             statusRepository.markIgnored(
                 "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
                 "\u53d7\u4fe1\u30a8\u30e9\u30fc"
@@ -78,12 +78,15 @@ internal class GeofenceEventProcessor(
                 return@map rule
             }
             if (!rule.matchesTransition(transition)) {
-                logIgnored(rule.name, "\u6761\u4ef6\u4e0d\u4e00\u81f4")
+                logIgnored(
+                    rule.name,
+                    "\u6761\u4ef6\u4e0d\u4e00\u81f4 \u53d7\u4fe1=${transition.toTransitionLabel()} \u8a2d\u5b9a=${rule.transitionType.toTransitionLabel()}"
+                )
                 statusRepository.markIgnored(rule.name, "\u6761\u4ef6\u4e0d\u4e00\u81f4")
                 return@map rule
             }
             if (!rule.isCooldownReady(now)) {
-                logIgnored(rule.name, "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u4e2d")
+                logIgnored(rule.name, "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u4e2d remaining=${rule.cooldownRemainingSeconds(now)}s")
                 statusRepository.markIgnored(rule.name, "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u4e2d")
                 return@map rule
             }
@@ -138,6 +141,12 @@ internal class GeofenceEventProcessor(
         return cooldownMillis == 0L || now - lastTriggeredAt > cooldownMillis
     }
 
+    private fun LocationRule.cooldownRemainingSeconds(now: Long): Long {
+        val cooldownMillis = cooldownMin.coerceAtLeast(0) * 60_000L
+        val remainingMillis = cooldownMillis - (now - lastTriggeredAt)
+        return ((remainingMillis.coerceAtLeast(0L) + 999L) / 1_000L)
+    }
+
     private fun Int.toTransitionUi(): TransitionUi {
         return when (this) {
             Geofence.GEOFENCE_TRANSITION_EXIT ->
@@ -148,6 +157,7 @@ internal class GeofenceEventProcessor(
     }
 
     private fun Int.toTransitionLabel(): String {
+        if (this == LocationTransition.BOTH) return "\u5230\u7740/\u9000\u51fa"
         return when (this) {
             Geofence.GEOFENCE_TRANSITION_EXIT -> "\u9000\u51fa"
             else -> "\u5230\u7740"
