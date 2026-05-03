@@ -1,9 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.LocationLambda" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/sand_300</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <item name="colorSecondary">@color/slate_300</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-</resources>

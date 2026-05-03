@@ -1,10 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.LocationLambda" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/slate_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/sand_500</item>
-        <item name="colorOnSecondary">@color/black</item>
+<resources>
+    <style name="Theme.LocationLambda" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">#F4F0E8</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>
