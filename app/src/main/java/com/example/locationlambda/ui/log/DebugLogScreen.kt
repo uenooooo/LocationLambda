@@ -214,7 +214,6 @@ private fun DebugLogEntry.toAnnotatedLogLine() = buildAnnotatedString {
 
 private fun DebugLogType.logColor(): Color = when (this) {
     DebugLogType.NOTIFICATION -> Color(0xFF0E8F5B)
-    DebugLogType.ACTION -> Color(0xFF2563EB)
     DebugLogType.GEOFENCE -> Color(0xFFB45309)
     DebugLogType.IGNORED -> Color(0xFFDC2626)
     DebugLogType.REGISTRATION -> Color(0xFF7C2D12)
@@ -229,7 +228,6 @@ private fun DebugLogType.logColor(): Color = when (this) {
 private fun DebugLogType.description(): String {
     return when (this) {
         DebugLogType.NOTIFICATION -> "\u901a\u77e5\u306e\u8868\u793a\u30fb\u5931\u6557"
-        DebugLogType.ACTION -> "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3\u306e\u5b9f\u884c"
         DebugLogType.GEOFENCE -> "\u6761\u4ef6\u306b\u5408\u3046\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9\u53cd\u5fdc"
         DebugLogType.IGNORED -> "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u306a\u3069\u3067\u7121\u8996"
         DebugLogType.REGISTRATION -> "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9\u767b\u9332\u30fb\u89e3\u9664"

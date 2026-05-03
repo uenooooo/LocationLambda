@@ -72,8 +72,8 @@ object GeofenceNotificationHelper {
         val launchIntent = RuleActionExecutor.buildLaunchIntent(context, rule)
         if (launchIntent == null && rule.actionType != ActionType.NOTIFICATION_ONLY) {
             DebugLogRepository(context).append(
-                type = DebugLogType.ACTION,
-                title = "\u30a2\u30af\u30b7\u30e7\u30f3\u6e96\u5099\u5931\u6557",
+                type = DebugLogType.NOTIFICATION,
+                title = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3\u6e96\u5099\u5931\u6557",
                 detail = "${rule.actionTypeLabel} ${buildActionDetail(rule)}"
             )
         }

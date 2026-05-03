@@ -17,7 +17,7 @@ class DebugLogRepository(context: Context) {
             val array = JSONArray(savedJson)
             buildList {
                 for (index in 0 until array.length()) {
-                    add(array.getJSONObject(index).toDebugLogEntry())
+                    array.getJSONObject(index).toDebugLogEntry()?.let(::add)
                 }
             }.sortedBy { it.timestampMillis }
         }.getOrElse { emptyList() }
@@ -41,11 +41,14 @@ class DebugLogRepository(context: Context) {
         prefs.edit().putString(KEY_LOGS, array.toString()).apply()
     }
 
-    private fun JSONObject.toDebugLogEntry(): DebugLogEntry {
+    private fun JSONObject.toDebugLogEntry(): DebugLogEntry? {
+        val typeName = optString("type", DebugLogType.NOTIFICATION.name)
+        if (typeName == "ACTION") return null
+
         return DebugLogEntry(
             timestampMillis = optLong("timestampMillis", 0L),
             type = runCatching {
-                DebugLogType.valueOf(optString("type", DebugLogType.NOTIFICATION.name))
+                DebugLogType.valueOf(typeName)
             }.getOrDefault(DebugLogType.NOTIFICATION),
             title = optString("title", ""),
             detail = optString("detail", "")
