@@ -17,12 +17,14 @@ import com.example.locationlambda.geofence.GeofenceManager
 import com.example.locationlambda.permissions.BackgroundLocationDialog
 import com.example.locationlambda.permissions.ForegroundLocationDialog
 import com.example.locationlambda.permissions.LocationPermissionDeniedDialog
+import com.example.locationlambda.permissions.NotificationPermissionDeniedDialog
 import com.example.locationlambda.permissions.PermissionStep
 import com.example.locationlambda.permissions.hasFineLocationPermission
 import com.example.locationlambda.permissions.hasBackgroundLocationPermission
 import com.example.locationlambda.permissions.hasGeofencePermissions
 import com.example.locationlambda.permissions.needsNotificationPermission
 import com.example.locationlambda.permissions.openAppSettings
+import com.example.locationlambda.permissions.openNotificationSettings
 import com.example.locationlambda.storage.RuleRepository
 import com.example.locationlambda.ui.edit.LocationLambdaEditScreen
 import com.example.locationlambda.ui.home.LocationLambdaHomeScreen
@@ -41,6 +43,7 @@ internal fun LocationLambdaApp() {
     var editingRuleId by remember { mutableStateOf<String?>(null) }
     var editingDraftRule by remember { mutableStateOf<LocationRule?>(null) }
     var permissionStep by remember { mutableStateOf(PermissionStep.Idle) }
+    var showNotificationPermissionDeniedDialog by remember { mutableStateOf(false) }
     var showForegroundLocationDialog by remember { mutableStateOf(false) }
     var showLocationPermissionDeniedDialog by remember { mutableStateOf(false) }
     var showBackgroundLocationDialog by remember { mutableStateOf(false) }
@@ -53,7 +56,10 @@ internal fun LocationLambdaApp() {
 
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
-    ) {
+    ) { granted ->
+        if (!granted && context.needsNotificationPermission()) {
+            showNotificationPermissionDeniedDialog = true
+        }
         permissionStep = PermissionStep.ForegroundLocation
     }
     val locationPermissionLauncher = rememberLauncherForActivityResult(
@@ -128,6 +134,16 @@ internal fun LocationLambdaApp() {
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     )
                 )
+            }
+        )
+    }
+
+    if (showNotificationPermissionDeniedDialog) {
+        NotificationPermissionDeniedDialog(
+            onDismiss = { showNotificationPermissionDeniedDialog = false },
+            onOpenSettings = {
+                showNotificationPermissionDeniedDialog = false
+                context.openNotificationSettings()
             }
         )
     }
