@@ -38,7 +38,6 @@ import com.example.locationlambda.ui.home.LocationLambdaHomeScreen
 import com.example.locationlambda.ui.log.DebugLogScreen
 import com.example.locationlambda.ui.model.toDomain
 import com.example.locationlambda.ui.model.toUi
-import com.example.locationlambda.ui.splash.LocationLambdaSplashScreen
 import kotlinx.coroutines.delay
 
 @Composable
@@ -47,7 +46,6 @@ internal fun LocationLambdaApp() {
     val repository = remember(context) { RuleRepository(context) }
     val debugLogRepository = remember(context) { DebugLogRepository(context) }
     val geofenceManager = remember(context) { GeofenceManager(context) }
-    var showSplash by remember { mutableStateOf(true) }
     var showDebugLogScreen by remember { mutableStateOf(false) }
     var rules by remember { mutableStateOf(repository.loadRules()) }
     var editingRuleId by remember { mutableStateOf<String?>(null) }
@@ -98,16 +96,9 @@ internal fun LocationLambdaApp() {
     }
 
     LaunchedEffect(Unit) {
-        delay(1_000)
-        showSplash = false
-    }
-
-    LaunchedEffect(showSplash) {
-        if (!showSplash) {
-            DebugDeviceStatusLogger.logPermissions(context, "\u8d77\u52d5\u6642")
-            DebugDeviceStatusLogger.logStatus(context, "\u8d77\u52d5\u6642")
-            permissionStep = PermissionStep.Notification
-        }
+        DebugDeviceStatusLogger.logPermissions(context, "\u8d77\u52d5\u6642")
+        DebugDeviceStatusLogger.logStatus(context, "\u8d77\u52d5\u6642")
+        permissionStep = PermissionStep.Notification
     }
 
     LaunchedEffect(permissionStep) {
@@ -144,8 +135,8 @@ internal fun LocationLambdaApp() {
         }
     }
 
-    LaunchedEffect(showSplash, geofenceRegistrationReady, geofenceRegistrationKey) {
-        if (!showSplash && geofenceRegistrationReady && context.hasGeofencePermissions()) {
+    LaunchedEffect(geofenceRegistrationReady, geofenceRegistrationKey) {
+        if (geofenceRegistrationReady && context.hasGeofencePermissions()) {
             delay(1_000)
             geofenceManager.reregister(rules)
         }
@@ -194,11 +185,6 @@ internal fun LocationLambdaApp() {
                 context.openAppSettings()
             }
         )
-    }
-
-    if (showSplash) {
-        LocationLambdaSplashScreen()
-        return
     }
 
     if (BuildConfig.SHOW_DEBUG_TOOLS && showDebugLogScreen) {
