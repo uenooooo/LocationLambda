@@ -62,6 +62,6 @@ class DebugLogRepository(context: Context) {
 
     private companion object {
         const val KEY_LOGS = "logs"
-        const val MAX_LOG_COUNT = 300
+        const val MAX_LOG_COUNT = 2_000
     }
 }
