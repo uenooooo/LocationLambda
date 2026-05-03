@@ -26,16 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.locationlambda.data.ActionType
 import com.example.locationlambda.data.LocationTransition
 import com.example.locationlambda.ui.model.LocationRuleUi
-import com.example.locationlambda.ui.model.TransitionUi
 import com.example.locationlambda.ui.theme.CardSurface
 import com.example.locationlambda.ui.theme.EnterBlue
 import com.example.locationlambda.ui.theme.ExitOrange
-import com.example.locationlambda.ui.theme.LocationLambdaTheme
 import kotlinx.coroutines.delay
 
 private fun hasRegisteredLocation(
@@ -362,37 +359,5 @@ fun LocationLambdaEditScreen(
                 }
             }
         }
-    }
-}
-
-private fun buildTransitions(onEnter: Boolean, onExit: Boolean): List<TransitionUi> {
-    val transitions = mutableListOf<TransitionUi>()
-    if (onEnter) transitions += TransitionUi("\u5230\u7740", EnterBlue)
-    if (onExit) transitions += TransitionUi("\u9000\u51fa", ExitOrange)
-    if (transitions.isEmpty()) transitions += TransitionUi("\u5230\u7740", EnterBlue)
-    return transitions
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun LocationLambdaEditScreenPreview() {
-    val previewRule = LocationRuleUi(
-        id = "preview",
-        name = "\u6e0b\u8c37\u99c5",
-        addressLabel = "\u6771\u4eac\u90fd\u6e0b\u8c37\u533a\u9053\u7384\u57421-1-1",
-        areaLabel = "\u901a\u77e5\u534a\u5f84150m",
-        transitions = listOf(TransitionUi("\u5230\u7740", EnterBlue)),
-        actionTypeLabel = "\u30a2\u30d7\u30ea\u3092\u958b\u304f",
-        actionTargetLabel = "Teams",
-        actionTargetValue = "com.microsoft.teams",
-        enabled = true
-    )
-
-    LocationLambdaTheme {
-        LocationLambdaEditScreen(
-            rule = previewRule,
-            onBack = {},
-            onRuleChange = {}
-        )
     }
 }
