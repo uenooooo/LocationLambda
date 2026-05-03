@@ -49,7 +49,8 @@ import java.util.Locale
 @Composable
 fun DebugLogScreen(onBack: () -> Unit) {
     val context = LocalContext.current
-    val logs = remember { DebugLogRepository(context).loadLogs().asReversed() }
+    val repository = remember(context) { DebugLogRepository(context) }
+    var logs by remember { mutableStateOf(repository.loadLogs().asReversed()) }
     var showLogHelp by remember { mutableStateOf(false) }
 
     BackHandler(onBack = onBack)
@@ -68,6 +69,12 @@ fun DebugLogScreen(onBack: () -> Unit) {
                 ) {
                     LogBackButton(onClick = onBack)
                     LogHelpButton(onClick = { showLogHelp = true })
+                    LogMarkerButton(
+                        onClick = {
+                            repository.appendMarker()
+                            logs = repository.loadLogs().asReversed()
+                        }
+                    )
                 }
             }
         }
@@ -149,12 +156,13 @@ private fun LogHelpLine(type: DebugLogType) {
 
 @Composable
 private fun DebugLogRow(log: DebugLogEntry) {
+    val isMarker = log.type == DebugLogType.MARKER
     SelectionContainer {
         Text(
             text = log.toAnnotatedLogLine(),
             modifier = Modifier.padding(vertical = 3.dp),
             style = MaterialTheme.typography.bodySmall,
-            color = Slate,
+            color = if (isMarker) log.type.logColor() else Slate,
             maxLines = 1,
             softWrap = false
         )
@@ -197,11 +205,30 @@ private fun LogHelpButton(onClick: () -> Unit) {
     }
 }
 
+@Composable
+private fun LogMarkerButton(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(Color(0xFFFFF4D6))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "\u533a\u5207\u308b",
+            style = MaterialTheme.typography.labelLarge,
+            color = Color(0xFF8A5A00)
+        )
+    }
+}
+
 private fun DebugLogEntry.toAnnotatedLogLine() = buildAnnotatedString {
     val content = listOf(title, detail)
         .filter { it.isNotBlank() }
         .joinToString(" / ")
         .ifBlank { "-" }
+    val lineColor = if (type == DebugLogType.MARKER) type.logColor() else Slate
 
     append(timestampMillis.toLogTime())
     append(" ")
@@ -209,7 +236,9 @@ private fun DebugLogEntry.toAnnotatedLogLine() = buildAnnotatedString {
         append(type.label)
     }
     append(" ")
-    append(content)
+    withStyle(SpanStyle(color = lineColor)) {
+        append(content)
+    }
 }
 
 private fun DebugLogType.logColor(): Color = when (this) {
@@ -223,6 +252,7 @@ private fun DebugLogType.logColor(): Color = when (this) {
     DebugLogType.RULE -> Color(0xFF4F46E5)
     DebugLogType.STATUS -> Color(0xFF525252)
     DebugLogType.RESTORE -> Color(0xFFBE123C)
+    DebugLogType.MARKER -> Color(0xFF8A5A00)
 }
 
 private fun DebugLogType.description(): String {
@@ -237,6 +267,7 @@ private fun DebugLogType.description(): String {
         DebugLogType.RULE -> "\u30eb\u30fc\u30eb\u4fdd\u5b58\u30fb\u5909\u66f4"
         DebugLogType.STATUS -> "\u7aef\u672b\u72b6\u614b"
         DebugLogType.RESTORE -> "\u518d\u8d77\u52d5\u30fb\u66f4\u65b0\u5f8c\u306e\u5fa9\u65e7"
+        DebugLogType.MARKER -> "\u624b\u52d5\u3067\u5165\u308c\u305f\u30ed\u30b0\u306e\u533a\u5207\u308a"
     }
 }
 

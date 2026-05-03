@@ -13,7 +13,11 @@ class GeofenceRestoreReceiver : BroadcastReceiver() {
 
         val appContext = context.applicationContext
         val rules = RuleRepository(appContext).loadRules()
-        DebugLogRepository(appContext).append(
+        val debugLogs = DebugLogRepository(appContext)
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+            debugLogs.appendMarker(label = "\u7aef\u672b\u518d\u8d77\u52d5")
+        }
+        debugLogs.append(
             type = DebugLogType.RESTORE,
             title = intent.action.toRestoreTitle(),
             detail = "rules=${rules.size} enabled=${rules.count { it.enabled }}"

@@ -35,6 +35,13 @@ class DebugLogRepository(context: Context) {
         saveLogs(logs.takeLast(MAX_LOG_COUNT))
     }
 
+    fun appendMarker(label: String = "区切り") {
+        append(
+            type = DebugLogType.MARKER,
+            title = "$LOG_MARKER_LINE $label $LOG_MARKER_LINE"
+        )
+    }
+
     private fun saveLogs(logs: List<DebugLogEntry>) {
         val array = JSONArray()
         logs.forEach { log -> array.put(log.toJson()) }
@@ -66,5 +73,6 @@ class DebugLogRepository(context: Context) {
     private companion object {
         const val KEY_LOGS = "logs"
         const val MAX_LOG_COUNT = 2_000
+        const val LOG_MARKER_LINE = "------------------------------------------------------------"
     }
 }

@@ -17,5 +17,6 @@ enum class DebugLogType(val label: String) {
     SUPPRESSED("supp"),
     RULE("rule"),
     STATUS("stat"),
-    RESTORE("boot")
+    RESTORE("boot"),
+    MARKER("mark")
 }
