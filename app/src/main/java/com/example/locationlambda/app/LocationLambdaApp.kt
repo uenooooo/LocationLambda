@@ -57,6 +57,8 @@ internal fun LocationLambdaApp() {
     var showForegroundLocationDialog by remember { mutableStateOf(false) }
     var showLocationPermissionDeniedDialog by remember { mutableStateOf(false) }
     var showBackgroundLocationDialog by remember { mutableStateOf(false) }
+    var geofenceRegistrationReady by remember { mutableStateOf(false) }
+    val geofenceRegistrationKey = remember(rules) { rules.toGeofenceRegistrationKey() }
     val maxRules = 5
 
     fun saveRules(updatedRules: List<LocationRule>) {
@@ -122,6 +124,7 @@ internal fun LocationLambdaApp() {
             PermissionStep.ForegroundLocation -> {
                 permissionStep = PermissionStep.Idle
                 if (!context.hasFineLocationPermission()) {
+                    geofenceRegistrationReady = false
                     showForegroundLocationDialog = true
                 } else {
                     permissionStep = PermissionStep.BackgroundLocation
@@ -130,18 +133,19 @@ internal fun LocationLambdaApp() {
             PermissionStep.BackgroundLocation -> {
                 permissionStep = PermissionStep.Idle
                 if (!context.hasBackgroundLocationPermission()) {
+                    geofenceRegistrationReady = false
                     DebugDeviceStatusLogger.logPermissions(context, "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u672a\u8a31\u53ef")
                     showBackgroundLocationDialog = true
                 } else {
                     DebugDeviceStatusLogger.logPermissions(context, "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u8a31\u53ef")
-                    geofenceManager.reregister(rules)
+                    geofenceRegistrationReady = true
                 }
             }
         }
     }
 
-    LaunchedEffect(rules) {
-        if (context.hasGeofencePermissions()) {
+    LaunchedEffect(showSplash, geofenceRegistrationReady, geofenceRegistrationKey) {
+        if (!showSplash && geofenceRegistrationReady && context.hasGeofencePermissions()) {
             delay(1_000)
             geofenceManager.reregister(rules)
         }
@@ -258,6 +262,35 @@ internal fun LocationLambdaApp() {
             }
         )
     }
+}
+
+private data class GeofenceRegistrationKey(
+    val rules: List<GeofenceRuleRegistrationKey>
+)
+
+private data class GeofenceRuleRegistrationKey(
+    val id: String,
+    val enabledForRegistration: Boolean,
+    val latitude: Double?,
+    val longitude: Double?,
+    val radiusMeters: Float?,
+    val transitionType: Int?
+)
+
+private fun List<LocationRule>.toGeofenceRegistrationKey(): GeofenceRegistrationKey {
+    return GeofenceRegistrationKey(map { it.toGeofenceRuleRegistrationKey() })
+}
+
+private fun LocationRule.toGeofenceRuleRegistrationKey(): GeofenceRuleRegistrationKey {
+    val enabledForRegistration = enabled && hasRegisteredLocation()
+    return GeofenceRuleRegistrationKey(
+        id = id,
+        enabledForRegistration = enabledForRegistration,
+        latitude = latitude.takeIf { enabledForRegistration },
+        longitude = longitude.takeIf { enabledForRegistration },
+        radiusMeters = radiusMeters.takeIf { enabledForRegistration },
+        transitionType = transitionType.takeIf { enabledForRegistration }
+    )
 }
 
 private fun DebugLogRepository.logRuleChanges(

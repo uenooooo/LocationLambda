@@ -1,0 +1,771 @@
+2026/05/03 21:04:07 noti 自宅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 21:04:07 geof 自宅 / 到着
+2026/05/03 21:04:07 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=1 error=-
+2026/05/03 21:02:04 noti 2 を 退出 / アプリを開く：Authenticator
+2026/05/03 21:02:04 geof 2 / 退出
+2026/05/03 21:02:04 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=-
+2026/05/03 21:02:04 noti 2 に 到着 / アプリを開く：Authenticator
+2026/05/03 21:02:04 geof 2 / 到着
+2026/05/03 21:02:04 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=-
+2026/05/03 20:55:55 noti 3 を 退出 / アプリを開く：Brave
+2026/05/03 20:55:55 geof 3 / 退出
+2026/05/03 20:55:55 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=3 error=-
+2026/05/03 20:51:53 noti 4 を 退出 / アプリを開く：AWS Console
+2026/05/03 20:51:53 geof 4 / 退出
+2026/05/03 20:51:53 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
+2026/05/03 20:51:53 noti 3 に 到着 / アプリを開く：Brave
+2026/05/03 20:51:53 geof 3 / 到着
+2026/05/03 20:51:53 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=3 error=-
+2026/05/03 20:51:53 noti 4 に 到着 / アプリを開く：AWS Console
+2026/05/03 20:51:53 geof 4 / 到着
+2026/05/03 20:51:53 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=-
+2026/05/03 20:45:52 noti 4 を 退出 / アプリを開く：AWS Console
+2026/05/03 20:45:52 geof 4 / 退出
+2026/05/03 20:45:52 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
+2026/05/03 20:23:57 regi 登録成功 / count=5
+2026/05/03 20:23:57 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:23:57 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:23:57 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:23:57 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:23:57 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:23:57 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:23:57 regi 既存登録解除 / 成功
+2026/05/03 20:23:57 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:23:57 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:23:57 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:23:56 rule 自宅 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 20:23:56 regi 登録成功 / count=5
+2026/05/03 20:23:56 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:23:56 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:23:56 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:23:56 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:23:56 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:23:56 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:23:56 regi 既存登録解除 / 成功
+2026/05/03 20:23:56 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:23:56 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:23:56 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:23:55 rule 自宅 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/03 20:23:51 regi 登録成功 / count=5
+2026/05/03 20:23:51 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:23:51 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:23:51 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:23:51 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:23:51 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:23:51 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:23:51 regi 既存登録解除 / 成功
+2026/05/03 20:23:51 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:23:51 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:23:51 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:23:29 regi 登録成功 / count=5
+2026/05/03 20:23:29 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:23:29 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:23:29 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:23:29 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:23:29 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:23:29 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:23:29 regi 既存登録解除 / 成功
+2026/05/03 20:23:29 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:23:29 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:23:29 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:23:28 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=Brave
+2026/05/03 20:20:55 regi 登録成功 / count=5
+2026/05/03 20:20:55 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:20:55 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:20:55 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:20:55 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:20:55 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:20:55 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:20:55 regi 既存登録解除 / 成功
+2026/05/03 20:20:55 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:20:55 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:20:55 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:20:45 noti 4 を 退出 / アプリを開く：AWS Console
+2026/05/03 20:20:45 geof 4 / 退出
+2026/05/03 20:20:45 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
+2026/05/03 20:13:08 regi 登録成功 / count=5
+2026/05/03 20:13:08 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:13:08 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:13:08 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:13:08 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:13:08 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:13:08 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:13:08 regi 既存登録解除 / 成功
+2026/05/03 20:13:08 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:13:08 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:13:08 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:09:59 noti 4 に 到着 / アプリを開く：AWS Console
+2026/05/03 20:09:59 geof 4 / 到着
+2026/05/03 20:09:59 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=-
+2026/05/03 20:09:59 noti 3 を 退出 / アプリを開く：Authenticator
+2026/05/03 20:09:59 geof 3 / 退出
+2026/05/03 20:09:59 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=3 error=-
+2026/05/03 20:07:38 noti 3 に 到着 / アプリを開く：Authenticator
+2026/05/03 20:07:38 geof 3 / 到着
+2026/05/03 20:07:38 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=3 error=-
+2026/05/03 20:07:38 noti 2 を 退出 / アプリを開く：Authenticator
+2026/05/03 20:07:38 geof 2 / 退出
+2026/05/03 20:07:38 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=-
+2026/05/03 20:04:18 regi 登録成功 / count=5
+2026/05/03 20:04:18 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:04:18 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:04:18 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:04:18 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:04:18 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:04:18 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:04:18 regi 既存登録解除 / 成功
+2026/05/03 20:04:18 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:04:18 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:04:18 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:03:19 acti アプリを開く / Authenticator
+2026/05/03 20:03:07 regi 登録成功 / count=5
+2026/05/03 20:03:07 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:03:07 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:03:07 regi 4 / 登録対象 radius=100m transition=到着/退出 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:03:07 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:03:07 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:03:07 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:03:07 regi 既存登録解除 / 成功
+2026/05/03 20:03:07 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:03:07 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:03:07 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:03:06 rule 4 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=AWS Console
+2026/05/03 20:03:02 regi 登録成功 / count=5
+2026/05/03 20:03:02 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:03:02 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:03:02 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:03:02 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:03:02 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:03:02 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:03:01 regi 既存登録解除 / 成功
+2026/05/03 20:03:01 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:03:01 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:03:01 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:03:01 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:03:01 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:03:01 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:03:01 regi 登録成功 / count=5
+2026/05/03 20:03:01 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:03:01 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:03:01 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:03:01 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:03:01 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:03:01 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:03:01 regi 既存登録解除 / 成功
+2026/05/03 20:03:01 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:03:00 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:03:00 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:02:59 regi 登録成功 / count=5
+2026/05/03 20:02:59 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:02:59 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:02:59 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:02:59 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:02:59 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:02:59 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:02:59 regi 既存登録解除 / 成功
+2026/05/03 20:02:59 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:02:59 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:02:59 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:02:59 noti 2 に 到着 / アプリを開く：Authenticator
+2026/05/03 20:02:59 geof 2 / 到着
+2026/05/03 20:02:59 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=-
+2026/05/03 20:02:06 regi 登録成功 / count=5
+2026/05/03 20:02:06 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:02:06 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:02:06 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:02:06 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:02:06 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:02:06 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:02:06 regi 既存登録解除 / 成功
+2026/05/03 20:02:05 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:02:05 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:02:05 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:02:05 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:02:05 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:02:05 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:02:05 regi 登録成功 / count=5
+2026/05/03 20:02:05 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:02:05 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:02:05 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:02:05 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:02:05 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:02:05 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:02:05 regi 既存登録解除 / 成功
+2026/05/03 20:02:05 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:02:05 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:02:05 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:02:04 regi 登録成功 / count=5
+2026/05/03 20:02:03 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:02:03 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:02:03 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:02:03 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:02:03 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:02:03 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:02:03 regi 既存登録解除 / 成功
+2026/05/03 20:02:03 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:02:03 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:02:03 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:01:45 acti アプリを開く / Amazon ショッピング
+2026/05/03 20:01:40 noti 自宅 を 退出 / アプリを開く：Amazon ショッピング
+2026/05/03 20:01:40 geof 自宅 / 退出
+2026/05/03 20:01:40 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=1 error=-
+2026/05/03 20:01:00 regi 登録成功 / count=5
+2026/05/03 20:01:00 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:01:00 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:01:00 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:01:00 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:01:00 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:01:00 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:01:00 regi 既存登録解除 / 成功
+2026/05/03 20:01:00 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:01:00 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:01:00 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:01:00 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:01:00 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:01:00 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:00:59 regi 登録成功 / count=5
+2026/05/03 20:00:59 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:00:59 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:00:59 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:00:59 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:00:59 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:00:59 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:00:59 regi 既存登録解除 / 成功
+2026/05/03 20:00:59 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:00:59 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:00:59 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:00:58 regi 登録成功 / count=5
+2026/05/03 20:00:58 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:00:58 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:00:58 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:00:58 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:00:58 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:00:58 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:00:58 regi 既存登録解除 / 成功
+2026/05/03 20:00:58 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:00:58 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:00:58 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:00:39 regi 登録成功 / count=5
+2026/05/03 20:00:39 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:00:39 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:00:39 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:00:39 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:00:39 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:00:39 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:00:39 regi 既存登録解除 / 成功
+2026/05/03 20:00:39 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:00:39 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:00:39 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 20:00:28 regi 登録成功 / count=5
+2026/05/03 20:00:28 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 20:00:28 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 20:00:28 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 20:00:28 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 20:00:28 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 20:00:28 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 20:00:28 regi 既存登録解除 / 成功
+2026/05/03 20:00:28 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 20:00:28 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 20:00:28 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:58:30 regi 登録成功 / count=5
+2026/05/03 19:58:30 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:58:30 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:58:30 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 19:58:30 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:58:30 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:58:30 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:58:30 regi 既存登録解除 / 成功
+2026/05/03 19:58:30 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:58:30 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:58:30 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:58:29 rule 4 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=AWS Console
+2026/05/03 19:58:25 regi 登録成功 / count=5
+2026/05/03 19:58:25 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:58:25 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:58:25 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 19:58:25 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:58:25 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:58:25 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:58:25 regi 既存登録解除 / 成功
+2026/05/03 19:58:25 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:58:25 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:58:25 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:58:24 rule 4 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=-
+2026/05/03 19:58:23 regi 登録成功 / count=5
+2026/05/03 19:58:23 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:58:23 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:58:23 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 19:58:23 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:58:23 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:58:23 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:58:23 regi 既存登録解除 / 成功
+2026/05/03 19:58:23 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:58:23 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:58:23 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:58:22 rule 4 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=通知のみ target=-
+2026/05/03 19:58:22 regi 登録成功 / count=5
+2026/05/03 19:58:22 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:58:22 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:58:22 regi 4 / 登録対象 radius=100m transition=到着 lat=35.5083144420553 lon=139.6761303395033
+2026/05/03 19:58:22 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:58:22 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:58:22 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:58:22 regi 既存登録解除 / 成功
+2026/05/03 19:58:22 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:58:22 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:58:22 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:58:21 rule 4 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/03 19:58:09 regi 登録成功 / count=4
+2026/05/03 19:58:08 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:58:08 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:58:08 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:58:08 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:58:08 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:58:08 regi 4 / 登録対象外 無効
+2026/05/03 19:58:08 regi 既存登録解除 / 成功
+2026/05/03 19:58:08 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:58:08 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:58:08 regi 再登録開始 / rules=5 enabled=4 max=5
+2026/05/03 19:58:07 rule 4 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/03 19:58:02 regi 登録成功 / count=5
+2026/05/03 19:58:02 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:58:02 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:58:02 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:58:02 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:58:02 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:58:02 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:58:02 regi 既存登録解除 / 成功
+2026/05/03 19:58:02 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:58:02 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:58:02 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:58:01 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=Authenticator
+2026/05/03 19:58:00 regi 登録成功 / count=5
+2026/05/03 19:58:00 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:58:00 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:58:00 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:58:00 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:58:00 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:58:00 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:58:00 regi 既存登録解除 / 成功
+2026/05/03 19:58:00 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:58:00 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:58:00 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:59 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=-
+2026/05/03 19:57:59 regi 登録成功 / count=5
+2026/05/03 19:57:59 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:59 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:59 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:59 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:57:59 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:59 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:59 regi 既存登録解除 / 成功
+2026/05/03 19:57:59 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:59 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:59 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:55 regi 登録成功 / count=5
+2026/05/03 19:57:55 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:55 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:55 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:55 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:57:55 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:55 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:55 regi 既存登録解除 / 成功
+2026/05/03 19:57:55 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:55 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:55 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:54 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/03 19:57:51 regi 登録成功 / count=5
+2026/05/03 19:57:51 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:51 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:51 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:51 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:57:51 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:51 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:51 regi 既存登録解除 / 成功
+2026/05/03 19:57:51 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:51 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:51 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:50 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=-
+2026/05/03 19:57:50 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/03 19:57:49 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=-
+2026/05/03 19:57:33 regi 登録成功 / count=5
+2026/05/03 19:57:33 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:33 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:33 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:33 regi 3 / 登録対象 radius=100m transition=到着/退出 lat=35.507120931103685 lon=139.67710062861443
+2026/05/03 19:57:33 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:33 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:33 regi 既存登録解除 / 成功
+2026/05/03 19:57:33 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:33 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:33 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:32 rule 3 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/03 19:57:18 regi 登録成功 / count=4
+2026/05/03 19:57:17 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:17 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:17 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:17 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:17 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:17 regi 3 / 登録対象外 無効
+2026/05/03 19:57:17 regi 既存登録解除 / 成功
+2026/05/03 19:57:17 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:17 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:17 regi 再登録開始 / rules=5 enabled=4 max=5
+2026/05/03 19:57:16 rule 3 保存 / enabled=OFF location=なし radius=100m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/03 19:57:15 regi 登録成功 / count=5
+2026/05/03 19:57:15 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:15 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:15 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:15 regi 3 / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:57:15 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:15 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:15 regi 既存登録解除 / 成功
+2026/05/03 19:57:15 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:15 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:15 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:14 rule 3 保存 / enabled=ON location=あり radius=120m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/03 19:57:13 rule 3 保存 / enabled=ON location=あり radius=120m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/03 19:57:13 rule ジ 保存 / enabled=ON location=あり radius=120m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/03 19:57:09 regi 登録成功 / count=5
+2026/05/03 19:57:09 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:09 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:09 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:09 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:57:09 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:09 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:09 regi 既存登録解除 / 成功
+2026/05/03 19:57:09 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:09 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:09 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:08 rule 2 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=Authenticator
+2026/05/03 19:57:05 regi 登録成功 / count=5
+2026/05/03 19:57:05 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:05 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:05 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:05 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:57:05 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:05 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:05 regi 既存登録解除 / 成功
+2026/05/03 19:57:05 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:05 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:05 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:03 rule 2 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=-
+2026/05/03 19:57:03 regi 登録成功 / count=5
+2026/05/03 19:57:03 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:57:03 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:57:03 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:57:03 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:57:03 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.50481328073219 lon=139.67828348279
+2026/05/03 19:57:03 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:57:03 regi 既存登録解除 / 成功
+2026/05/03 19:57:03 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:57:03 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:57:03 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:57:02 rule 2 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 19:56:50 regi 登録成功 / count=4
+2026/05/03 19:56:50 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:56:50 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:56:50 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:56:50 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:56:50 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:56:50 regi 2 / 登録対象外 無効
+2026/05/03 19:56:50 regi 既存登録解除 / 成功
+2026/05/03 19:56:50 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:56:50 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:56:50 regi 再登録開始 / rules=5 enabled=4 max=5
+2026/05/03 19:56:49 rule 2 保存 / enabled=OFF location=なし radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 19:56:42 regi 登録成功 / count=5
+2026/05/03 19:56:42 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:56:42 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:56:42 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:56:42 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:56:42 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:56:42 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:56:42 regi 既存登録解除 / 成功
+2026/05/03 19:56:42 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:56:42 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:56:42 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:56:41 rule 2 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 19:56:41 regi 登録成功 / count=5
+2026/05/03 19:56:41 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:56:41 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:56:41 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:56:41 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:56:41 regi 2 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:56:41 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:56:41 regi 既存登録解除 / 成功
+2026/05/03 19:56:41 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:56:41 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:56:41 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:56:40 rule 2 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 19:56:40 rule 会 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 19:56:19 regi 登録成功 / count=5
+2026/05/03 19:56:19 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:56:19 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:56:19 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:56:19 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:56:19 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:56:19 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:56:19 regi 既存登録解除 / 成功
+2026/05/03 19:56:19 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:56:19 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:56:19 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:56:18 rule 自宅 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/03 19:55:46 regi 登録成功 / count=5
+2026/05/03 19:55:46 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:55:46 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:55:46 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:55:46 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:55:46 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:55:46 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:55:46 regi 既存登録解除 / 成功
+2026/05/03 19:55:46 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:55:46 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:55:46 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:55:46 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:55:46 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:55:46 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:55:45 regi 登録成功 / count=5
+2026/05/03 19:55:45 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:55:45 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:55:45 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:55:45 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:55:45 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:55:45 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:55:45 regi 既存登録解除 / 成功
+2026/05/03 19:55:45 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:55:45 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:55:45 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:55:44 regi 登録成功 / count=5
+2026/05/03 19:55:44 regi 登録成功 / count=5
+2026/05/03 19:55:44 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:55:44 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:55:44 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:55:44 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:55:44 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:55:44 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:55:44 regi 既存登録解除 / 成功
+2026/05/03 19:55:44 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:55:44 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:55:44 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:55:44 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:55:44 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:55:44 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:55:44 regi 既存登録解除 / 成功
+2026/05/03 19:55:44 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:55:44 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:55:44 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:55:44 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:55:44 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:55:44 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:55:44 boot 端末再起動 / rules=5 enabled=5
+2026/05/03 19:53:23 regi 登録成功 / count=5
+2026/05/03 19:53:23 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:53:23 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:53:23 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:53:23 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:53:23 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:53:23 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:53:23 regi 既存登録解除 / 成功
+2026/05/03 19:53:23 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:53:23 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:53:23 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:14:45 regi 登録成功 / count=5
+2026/05/03 19:14:45 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:14:45 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:14:45 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:14:45 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:14:45 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:14:45 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:14:45 regi 既存登録解除 / 成功
+2026/05/03 19:14:45 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:14:45 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:14:45 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:14:45 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:14:45 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:14:45 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:14:44 regi 登録成功 / count=5
+2026/05/03 19:14:44 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:14:44 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:14:44 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:14:44 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:14:44 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:14:44 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:14:44 regi 既存登録解除 / 成功
+2026/05/03 19:14:44 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:14:44 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:14:44 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:14:43 regi 登録成功 / count=5
+2026/05/03 19:14:43 regi 登録成功 / count=5
+2026/05/03 19:14:43 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:14:43 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:14:43 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:14:43 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:14:43 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:14:43 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:14:43 regi 既存登録解除 / 成功
+2026/05/03 19:14:43 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:14:43 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:14:43 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:14:43 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:14:43 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:14:43 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:14:43 regi 既存登録解除 / 成功
+2026/05/03 19:14:43 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:14:43 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:14:43 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:14:43 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:14:43 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:14:43 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:14:43 boot 端末再起動 / rules=5 enabled=5
+2026/05/03 19:13:30 regi 登録成功 / count=5
+2026/05/03 19:13:30 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:13:30 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:13:30 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:13:30 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:13:30 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:13:30 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:13:30 regi 既存登録解除 / 成功
+2026/05/03 19:13:30 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:13:30 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:13:30 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:13:30 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:13:30 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:13:30 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:13:29 regi 登録成功 / count=5
+2026/05/03 19:13:29 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:13:29 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:13:29 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:13:29 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:13:29 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:13:29 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:13:29 regi 既存登録解除 / 成功
+2026/05/03 19:13:29 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:13:29 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:13:29 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:13:28 regi 登録成功 / count=5
+2026/05/03 19:13:28 regi 登録成功 / count=5
+2026/05/03 19:13:28 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:13:28 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:13:28 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:13:28 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:13:28 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:13:28 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:13:28 regi 既存登録解除 / 成功
+2026/05/03 19:13:28 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:13:28 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:13:28 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:13:28 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:13:28 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:13:28 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:13:28 regi 既存登録解除 / 成功
+2026/05/03 19:13:28 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:13:28 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:13:28 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:13:28 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:13:28 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:13:28 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:13:28 boot 端末再起動 / rules=5 enabled=5
+2026/05/03 19:10:51 regi 登録成功 / count=5
+2026/05/03 19:10:51 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:10:51 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:10:51 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:10:51 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:10:51 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:10:51 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:10:51 regi 既存登録解除 / 成功
+2026/05/03 19:10:51 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:10:51 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:10:51 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:10:51 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:10:51 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:10:51 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:10:50 regi 登録成功 / count=5
+2026/05/03 19:10:50 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:10:50 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:10:50 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:10:50 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:10:50 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:10:50 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:10:50 regi 既存登録解除 / 成功
+2026/05/03 19:10:50 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:10:50 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:10:50 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:10:49 regi 登録成功 / count=5
+2026/05/03 19:10:49 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:10:49 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:10:49 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:10:49 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:10:49 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:10:49 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:10:49 regi 既存登録解除 / 成功
+2026/05/03 19:10:49 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:10:49 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:10:49 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:06:48 regi 登録成功 / count=5
+2026/05/03 19:06:48 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:06:48 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:06:48 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:06:48 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:06:48 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:06:48 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:06:48 regi 既存登録解除 / 成功
+2026/05/03 19:06:48 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:06:48 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:06:48 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:06:21 regi 登録成功 / count=5
+2026/05/03 19:06:21 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:06:21 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:06:21 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:06:21 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:06:21 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:06:21 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:06:21 regi 既存登録解除 / 成功
+2026/05/03 19:06:21 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:06:21 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:06:21 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:06:21 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:06:20 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:06:20 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:06:18 regi 登録成功 / count=5
+2026/05/03 19:06:18 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:06:18 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:06:18 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:06:18 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:06:18 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:06:18 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:06:18 regi 既存登録解除 / 成功
+2026/05/03 19:06:18 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:06:18 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:06:18 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:06:17 regi 登録成功 / count=5
+2026/05/03 19:06:17 regi 登録成功 / count=5
+2026/05/03 19:06:17 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:06:17 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:06:17 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:06:17 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:06:17 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:06:17 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:06:17 regi 既存登録解除 / 成功
+2026/05/03 19:06:17 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/03 19:06:17 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
+2026/05/03 19:06:17 regi 4 / 登録対象 radius=100m transition=到着 lat=35.50583023808045 lon=139.67699233442545
+2026/05/03 19:06:17 regi ジム / 登録対象 radius=120m transition=到着/退出 lat=35.689634 lon=139.692101
+2026/05/03 19:06:17 regi 会社 / 登録対象 radius=100m transition=到着/退出 lat=35.5313654 lon=139.696889
+2026/05/03 19:06:17 regi 自宅 / 登録対象 radius=100m transition=到着/退出 lat=35.5022323 lon=139.6803246
+2026/05/03 19:06:17 regi 既存登録解除 / 成功
+2026/05/03 19:06:17 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:06:17 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:06:17 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:06:17 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/03 19:06:17 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/03 19:06:17 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/03 19:06:17 boot 端末再起動 / rules=5 enabled=5
+2026/05/03 18:49:53 noti 自宅 に 到着 / アプリを開く：Amazon ショッピング
+2026/05/03 18:39:56 noti 会社 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/03 18:39:54 noti 自宅 に 到着 / アプリを開く：Amazon ショッピング
+2026/05/03 18:38:56 acti アプリを開く / Amazon ショッピング
+2026/05/03 18:38:39 noti 自宅 に 到着 / アプリを開く：Amazon ショッピング
+2026/05/03 18:38:28 noti 自宅 に 到着 / アプリを開く：Amazon ショッピング
+2026/05/03 18:22:48 acti アプリを開く / Amazon ショッピング
+2026/05/03 18:22:44 noti 自宅 に 到着 / アプリを開く：Amazon ショッピング
