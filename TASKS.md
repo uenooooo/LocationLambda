@@ -65,7 +65,7 @@
   - `local.properties` 管理を維持し、APIキーをgit管理しない。
 
 - Google Cloud Billingの予算アラートを設定する。
-課金はmapsのみ。
+  - 課金はmapsのみ。
   - Maps SDK自体は無償SKU扱いの箇所があるが、検索/Places/Geocoding等を増やすと課金対象になり得る。
   - 予算アラートは課金停止ではなく通知なので、必要ならAPIクォータも別途設定する。
 
