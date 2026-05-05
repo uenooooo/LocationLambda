@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 import os
 
-PACKAGE = "com.example.locationlambda"
+PACKAGE = "com.yasumo.locationlambda"
 PREF_PATH = "shared_prefs/location_lambda_debug_logs.xml"
 
 OUTPUT_DIR = r"C:\githubClone\LocationLambda\debug-logs"

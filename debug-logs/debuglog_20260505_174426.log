@@ -1,0 +1,5 @@
+2026/05/05 17:43:15 perm バックグラウンド位置未許可 / 通知=許可 fine=許可 coarse=許可 background=未許可
+2026/05/05 17:43:15 perm 前景位置権限許可 / 通知=許可 fine=許可 coarse=許可 background=未許可
+2026/05/05 17:43:10 perm 通知権限許可 / 通知=許可 fine=未許可 coarse=未許可 background=未許可
+2026/05/05 17:43:05 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=OFF channel=未作成
+2026/05/05 17:43:05 perm 起動時 / 通知=未許可 fine=未許可 coarse=未許可 background=未許可

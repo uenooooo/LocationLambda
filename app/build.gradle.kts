@@ -14,11 +14,11 @@ val localProperties = Properties().apply {
 val mapsApiKey = localProperties.getProperty("MAPS_API_KEY", "")
 
 android {
-    namespace = "com.example.locationlambda"
+    namespace = "com.yasumo.locationlambda"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.locationlambda"
+        applicationId = "com.yasumo.locationlambda"
         minSdk = 29
         targetSdk = 34
         versionCode = 1

@@ -1,0 +1,47 @@
+package com.yasumo.locationlambda.ui.home
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import com.yasumo.locationlambda.ui.model.LocationRuleUi
+import com.yasumo.locationlambda.ui.theme.CardSurface
+import com.yasumo.locationlambda.ui.theme.Divider
+
+@Composable
+internal fun RuleList(
+    rules: List<LocationRuleUi?>,
+    onEditRule: (LocationRuleUi) -> Unit,
+    onEditEmptyRule: (Int) -> Unit,
+    onToggleRule: (LocationRuleUi, Boolean) -> Unit,
+    showDebugTools: Boolean,
+    onDebugNotify: (LocationRuleUi) -> Unit
+) {
+    Surface(
+        color = CardSurface,
+        shape = RoundedCornerShape(28.dp)
+    ) {
+        Column {
+            rules.forEachIndexed { index, rule ->
+                if (rule == null) {
+                    EmptyRuleRow(
+                        onClick = { onEditEmptyRule(index + 1) }
+                    )
+                } else {
+                    RuleRow(
+                        rule = rule,
+                        onEditRule = onEditRule,
+                        onToggleRule = onToggleRule,
+                        showDebugTools = showDebugTools,
+                        onDebugNotify = onDebugNotify
+                    )
+                }
+                if (index != rules.lastIndex) {
+                    HorizontalDivider(color = Divider)
+                }
+            }
+        }
+    }
+}

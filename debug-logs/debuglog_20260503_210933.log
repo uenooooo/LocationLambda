@@ -1,27 +1,27 @@
 2026/05/03 21:04:07 noti 自宅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
 2026/05/03 21:04:07 geof 自宅 / 到着
-2026/05/03 21:04:07 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=1 error=-
+2026/05/03 21:04:07 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=1 error=-
 2026/05/03 21:02:04 noti 2 を 退出 / アプリを開く：Authenticator
 2026/05/03 21:02:04 geof 2 / 退出
-2026/05/03 21:02:04 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=-
+2026/05/03 21:02:04 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=-
 2026/05/03 21:02:04 noti 2 に 到着 / アプリを開く：Authenticator
 2026/05/03 21:02:04 geof 2 / 到着
-2026/05/03 21:02:04 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=-
+2026/05/03 21:02:04 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=-
 2026/05/03 20:55:55 noti 3 を 退出 / アプリを開く：Brave
 2026/05/03 20:55:55 geof 3 / 退出
-2026/05/03 20:55:55 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=3 error=-
+2026/05/03 20:55:55 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=3 error=-
 2026/05/03 20:51:53 noti 4 を 退出 / アプリを開く：AWS Console
 2026/05/03 20:51:53 geof 4 / 退出
-2026/05/03 20:51:53 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
+2026/05/03 20:51:53 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
 2026/05/03 20:51:53 noti 3 に 到着 / アプリを開く：Brave
 2026/05/03 20:51:53 geof 3 / 到着
-2026/05/03 20:51:53 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=3 error=-
+2026/05/03 20:51:53 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=3 error=-
 2026/05/03 20:51:53 noti 4 に 到着 / アプリを開く：AWS Console
 2026/05/03 20:51:53 geof 4 / 到着
-2026/05/03 20:51:53 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=-
+2026/05/03 20:51:53 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=-
 2026/05/03 20:45:52 noti 4 を 退出 / アプリを開く：AWS Console
 2026/05/03 20:45:52 geof 4 / 退出
-2026/05/03 20:45:52 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
+2026/05/03 20:45:52 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
 2026/05/03 20:23:57 regi 登録成功 / count=5
 2026/05/03 20:23:57 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
 2026/05/03 20:23:57 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
@@ -82,7 +82,7 @@
 2026/05/03 20:20:55 regi 再登録開始 / rules=5 enabled=5 max=5
 2026/05/03 20:20:45 noti 4 を 退出 / アプリを開く：AWS Console
 2026/05/03 20:20:45 geof 4 / 退出
-2026/05/03 20:20:45 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
+2026/05/03 20:20:45 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=-
 2026/05/03 20:13:08 regi 登録成功 / count=5
 2026/05/03 20:13:08 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
 2026/05/03 20:13:08 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
@@ -96,16 +96,16 @@
 2026/05/03 20:13:08 regi 再登録開始 / rules=5 enabled=5 max=5
 2026/05/03 20:09:59 noti 4 に 到着 / アプリを開く：AWS Console
 2026/05/03 20:09:59 geof 4 / 到着
-2026/05/03 20:09:59 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=-
+2026/05/03 20:09:59 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=-
 2026/05/03 20:09:59 noti 3 を 退出 / アプリを開く：Authenticator
 2026/05/03 20:09:59 geof 3 / 退出
-2026/05/03 20:09:59 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=3 error=-
+2026/05/03 20:09:59 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=3 error=-
 2026/05/03 20:07:38 noti 3 に 到着 / アプリを開く：Authenticator
 2026/05/03 20:07:38 geof 3 / 到着
-2026/05/03 20:07:38 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=3 error=-
+2026/05/03 20:07:38 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=3 error=-
 2026/05/03 20:07:38 noti 2 を 退出 / アプリを開く：Authenticator
 2026/05/03 20:07:38 geof 2 / 退出
-2026/05/03 20:07:38 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=-
+2026/05/03 20:07:38 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=-
 2026/05/03 20:04:18 regi 登録成功 / count=5
 2026/05/03 20:04:18 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
 2026/05/03 20:04:18 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
@@ -168,7 +168,7 @@
 2026/05/03 20:02:59 regi 再登録開始 / rules=5 enabled=5 max=5
 2026/05/03 20:02:59 noti 2 に 到着 / アプリを開く：Authenticator
 2026/05/03 20:02:59 geof 2 / 到着
-2026/05/03 20:02:59 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=-
+2026/05/03 20:02:59 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=-
 2026/05/03 20:02:06 regi 登録成功 / count=5
 2026/05/03 20:02:06 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
 2026/05/03 20:02:06 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
@@ -208,7 +208,7 @@
 2026/05/03 20:01:45 acti アプリを開く / Amazon ショッピング
 2026/05/03 20:01:40 noti 自宅 を 退出 / アプリを開く：Amazon ショッピング
 2026/05/03 20:01:40 geof 自宅 / 退出
-2026/05/03 20:01:40 recv ジオフェンス / action=com.example.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=1 error=-
+2026/05/03 20:01:40 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=1 error=-
 2026/05/03 20:01:00 regi 登録成功 / count=5
 2026/05/03 20:01:00 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
 2026/05/03 20:01:00 regi あ / 登録対象 radius=100m transition=到着 lat=35.50424393183814 lon=139.68577422201633
