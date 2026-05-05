@@ -58,7 +58,7 @@ def main():
     xml_str = get_xml_from_device()
     logs = parse_logs(xml_str)
 
-    logs.sort(key=lambda x: x["timestampMillis"])
+    logs.sort(key=lambda x: x["timestampMillis"], reverse=True)
 
     with open(output_path, "w", encoding="utf-8") as f:
         for log in logs:
