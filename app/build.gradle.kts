@@ -31,6 +31,7 @@ android {
 
     buildTypes {
         debug {
+            // ツールの表示非表示
             buildConfigField("Boolean", "SHOW_DEBUG_TOOLS", "true")
         }
         release {
