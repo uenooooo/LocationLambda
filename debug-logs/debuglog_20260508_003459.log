@@ -1,0 +1,520 @@
+2026/05/07 22:50:58 noti 自宅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 22:50:58 geof 自宅 / 到着
+2026/05/07 22:50:58 stat 現在地 / transition=到着 ids=1 lat=35.5030189 lon=139.6810875 accuracy=100m age=1s
+2026/05/07 22:50:58 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=1 error=- trigger=lat=35.5030189 lon=139.6810875 accuracy=100m age=1s
+2026/05/07 22:47:30 noti 鶴見駅 を 退出 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 22:47:30 geof 鶴見駅 / 退出
+2026/05/07 22:47:30 stat 現在地 / transition=退出 ids=2 lat=35.5046061 lon=139.6786891 accuracy=32m age=1s
+2026/05/07 22:47:30 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=- trigger=lat=35.5056096 lon=139.6790541 accuracy=22m age=122s
+2026/05/07 22:43:27 noti 鶴見駅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 22:43:27 geof 鶴見駅 / 到着
+2026/05/07 22:43:27 stat 現在地 / transition=到着 ids=2 lat=35.5069504 lon=139.6781467 accuracy=56m age=106s
+2026/05/07 22:43:27 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=- trigger=lat=35.5069504 lon=139.6781467 accuracy=56m age=106s
+2026/05/07 18:14:50 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 18:14:50 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 18:14:49 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 18:08:54 igno 横浜駅 / 現在地が登録地点から1km以上離れている distance=1560m
+2026/05/07 18:08:54 geof 横浜駅 / 退出
+2026/05/07 18:08:53 stat 現在地 / transition=退出 ids=4 lat=35.4888868 lon=139.6587606 accuracy=200m age=2s
+2026/05/07 18:08:53 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=- trigger=lat=35.4774579 lon=139.6320050 accuracy=22m age=122s
+2026/05/07 18:04:53 noti 横浜駅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 18:04:52 geof 横浜駅 / 到着
+2026/05/07 18:04:52 stat 現在地 / transition=到着 ids=4 lat=35.4654144 lon=139.6217804 accuracy=100m age=3s
+2026/05/07 18:04:52 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=- trigger=lat=35.4654144 lon=139.6217804 accuracy=100m age=3s
+2026/05/07 17:43:11 noti 現場 を 退出 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 17:43:11 geof 現場 / 退出
+2026/05/07 17:43:11 stat 現在地 / transition=退出 ids=5 lat=35.4032938 lon=139.5372511 accuracy=37m age=3s
+2026/05/07 17:43:10 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=5 error=- trigger=lat=35.4032938 lon=139.5372511 accuracy=37m age=2s
+2026/05/07 11:28:38 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 11:28:38 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 11:28:38 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 09:30:14 noti 現場 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 09:30:14 geof 現場 / 到着
+2026/05/07 09:30:13 stat 現在地 / transition=到着 ids=5 lat=35.4025274 lon=139.5396894 accuracy=60m age=84s
+2026/05/07 09:30:13 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=5 error=- trigger=lat=35.4025274 lon=139.5396894 accuracy=60m age=84s
+2026/05/07 09:29:49 noti 現場 を 退出 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 09:29:49 geof 現場 / 退出
+2026/05/07 09:29:49 stat 現在地 / transition=退出 ids=5 lat=35.4107156 lon=139.5386597 accuracy=200m age=181s
+2026/05/07 09:29:49 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=5 error=- trigger=lat=35.4107156 lon=139.5386597 accuracy=200m age=181s
+2026/05/07 08:48:41 noti 現場 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 08:48:41 geof 現場 / 到着
+2026/05/07 08:48:41 stat 現在地 / transition=到着 ids=5 lat=35.4017207 lon=139.5397960 accuracy=44m age=2s
+2026/05/07 08:48:40 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=5 error=- trigger=lat=35.4017207 lon=139.5397960 accuracy=44m age=1s
+2026/05/07 08:34:26 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 08:34:26 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 08:34:26 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 08:31:21 igno 横浜駅 / 境界揺れ 前回=到着 今回=退出 1s
+2026/05/07 08:31:21 geof 横浜駅 / 退出
+2026/05/07 08:31:21 stat 現在地 / transition=退出 ids=4 lat=35.4615223 lon=139.6186008 accuracy=34m age=4s
+2026/05/07 08:31:21 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=4 error=- trigger=lat=35.4615223 lon=139.6186008 accuracy=34m age=3s
+2026/05/07 08:31:21 noti 横浜駅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 08:31:21 geof 横浜駅 / 到着
+2026/05/07 08:31:21 stat 現在地 / transition=到着 ids=4 lat=35.4615223 lon=139.6186008 accuracy=34m age=3s
+2026/05/07 08:31:20 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=4 error=- trigger=lat=35.4663731 lon=139.6227365 accuracy=100m age=244s
+2026/05/07 08:29:52 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 08:29:52 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 08:29:52 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 08:20:16 igno 鶴見駅 / 現在地が登録地点から1km以上離れている distance=2767m
+2026/05/07 08:20:16 geof 鶴見駅 / 退出
+2026/05/07 08:20:16 stat 現在地 / transition=退出 ids=2 lat=35.4853955 lon=139.6479192 accuracy=200m age=4s
+2026/05/07 08:20:16 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=- trigger=lat=35.4888213 lon=139.6571662 accuracy=300m age=125s
+2026/05/07 08:11:50 noti 鶴見駅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 08:11:50 geof 鶴見駅 / 到着
+2026/05/07 08:11:50 stat 現在地 / transition=到着 ids=2 lat=35.5072471 lon=139.6770212 accuracy=15m age=1s
+2026/05/07 08:11:50 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=2 error=- trigger=lat=35.5072471 lon=139.6770212 accuracy=15m age=1s
+2026/05/07 08:08:44 noti 自宅 を 退出 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 08:08:44 geof 自宅 / 退出
+2026/05/07 08:08:44 stat 現在地 / transition=退出 ids=1 lat=35.5050488 lon=139.6779680 accuracy=18m age=1s
+2026/05/07 08:08:44 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=1 error=- trigger=lat=35.5046634 lon=139.6783643 accuracy=13m age=34s
+2026/05/07 07:52:58 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 07:52:58 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 07:52:58 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 01:30:53 igno 現場 / 現在地が登録地点から1km以上離れている distance=16888m
+2026/05/07 01:30:53 geof 現場 / 退出
+2026/05/07 01:30:53 igno 横浜駅 / 現在地が登録地点から1km以上離れている distance=6639m
+2026/05/07 01:30:52 geof 横浜駅 / 退出
+2026/05/07 01:30:52 igno 新子安駅 / 現在地が登録地点から1km以上離れている distance=2933m
+2026/05/07 01:30:52 geof 新子安駅 / 退出
+2026/05/07 01:30:52 noti 鶴見駅 を 退出 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 01:30:52 geof 鶴見駅 / 退出
+2026/05/07 01:30:52 stat 現在地 / transition=退出 ids=2,3,4,5 lat=35.5022199 lon=139.6802812 accuracy=13m age=13s
+2026/05/07 01:30:52 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2,3,4,5 error=- trigger=lat=35.5022199 lon=139.6802812 accuracy=13m age=13s
+2026/05/07 01:30:52 noti 自宅 に 到着 / URLを開く：https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 01:30:51 geof 自宅 / 到着
+2026/05/07 01:30:51 stat 現在地 / transition=到着 ids=1 lat=35.5022199 lon=139.6802812 accuracy=13m age=12s
+2026/05/07 01:30:51 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=1 error=- trigger=lat=35.5022199 lon=139.6802812 accuracy=13m age=11s
+2026/05/07 01:00:39 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 01:00:39 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 01:00:39 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 01:00:26 mark ------------------------------------------------------------ 区切り ------------------------------------------------------------ / 
+2026/05/07 00:59:49 rule 現場 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:59:47 rule 現場 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/07 00:59:46 regi 登録成功 / count=5
+2026/05/07 00:59:46 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:59:46 regi 現場 / 登録対象 radius=100m transition=到着/退出 lat=35.40232 lon=139.539917
+2026/05/07 00:59:46 regi 横浜駅 / 登録対象 radius=300m transition=到着/退出 lat=35.46598110000001 lon=139.622062
+2026/05/07 00:59:46 regi 新子安駅 / 登録対象 radius=300m transition=到着/退出 lat=35.4868029 lon=139.6540173
+2026/05/07 00:59:46 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:59:46 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:59:46 regi 既存登録解除 / 成功
+2026/05/07 00:59:46 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:59:46 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:59:46 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/07 00:59:46 rule 現場 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/07 00:59:45 rule 現場 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:44 regi 登録成功 / count=5
+2026/05/07 00:59:44 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:59:44 regi 現場 / 登録対象 radius=100m transition=到着 lat=35.40232 lon=139.539917
+2026/05/07 00:59:44 regi 横浜駅 / 登録対象 radius=300m transition=到着/退出 lat=35.46598110000001 lon=139.622062
+2026/05/07 00:59:44 regi 新子安駅 / 登録対象 radius=300m transition=到着/退出 lat=35.4868029 lon=139.6540173
+2026/05/07 00:59:44 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:59:44 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:59:44 regi 既存登録解除 / 成功
+2026/05/07 00:59:44 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:59:44 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:59:44 regi 再登録開始 / rules=5 enabled=5 max=5
+2026/05/07 00:59:43 rule 現場 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:08 rule 現場 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:07 rule げんば 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:07 rule げんは 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:07 rule げん 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:06 rule げ 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:06 rule け 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:59:03 regi 登録成功 / count=4
+2026/05/07 00:59:03 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:59:03 regi 横浜駅 / 登録対象 radius=300m transition=到着/退出 lat=35.46598110000001 lon=139.622062
+2026/05/07 00:59:03 regi 新子安駅 / 登録対象 radius=300m transition=到着/退出 lat=35.4868029 lon=139.6540173
+2026/05/07 00:59:03 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:59:03 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:59:03 regi 5 / 登録対象外 無効
+2026/05/07 00:59:03 regi 既存登録解除 / 成功
+2026/05/07 00:59:03 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:59:03 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:59:03 regi 再登録開始 / rules=5 enabled=4 max=5
+2026/05/07 00:59:02 rule 5 新規保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:56 rule 横浜駅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:58:48 rule 横浜駅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/07 00:58:48 regi 登録成功 / count=4
+2026/05/07 00:58:48 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:58:48 regi 横浜駅 / 登録対象 radius=300m transition=到着/退出 lat=35.46598110000001 lon=139.622062
+2026/05/07 00:58:48 regi 新子安駅 / 登録対象 radius=300m transition=到着/退出 lat=35.4868029 lon=139.6540173
+2026/05/07 00:58:48 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:58:48 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:58:48 regi 既存登録解除 / 成功
+2026/05/07 00:58:48 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:58:48 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:58:48 regi 再登録開始 / rules=4 enabled=4 max=5
+2026/05/07 00:58:47 rule 横浜駅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/07 00:58:46 rule 横浜駅 保存 / enabled=ON location=あり radius=300m transition=到着 cooldown=なし action=通知のみ target=-
+2026/05/07 00:58:46 regi 登録成功 / count=4
+2026/05/07 00:58:46 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:58:46 regi 横浜駅 / 登録対象 radius=300m transition=到着 lat=35.46598110000001 lon=139.622062
+2026/05/07 00:58:46 regi 新子安駅 / 登録対象 radius=300m transition=到着/退出 lat=35.4868029 lon=139.6540173
+2026/05/07 00:58:46 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:58:46 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:58:46 regi 既存登録解除 / 成功
+2026/05/07 00:58:46 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:58:46 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:58:46 regi 再登録開始 / rules=4 enabled=4 max=5
+2026/05/07 00:58:45 rule 横浜駅 保存 / enabled=ON location=あり radius=300m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:37 rule 横浜駅 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:36 rule 横浜えき 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:36 rule 横浜え 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:35 rule 横浜 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:34 rule よこ 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:34 rule よ 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/07 00:58:07 rule 新子安駅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:58:07 rule しんこ 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:58:06 rule しん 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:58:06 rule し 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:58:04 rule 3 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:58:04 rule ジ 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:57:53 rule ジム 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:57:50 rule ジム 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/07 00:57:49 regi 登録成功 / count=3
+2026/05/07 00:57:49 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:57:49 regi ジム / 登録対象 radius=300m transition=到着/退出 lat=35.4868029 lon=139.6540173
+2026/05/07 00:57:49 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:57:49 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:57:49 regi 4 / 登録対象外 無効
+2026/05/07 00:57:49 regi 既存登録解除 / 成功
+2026/05/07 00:57:49 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:57:49 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:57:49 regi 再登録開始 / rules=4 enabled=3 max=5
+2026/05/07 00:57:48 rule ジム 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/07 00:57:44 regi 登録成功 / count=3
+2026/05/07 00:57:44 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:57:44 regi ジム / 登録対象 radius=100m transition=到着/退出 lat=35.4868029 lon=139.6540173
+2026/05/07 00:57:44 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:57:44 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:57:44 regi 4 / 登録対象外 無効
+2026/05/07 00:57:44 regi 既存登録解除 / 成功
+2026/05/07 00:57:44 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:57:44 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:57:44 regi 再登録開始 / rules=4 enabled=3 max=5
+2026/05/07 00:57:43 rule ジム 保存 / enabled=ON location=あり radius=100m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/07 00:56:41 rule ジム 保存 / enabled=OFF location=なし radius=100m transition=到着/退出 cooldown=なし action=通知のみ target=-
+2026/05/07 00:56:33 rule 鶴見駅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:56:31 rule 鶴見駅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/07 00:56:31 regi 登録成功 / count=2
+2026/05/07 00:56:31 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:56:31 regi 鶴見駅 / 登録対象 radius=300m transition=到着/退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:56:31 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:56:31 regi 4 / 登録対象外 無効
+2026/05/07 00:56:31 regi ジム / 登録対象外 無効
+2026/05/07 00:56:31 regi 既存登録解除 / 成功
+2026/05/07 00:56:30 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:56:30 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:56:30 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/07 00:56:29 rule 鶴見駅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:56:27 rule 鶴見駅 保存 / enabled=ON location=あり radius=300m transition=退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:56:26 rule つる 保存 / enabled=ON location=あり radius=300m transition=退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:56:26 rule つ 保存 / enabled=ON location=あり radius=300m transition=退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:56:26 rule 2 保存 / enabled=ON location=あり radius=300m transition=退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:56:25 rule 会 保存 / enabled=ON location=あり radius=300m transition=退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:56:24 regi 登録成功 / count=2
+2026/05/07 00:56:24 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:56:24 regi 会社 / 登録対象 radius=300m transition=退出 lat=35.5082879683025 lon=139.676235280931
+2026/05/07 00:56:24 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:56:24 regi 4 / 登録対象外 無効
+2026/05/07 00:56:24 regi ジム / 登録対象外 無効
+2026/05/07 00:56:24 regi 既存登録解除 / 成功
+2026/05/07 00:56:24 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:56:24 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:56:24 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/07 00:56:23 rule 会社 保存 / enabled=ON location=あり radius=300m transition=退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:55:49 regi 登録成功 / count=1
+2026/05/07 00:55:49 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:55:49 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:55:49 regi 4 / 登録対象外 無効
+2026/05/07 00:55:49 regi ジム / 登録対象外 無効
+2026/05/07 00:55:49 regi 会社 / 登録対象外 無効
+2026/05/07 00:55:49 regi 既存登録解除 / 成功
+2026/05/07 00:55:49 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:55:49 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:55:49 regi 再登録開始 / rules=4 enabled=1 max=5
+2026/05/07 00:55:48 rule 会社 保存 / enabled=OFF location=なし radius=100m transition=退出 cooldown=なし action=アプリを開く target=Teams
+2026/05/07 00:55:31 rule 自宅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=https://id.obc.jp/ia0e0ne1prj4/
+2026/05/07 00:55:19 rule 自宅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=URLを開く target=-
+2026/05/07 00:55:16 regi 登録成功 / count=2
+2026/05/07 00:55:16 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:55:16 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/07 00:55:16 regi 自宅 / 登録対象 radius=300m transition=到着/退出 lat=35.502244 lon=139.6802823
+2026/05/07 00:55:16 regi 4 / 登録対象外 無効
+2026/05/07 00:55:16 regi ジム / 登録対象外 無効
+2026/05/07 00:55:16 regi 既存登録解除 / 成功
+2026/05/07 00:55:16 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:55:16 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:55:16 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/07 00:55:15 rule 自宅 保存 / enabled=ON location=あり radius=300m transition=到着/退出 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:13 regi 登録成功 / count=2
+2026/05/07 00:55:13 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:55:13 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/07 00:55:13 regi 自宅 / 登録対象 radius=300m transition=到着 lat=35.502244 lon=139.6802823
+2026/05/07 00:55:13 regi 4 / 登録対象外 無効
+2026/05/07 00:55:13 regi ジム / 登録対象外 無効
+2026/05/07 00:55:13 regi 既存登録解除 / 成功
+2026/05/07 00:55:13 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:55:13 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:55:13 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/07 00:55:12 rule 自宅 保存 / enabled=ON location=あり radius=300m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:08 regi 登録成功 / count=1
+2026/05/07 00:55:08 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/07 00:55:08 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/07 00:55:08 regi 4 / 登録対象外 無効
+2026/05/07 00:55:08 regi ジム / 登録対象外 無効
+2026/05/07 00:55:08 regi 自宅 / 登録対象外 無効
+2026/05/07 00:55:08 regi 既存登録解除 / 成功
+2026/05/07 00:55:08 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:55:08 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:55:08 regi 再登録開始 / rules=4 enabled=1 max=5
+2026/05/07 00:55:07 rule 自宅 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:04 rule 自宅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:03 rule じたく 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:03 rule じた 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:03 rule じ 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:03 rule し 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:00 rule 1 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:55:00 rule 渋 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:54:59 rule 渋谷 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/07 00:54:54 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/07 00:54:53 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/07 00:54:53 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 20:30:46 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=Amazon ショッピング
+2026/05/06 20:30:43 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=-
+2026/05/06 20:30:37 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 20:30:36 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/06 20:30:36 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 20:30:33 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 20:30:33 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/06 20:30:33 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 20:17:35 noti 渋谷駅 に 到着 / URLを開く：
+2026/05/06 20:17:35 noti 通知後アクション準備失敗 / URLを開く 
+2026/05/06 20:17:35 geof 渋谷駅 / 到着
+2026/05/06 20:17:35 stat 現在地 / transition=到着 ids=1 lat=35.5020176 lon=139.6798166 accuracy=22m age=3s
+2026/05/06 20:17:34 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=1 error=- trigger=lat=35.5020176 lon=139.6798166 accuracy=22m age=2s
+2026/05/06 18:24:33 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 18:24:33 regi 登録成功 / count=2
+2026/05/06 18:24:33 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/06 18:24:33 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/06 18:24:33 regi 渋谷駅 / 登録対象 radius=100m transition=到着 lat=35.5022152 lon=139.6803055
+2026/05/06 18:24:33 regi 4 / 登録対象外 無効
+2026/05/06 18:24:33 regi ジム / 登録対象外 無効
+2026/05/06 18:24:33 regi 既存登録解除 / 成功
+2026/05/06 18:24:33 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/06 18:24:33 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 18:24:32 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/06 18:24:32 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 18:24:32 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/06 18:24:32 boot 端末再起動 / rules=4 enabled=2
+2026/05/06 18:24:32 mark ------------------------------------------------------------ 端末再起動 ------------------------------------------------------------ / 
+2026/05/06 10:33:31 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 10:33:31 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/06 10:33:31 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 10:33:17 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 10:33:17 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/06 10:33:17 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 10:33:06 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 10:33:06 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=ON
+2026/05/06 10:33:06 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 09:49:56 igno 会社 / 現在地が登録地点から1km以上離れている distance=21362m
+2026/05/06 09:49:56 geof 会社 / 退出
+2026/05/06 09:49:56 stat 現在地 / transition=退出 ids=2 lat=35.5022430 lon=139.6802782 accuracy=13m age=2s
+2026/05/06 09:49:56 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=退出 ids=2 error=- trigger=lat=35.5022405 lon=139.6802812 accuracy=100m age=186s
+2026/05/06 09:49:56 noti 渋谷駅 に 到着 / URLを開く：
+2026/05/06 09:49:56 noti 通知後アクション準備失敗 / URLを開く 
+2026/05/06 09:49:56 geof 渋谷駅 / 到着
+2026/05/06 09:49:56 stat 現在地 / transition=到着 ids=1 lat=35.5022430 lon=139.6802782 accuracy=13m age=2s
+2026/05/06 09:49:55 recv ジオフェンス / action=com.yasumo.locationlambda.ACTION_GEOFENCE_EVENT transition=到着 ids=1 error=- trigger=lat=35.5022405 lon=139.6802812 accuracy=100m age=184s
+2026/05/06 01:03:07 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:03:07 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:03:07 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:03:07 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:03:07 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:03:07 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:19 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:18 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:01:18 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:10 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:10 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:01:10 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:01 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:01 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:01:01 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:00 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:01:00 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:01:00 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:00:58 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:00:58 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:00:58 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:00:55 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 01:00:55 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 01:00:55 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:59:47 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:59:47 regi 登録成功 / count=2
+2026/05/06 00:59:47 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:59:47 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:59:47 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/06 00:59:47 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/06 00:59:47 regi 渋谷駅 / 登録対象 radius=100m transition=到着 lat=35.5022152 lon=139.6803055
+2026/05/06 00:59:47 regi 4 / 登録対象外 無効
+2026/05/06 00:59:47 regi ジム / 登録対象外 無効
+2026/05/06 00:59:47 regi 既存登録解除 / 成功
+2026/05/06 00:59:47 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:59:47 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:59:47 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/06 00:59:47 boot 端末再起動 / rules=4 enabled=2
+2026/05/06 00:59:47 mark ------------------------------------------------------------ 端末再起動 ------------------------------------------------------------ / 
+2026/05/06 00:54:52 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:54:52 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:54:52 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:54:42 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:54:42 regi 登録成功 / count=2
+2026/05/06 00:54:42 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:54:42 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:54:42 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/06 00:54:42 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/06 00:54:42 regi 渋谷駅 / 登録対象 radius=100m transition=到着 lat=35.5022152 lon=139.6803055
+2026/05/06 00:54:42 regi 4 / 登録対象外 無効
+2026/05/06 00:54:42 regi ジム / 登録対象外 無効
+2026/05/06 00:54:42 regi 既存登録解除 / 成功
+2026/05/06 00:54:42 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:54:42 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:54:42 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/06 00:54:42 boot 端末再起動 / rules=4 enabled=2
+2026/05/06 00:54:42 mark ------------------------------------------------------------ 端末再起動 ------------------------------------------------------------ / 
+2026/05/06 00:49:10 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:49:09 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:49:09 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:48:32 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=-
+2026/05/06 00:48:31 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=アプリを開く target=-
+2026/05/06 00:47:51 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:47:51 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:47:51 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:47:00 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:47:00 regi 登録成功 / count=2
+2026/05/06 00:47:00 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/06 00:47:00 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/06 00:47:00 regi 渋谷駅 / 登録対象 radius=100m transition=到着 lat=35.5022152 lon=139.6803055
+2026/05/06 00:47:00 regi 4 / 登録対象外 無効
+2026/05/06 00:47:00 regi ジム / 登録対象外 無効
+2026/05/06 00:47:00 regi 既存登録解除 / 成功
+2026/05/06 00:47:00 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:47:00 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:47:00 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:47:00 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:47:00 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/06 00:47:00 boot 端末再起動 / rules=4 enabled=2
+2026/05/06 00:47:00 mark ------------------------------------------------------------ 端末再起動 ------------------------------------------------------------ / 
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=-
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=h
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=ht
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=htt
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=http
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https:
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https:/
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://e
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://ex
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://exa
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://exam
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://examp
+2026/05/06 00:22:12 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://exampl
+2026/05/06 00:22:11 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example
+2026/05/06 00:22:11 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example.
+2026/05/06 00:22:11 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example.c
+2026/05/06 00:22:11 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example.co
+2026/05/06 00:22:11 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example.com
+2026/05/06 00:22:10 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example.comあ
+2026/05/06 00:11:26 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:11:26 regi 登録成功 / count=2
+2026/05/06 00:11:26 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:11:26 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:11:26 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/06 00:11:26 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/06 00:11:26 regi 渋谷駅 / 登録対象 radius=100m transition=到着 lat=35.5022152 lon=139.6803055
+2026/05/06 00:11:26 regi 4 / 登録対象外 無効
+2026/05/06 00:11:26 regi ジム / 登録対象外 無効
+2026/05/06 00:11:26 regi 既存登録解除 / 成功
+2026/05/06 00:11:25 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/06 00:11:25 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/06 00:11:25 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/06 00:11:25 boot 端末再起動 / rules=4 enabled=2
+2026/05/06 00:11:25 mark ------------------------------------------------------------ 端末再起動 ------------------------------------------------------------ / 
+2026/05/05 18:04:16 regi 登録成功 / count=2
+2026/05/05 18:04:16 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/05 18:04:16 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/05 18:04:16 regi 渋谷駅 / 登録対象 radius=100m transition=到着 lat=35.5022152 lon=139.6803055
+2026/05/05 18:04:16 regi 4 / 登録対象外 無効
+2026/05/05 18:04:16 regi ジム / 登録対象外 無効
+2026/05/05 18:04:16 regi 既存登録解除 / 成功
+2026/05/05 18:04:16 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 18:04:16 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 18:04:16 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/05 18:04:15 rule 渋谷駅 保存 / enabled=ON location=あり radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example.com
+2026/05/05 18:04:10 regi 登録成功 / count=1
+2026/05/05 18:04:10 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/05 18:04:10 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/05 18:04:10 regi 4 / 登録対象外 無効
+2026/05/05 18:04:10 regi ジム / 登録対象外 無効
+2026/05/05 18:04:10 regi 渋谷駅 / 登録対象外 無効
+2026/05/05 18:04:10 regi 既存登録解除 / 成功
+2026/05/05 18:04:10 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 18:04:10 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 18:04:10 regi 再登録開始 / rules=4 enabled=1 max=5
+2026/05/05 18:04:09 rule 渋谷駅 保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=なし action=URLを開く target=https://example.com
+2026/05/05 18:04:04 regi 登録成功 / count=2
+2026/05/05 18:04:04 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/05 18:04:04 regi 渋谷駅 / 登録対象 radius=150m transition=到着 lat=35.658034 lon=139.701636
+2026/05/05 18:04:04 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/05 18:04:04 regi 4 / 登録対象外 無効
+2026/05/05 18:04:04 regi ジム / 登録対象外 無効
+2026/05/05 18:04:04 regi 既存登録解除 / 成功
+2026/05/05 18:04:04 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 18:04:04 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 18:04:04 regi 再登録開始 / rules=4 enabled=2 max=5
+2026/05/05 18:04:03 rule 4 新規保存 / enabled=OFF location=なし radius=100m transition=到着 cooldown=5分 action=通知のみ target=-
+2026/05/05 17:54:30 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 17:54:30 regi 登録成功 / count=2
+2026/05/05 17:54:30 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 17:54:30 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 17:54:30 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/05 17:54:30 regi 渋谷駅 / 登録対象 radius=150m transition=到着 lat=35.658034 lon=139.701636
+2026/05/05 17:54:30 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/05 17:54:30 regi ジム / 登録対象外 無効
+2026/05/05 17:54:30 regi 既存登録解除 / 成功
+2026/05/05 17:54:29 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 17:54:29 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 17:54:29 regi 再登録開始 / rules=3 enabled=2 max=5
+2026/05/05 17:54:29 boot 端末再起動 / rules=3 enabled=2
+2026/05/05 17:54:29 mark ------------------------------------------------------------ 端末再起動 ------------------------------------------------------------ / 
+2026/05/05 17:54:19 perm バックグラウンド位置許可 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 17:54:19 regi 登録成功 / count=2
+2026/05/05 17:54:19 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/05 17:54:19 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/05 17:54:19 regi 渋谷駅 / 登録対象 radius=150m transition=到着 lat=35.658034 lon=139.701636
+2026/05/05 17:54:19 regi ジム / 登録対象外 無効
+2026/05/05 17:54:19 regi 既存登録解除 / 成功
+2026/05/05 17:54:18 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 17:54:18 perm 起動時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 17:54:17 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 17:54:17 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 17:54:17 regi 再登録開始 / rules=3 enabled=2 max=5
+2026/05/05 17:54:17 boot 端末再起動 / rules=3 enabled=2
+2026/05/05 17:54:17 mark ------------------------------------------------------------ 端末再起動 ------------------------------------------------------------ / 
+2026/05/05 17:47:26 regi 登録成功 / count=2
+2026/05/05 17:47:26 supp 初期トリガー / 再登録直後は発火させない setInitialTrigger=0
+2026/05/05 17:47:26 regi 会社 / 登録対象 radius=200m transition=退出 lat=35.681236 lon=139.767125
+2026/05/05 17:47:26 regi 渋谷駅 / 登録対象 radius=150m transition=到着 lat=35.658034 lon=139.701636
+2026/05/05 17:47:26 regi ジム / 登録対象外 無効
+2026/05/05 17:47:26 regi 既存登録解除 / 成功
+2026/05/05 17:47:26 stat 再登録時 / 位置情報=ON gps=ON network=ON gms=OK 通知=ON channel=未作成
+2026/05/05 17:47:26 perm 再登録時 / 通知=許可 fine=許可 coarse=許可 background=許可
+2026/05/05 17:47:26 regi 再登録開始 / rules=3 enabled=2 max=5
+2026/05/05 17:47:26 boot アプリ更新 / rules=3 enabled=2
+2026/05/05 17:43:15 perm バックグラウンド位置未許可 / 通知=許可 fine=許可 coarse=許可 background=未許可
+2026/05/05 17:43:15 perm 前景位置権限許可 / 通知=許可 fine=許可 coarse=許可 background=未許可
+2026/05/05 17:43:10 perm 通知権限許可 / 通知=許可 fine=未許可 coarse=未許可 background=未許可
+2026/05/05 17:43:05 stat 起動時 / 位置情報=ON gps=ON network=ON gms=OK 通知=OFF channel=未作成
+2026/05/05 17:43:05 perm 起動時 / 通知=未許可 fine=未許可 coarse=未許可 background=未許可
