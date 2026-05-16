@@ -1,4 +1,5 @@
 import java.util.Properties
+import org.gradle.api.tasks.Copy
 
 plugins {
     alias(libs.plugins.android.application)
@@ -12,6 +13,10 @@ val localProperties = Properties().apply {
     }
 }
 val mapsApiKey = localProperties.getProperty("MAPS_API_KEY", "")
+val releaseStoreFile = localProperties.getProperty("RELEASE_STORE_FILE")
+val releaseStorePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")
+val releaseKeyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
+val releaseKeyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD", releaseStorePassword)
 
 android {
     namespace = "com.yasumo.locationlambda"
@@ -29,12 +34,37 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            if (
+                !releaseStoreFile.isNullOrBlank() &&
+                !releaseStorePassword.isNullOrBlank() &&
+                !releaseKeyAlias.isNullOrBlank() &&
+                !releaseKeyPassword.isNullOrBlank()
+            ) {
+                storeFile = file(releaseStoreFile)
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         debug {
-            // ツールの表示非表示
+            // デバッグ時のみ表示
             buildConfigField("Boolean", "SHOW_DEBUG_TOOLS", "true")
         }
         release {
+            if (
+                !releaseStoreFile.isNullOrBlank() &&
+                !releaseStorePassword.isNullOrBlank() &&
+                !releaseKeyAlias.isNullOrBlank() &&
+                !releaseKeyPassword.isNullOrBlank()
+            ) {
+                signingConfig = signingConfigs.getByName("release")
+                signingConfigs.getByName("release").storeFile = rootProject.file(releaseStoreFile)
+            }
             isMinifyEnabled = false
             buildConfigField("Boolean", "SHOW_DEBUG_TOOLS", "false")
             proguardFiles(
@@ -75,4 +105,13 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+val renameReleaseApk by tasks.registering(Copy::class) {
+    dependsOn("assembleRelease")
+    from(layout.buildDirectory.dir("outputs/apk/release")) {
+        include("app-release.apk")
+    }
+    into(layout.buildDirectory.dir("outputs/apk/distribution"))
+    rename("app-release.apk", "LocationLambda-v1.0.apk")
 }
