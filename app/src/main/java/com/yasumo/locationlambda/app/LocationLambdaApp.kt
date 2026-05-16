@@ -4,10 +4,6 @@ import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,8 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.yasumo.locationlambda.BuildConfig
 import com.yasumo.locationlambda.data.ActionType
 import com.yasumo.locationlambda.data.LocationRule
@@ -56,7 +50,6 @@ internal fun LocationLambdaApp() {
     val debugLogRepository = remember(context) { DebugLogRepository(context) }
     val geofenceManager = remember(context) { GeofenceManager(context) }
     var showDebugLogScreen by remember { mutableStateOf(false) }
-    var showIntroDialog by remember { mutableStateOf(true) }
     var rules by remember { mutableStateOf(repository.loadRules()) }
     var editingRuleId by remember { mutableStateOf<String?>(null) }
     var editingDraftRule by remember { mutableStateOf<LocationRule?>(null) }
@@ -237,44 +230,6 @@ internal fun LocationLambdaApp() {
                     context.openAppSettings()
                 }
         )
-    }
-
-    if (showIntroDialog) {
-        Dialog(
-                onDismissRequest = { showIntroDialog = false },
-                properties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            Surface(
-                    modifier = Modifier.fillMaxSize().padding(16.dp),
-                    shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(
-                        modifier = Modifier.fillMaxSize().padding(24.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Location Lambdaへようこそ")
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Text(
-                                "指定した場所に到着・退出したときに\n" +
-                                        "通知やアクションを実行できます。\n\n" +
-                                        "使い方\n" +
-                                        "1. ルールを作成\n" +
-                                        "2. 地点を選択\n" +
-                                        "3. 条件を設定\n" +
-                                        "4. 通知や起動アプリ設定"
-                        )
-                    }
-
-                    Button(
-                            onClick = { showIntroDialog = false },
-                            modifier = Modifier.fillMaxWidth()
-                    ) { Text("はじめる") }
-                }
-            }
-        }
     }
 
     if (BuildConfig.SHOW_DEBUG_TOOLS && showDebugLogScreen) {
