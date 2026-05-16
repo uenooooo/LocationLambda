@@ -2,10 +2,12 @@ package com.yasumo.locationlambda.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -26,7 +28,12 @@ import com.yasumo.locationlambda.ui.theme.SlateSoft
 import com.yasumo.locationlambda.ui.theme.SuccessGreen
 
 @Composable
-internal fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
+internal fun HomeHeader(
+    ruleCount: Int,
+    activeCount: Int,
+    maxRules: Int,
+    onShowRequiredPermissions: () -> Unit
+) {
     Column(
         modifier = Modifier.padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -52,17 +59,24 @@ internal fun HomeHeader(ruleCount: Int, activeCount: Int, maxRules: Int) {
             style = MaterialTheme.typography.bodyMedium,
             color = SlateSoft
         )
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            StatPill(
-                label = "\u8a2d\u5b9a ${ruleCount}/${maxRules}\u4ef6",
-                color = Slate,
-                textColor = CardSurface
-            )
-            StatPill(
-                label = "\u6709\u52b9${activeCount}\u4ef6",
-                color = SuccessGreen,
-                textColor = CardSurface
-            )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                StatPill(
+                    label = "\u8a2d\u5b9a ${ruleCount}/${maxRules}\u4ef6",
+                    color = Slate,
+                    textColor = CardSurface
+                )
+                StatPill(
+                    label = "\u6709\u52b9${activeCount}\u4ef6",
+                    color = SuccessGreen,
+                    textColor = CardSurface
+                )
+            }
+            HeaderPillButton(label = "\u6a29\u9650", onClick = onShowRequiredPermissions)
         }
     }
 }
@@ -79,6 +93,25 @@ private fun StatPill(label: String, color: Color, textColor: Color) {
             text = label,
             style = MaterialTheme.typography.labelLarge,
             color = textColor
+        )
+    }
+}
+
+@Composable
+private fun HeaderPillButton(label: String, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .background(Slate)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = CardSurface
         )
     }
 }

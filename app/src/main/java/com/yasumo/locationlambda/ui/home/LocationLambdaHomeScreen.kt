@@ -29,6 +29,7 @@ fun LocationLambdaHomeScreen(
     onEditRule: (LocationRuleUi) -> Unit,
     onEditEmptyRule: (Int) -> Unit,
     onToggleRule: (LocationRuleUi, Boolean) -> Unit,
+    onShowRequiredPermissions: () -> Unit,
     onDebugNotify: (LocationRuleUi) -> Unit
 ) {
     val ruleSlots = rules.map<LocationRuleUi, LocationRuleUi?> { it } +
@@ -58,7 +59,8 @@ fun LocationLambdaHomeScreen(
                     HomeHeader(
                         ruleCount = rules.count { it.hasRegisteredLocation() },
                         activeCount = rules.count { it.enabled },
-                        maxRules = maxRules
+                        maxRules = maxRules,
+                        onShowRequiredPermissions = onShowRequiredPermissions
                     )
                 }
                 item {
@@ -132,6 +134,7 @@ private fun LocationLambdaHomePreview() {
                 onEditRule = {},
                 onEditEmptyRule = {},
                 onToggleRule = { _, _ -> },
+                onShowRequiredPermissions = {},
                 onDebugNotify = {}
             )
         }

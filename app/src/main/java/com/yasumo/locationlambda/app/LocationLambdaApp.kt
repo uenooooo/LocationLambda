@@ -4,6 +4,9 @@ import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,6 +61,7 @@ internal fun LocationLambdaApp() {
     var showForegroundLocationDialog by remember { mutableStateOf(false) }
     var showLocationPermissionDeniedDialog by remember { mutableStateOf(false) }
     var showBackgroundLocationDialog by remember { mutableStateOf(false) }
+    var showRequiredPermissionsDialog by remember { mutableStateOf(false) }
     var geofenceRegistrationRequest by remember {
         mutableStateOf<GeofenceRegistrationRequest?>(null)
     }
@@ -232,6 +236,19 @@ internal fun LocationLambdaApp() {
         )
     }
 
+    if (showRequiredPermissionsDialog) {
+        AlertDialog(
+                onDismissRequest = { showRequiredPermissionsDialog = false },
+                title = { Text("必要権限") },
+                text = { Text("通知権限\n位置情報権限（前景・バックグラウンド）") },
+                confirmButton = {
+                    TextButton(onClick = { showRequiredPermissionsDialog = false }) {
+                        Text("閉じる")
+                    }
+                }
+        )
+    }
+
     if (BuildConfig.SHOW_DEBUG_TOOLS && showDebugLogScreen) {
         DebugLogScreen(onBack = { showDebugLogScreen = false })
         return
@@ -285,6 +302,7 @@ internal fun LocationLambdaApp() {
                             }
                     saveRules(updatedRules)
                 },
+                onShowRequiredPermissions = { showRequiredPermissionsDialog = true },
                 onDebugNotify = { rule ->
                     if (BuildConfig.SHOW_DEBUG_TOOLS) {
                         GeofenceNotificationHelper.showRuleNotification(context, rule)
