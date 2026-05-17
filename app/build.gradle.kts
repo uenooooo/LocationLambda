@@ -26,8 +26,8 @@ android {
         applicationId = "com.yasumo.locationlambda"
         minSdk = 29
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
         manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
         buildConfigField("String", "MAPS_API_KEY", "\"$mapsApiKey\"")
 
@@ -113,5 +113,5 @@ val renameReleaseApk by tasks.registering(Copy::class) {
         include("app-release.apk")
     }
     into(layout.buildDirectory.dir("outputs/apk/distribution"))
-    rename("app-release.apk", "LocationLambda-v1.0.apk")
+    rename("app-release.apk", "LocationLambda-v1.1.apk")
 }
