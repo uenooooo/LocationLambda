@@ -184,7 +184,7 @@ object GeofenceNotificationHelper {
         val manager = context.getSystemService(NotificationManager::class.java)
         val channel = NotificationChannel(
             CHANNEL_ID,
-            "\u30ed\u30b1\u30e9\u30e0\u901a\u77e5",
+            "ロケラム通知",
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = "\u5834\u6240\u306b\u5165\u308b\u30fb\u51fa\u308b\u3068\u304d\u306e\u901a\u77e5"

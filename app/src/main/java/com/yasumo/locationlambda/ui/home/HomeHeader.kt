@@ -44,11 +44,11 @@ internal fun HomeHeader(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.location_lambda_icon),
-                contentDescription = "Location Lambda",
+                contentDescription = "ロケラム",
                 modifier = Modifier.size(70.dp)
             )
             Text(
-                text = "\u30ed\u30b1\u30fc\u30b7\u30e7\u30f3\u30e9\u30e0\u30c0",
+                text = "ロケラム",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = Slate
