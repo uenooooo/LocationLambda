@@ -34,8 +34,8 @@ object GeofenceNotificationHelper {
         ) {
             DebugLogRepository(context).append(
                 type = DebugLogType.NOTIFICATION,
-                title = "\u901a\u77e5\u5931\u6557",
-                detail = "\u901a\u77e5\u6a29\u9650\u306a\u3057"
+                title = "通知失敗",
+                detail = "通知権限なし"
             )
             return false
         }
@@ -46,16 +46,16 @@ object GeofenceNotificationHelper {
         if (!notificationManager.areNotificationsEnabled()) {
             DebugLogRepository(context).append(
                 type = DebugLogType.NOTIFICATION,
-                title = "\u901a\u77e5\u5931\u6557",
-                detail = "\u30a2\u30d7\u30ea\u901a\u77e5OFF"
+                title = "通知失敗",
+                detail = "アプリ通知OFF"
             )
             return false
         }
         if (!isChannelEnabled(context)) {
             DebugLogRepository(context).append(
                 type = DebugLogType.NOTIFICATION,
-                title = "\u901a\u77e5\u5931\u6557",
-                detail = "\u901a\u77e5\u30c1\u30e3\u30f3\u30cd\u30ebOFF"
+                title = "通知失敗",
+                detail = "通知チャンネルOFF"
             )
             return false
         }
@@ -73,7 +73,7 @@ object GeofenceNotificationHelper {
         if (launchIntent == null && rule.actionType != ActionType.NOTIFICATION_ONLY) {
             DebugLogRepository(context).append(
                 type = DebugLogType.NOTIFICATION,
-                title = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3\u6e96\u5099\u5931\u6557",
+                title = "通知後アクション準備失敗",
                 detail = "${rule.actionTypeLabel} ${buildActionDetail(rule)}"
             )
         }
@@ -123,7 +123,7 @@ object GeofenceNotificationHelper {
         } else {
             DebugLogRepository(context).append(
                 type = DebugLogType.NOTIFICATION,
-                title = "\u901a\u77e5\u5931\u6557",
+                title = "通知失敗",
                 detail = result.exceptionOrNull()?.message.orEmpty()
             )
         }
@@ -131,15 +131,15 @@ object GeofenceNotificationHelper {
     }
 
     private fun buildTitle(rule: LocationRuleUi): String {
-        val trigger = rule.transitions.firstOrNull()?.label ?: "\u5230\u7740"
-        val particle = if (trigger == "\u9000\u51fa") "\u3092" else "\u306b"
+        val trigger = rule.transitions.firstOrNull()?.label ?: "到着"
+        val particle = if (trigger == "退出") "を" else "に"
         return "${rule.name} $particle $trigger"
     }
 
     private fun buildBody(rule: LocationRuleUi): String? {
         return when (rule.actionType) {
-            ActionType.URL -> "URL\u3092\u958b\u304f\uff1a${rule.actionTargetValue}"
-            ActionType.APP -> "\u30a2\u30d7\u30ea\u3092\u958b\u304f\uff1a${rule.actionTargetLabel}"
+            ActionType.URL -> "URLを開く：${rule.actionTargetValue}"
+            ActionType.APP -> "アプリを開く：${rule.actionTargetLabel}"
             ActionType.NOTIFICATION_ONLY -> null
         }
     }
@@ -187,7 +187,7 @@ object GeofenceNotificationHelper {
             "ロケラム通知",
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = "\u5834\u6240\u306b\u5165\u308b\u30fb\u51fa\u308b\u3068\u304d\u306e\u901a\u77e5"
+            description = "場所に入る・出るときの通知"
         }
         manager.createNotificationChannel(channel)
     }

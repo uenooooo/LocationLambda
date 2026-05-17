@@ -12,16 +12,16 @@ internal fun LocationRuleUi.hasRegisteredLocation(): Boolean {
 }
 
 internal fun String.toRadiusValueLabel(): String {
-    return replace("\u901a\u77e5\u534a\u5f84", "").ifBlank { "-" }
+    return replace("通知半径", "").ifBlank { "-" }
 }
 
 internal fun Int.toCooldownValueLabel(): String {
-    if (this <= 0) return "\u306a\u3057"
+    if (this <= 0) return "なし"
     val hours = this / 60
     val minutes = this % 60
     return when {
-        hours == 0 -> "${minutes}\u5206"
-        minutes == 0 -> "${hours}\u6642\u9593"
-        else -> "${hours}\u6642\u9593${minutes}\u5206"
+        hours == 0 -> "${minutes}分"
+        minutes == 0 -> "${hours}時間"
+        else -> "${hours}時間${minutes}分"
     }
 }

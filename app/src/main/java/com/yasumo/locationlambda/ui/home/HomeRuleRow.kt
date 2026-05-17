@@ -124,11 +124,11 @@ private fun RuleSummary(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 InlineInfo(
-                    label = "\u534a\u5f84",
+                    label = "半径",
                     value = rule.areaLabel.toRadiusValueLabel()
                 )
                 InlineInfo(
-                    label = "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3",
+                    label = "クールダウン",
                     value = rule.cooldownMin.toCooldownValueLabel()
                 )
             }
@@ -178,7 +178,7 @@ private fun DebugNotifyButton(onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "\u901a\u77e5",
+            text = "通知",
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.SemiBold,
             color = Slate
@@ -193,7 +193,7 @@ private fun RuleActionSummary(
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3",
+            text = "通知後アクション",
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.SemiBold,
             color = Slate
@@ -204,7 +204,7 @@ private fun RuleActionSummary(
             color = SlateSoft
         )
         Text(
-            text = "\u5bfe\u8c61",
+            text = "対象",
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.SemiBold,
             color = Slate

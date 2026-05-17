@@ -1,6 +1,5 @@
 package com.yasumo.locationlambda.ui.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,10 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.yasumo.locationlambda.R
 import com.yasumo.locationlambda.ui.theme.CardSurface
 import com.yasumo.locationlambda.ui.theme.Slate
 import com.yasumo.locationlambda.ui.theme.SlateSoft
@@ -38,24 +34,8 @@ internal fun HomeHeader(
         modifier = Modifier.padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.location_lambda_icon),
-                contentDescription = "ロケラム",
-                modifier = Modifier.size(70.dp)
-            )
-            Text(
-                text = "ロケラム",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = Slate
-            )
-        }
         Text(
-            text = "\u5834\u6240\u306b\u5230\u7740\u30fb\u9000\u51fa\u3057\u305f\u3068\u304d\u306b\u901a\u77e5\u3068\u30a2\u30af\u30b7\u30e7\u30f3\u3092\u8a2d\u5b9a\u3067\u304d\u307e\u3059\u3002",
+            text = "場所に到着・退出したときに通知とアクションを設定できます。",
             style = MaterialTheme.typography.bodyMedium,
             color = SlateSoft
         )
@@ -66,17 +46,17 @@ internal fun HomeHeader(
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 StatPill(
-                    label = "\u8a2d\u5b9a ${ruleCount}/${maxRules}\u4ef6",
+                    label = "設定 ${ruleCount}/${maxRules}件",
                     color = Slate,
                     textColor = CardSurface
                 )
                 StatPill(
-                    label = "\u6709\u52b9${activeCount}\u4ef6",
+                    label = "有効${activeCount}件",
                     color = SuccessGreen,
                     textColor = CardSurface
                 )
             }
-            HeaderPillButton(label = "\u6a29\u9650", onClick = onShowRequiredPermissions)
+            HeaderPillButton(label = "権限", onClick = onShowRequiredPermissions)
         }
     }
 }

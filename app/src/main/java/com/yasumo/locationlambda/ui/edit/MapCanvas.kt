@@ -86,13 +86,13 @@ internal fun RealMap(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "Maps API\u30ad\u30fc\u3092\u8a2d\u5b9a\u3059\u308b\u3068\u5730\u56f3\u304c\u8868\u793a\u3055\u308c\u307e\u3059\u3002",
+                        text = "Maps APIキーを設定すると地図が表示されます。",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = Slate
                     )
                     Text(
-                        text = "local.properties \u306b MAPS_API_KEY=... \u3092\u8ffd\u52a0\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+                        text = "local.properties に MAPS_API_KEY=... を追加してください。",
                         style = MaterialTheme.typography.bodyMedium,
                         color = SlateSoft
                     )

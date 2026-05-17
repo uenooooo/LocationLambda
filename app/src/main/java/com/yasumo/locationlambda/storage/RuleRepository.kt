@@ -74,8 +74,8 @@ class RuleRepository(context: Context) {
         return listOf(
             LocationRule(
                 id = "1",
-                name = "\u6e0b\u8c37\u99c5",
-                address = "\u6771\u4eac\u90fd\u6e0b\u8c37\u533a\u9053\u7384\u57421-1-1",
+                name = "渋谷駅",
+                address = "東京都渋谷区道玄坂1-1-1",
                 latitude = 35.658034,
                 longitude = 139.701636,
                 radiusMeters = 150f,
@@ -89,8 +89,8 @@ class RuleRepository(context: Context) {
             ),
             LocationRule(
                 id = "2",
-                name = "\u4f1a\u793e",
-                address = "\u6771\u4eac\u90fd\u5343\u4ee3\u7530\u533a\u4e38\u306e\u51851-1-1",
+                name = "会社",
+                address = "東京都千代田区丸の内1-1-1",
                 latitude = 35.681236,
                 longitude = 139.767125,
                 radiusMeters = 200f,
@@ -104,8 +104,8 @@ class RuleRepository(context: Context) {
             ),
             LocationRule(
                 id = "3",
-                name = "\u30b8\u30e0",
-                address = "\u6771\u4eac\u90fd\u65b0\u5bbf\u533a\u897f\u65b0\u5bbf2-2-2",
+                name = "ジム",
+                address = "東京都新宿区西新宿2-2-2",
                 latitude = 35.689634,
                 longitude = 139.692101,
                 radiusMeters = 120f,

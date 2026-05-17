@@ -207,7 +207,7 @@ fun LocationLambdaEditScreen(
                 val hadRegisteredLocation = hasRegisteredLocation(latitude, longitude, address)
                 val selectedAddress = result.address.ifBlank { address }
                 address = selectedAddress
-                radiusLabel = "\u901a\u77e5\u534a\u5f84${result.radiusMeters.toInt()}m"
+                radiusLabel = "通知半径${result.radiusMeters.toInt()}m"
                 latitude = result.latitude
                 longitude = result.longitude
                 radiusMeters = result.radiusMeters
@@ -245,7 +245,7 @@ fun LocationLambdaEditScreen(
                     shape = RoundedCornerShape(28.dp)
                 ) {
                     Column {
-                        CompactSeamlessSection(title = "\u540d\u524d") {
+                        CompactSeamlessSection(title = "名前") {
                             TitleNameEditor(
                                 value = name,
                                 onValueChange = { name = it },
@@ -253,22 +253,22 @@ fun LocationLambdaEditScreen(
                             )
                         }
                         DividerLine()
-                        SeamlessSection(title = "\u5834\u6240\u3068\u901a\u77e5\u534a\u5f84") {
+                        SeamlessSection(title = "場所と通知半径") {
                             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                                 MapSelectorRow(
                                     address = address,
                                     radiusLabel = radiusLabel
                                 )
                                 FullWidthActionButton(
-                                    label = "\u5730\u56f3\u3067\u9078\u629e",
+                                    label = "地図で選択",
                                     onClick = { showMapSelectionScreen = true }
                                 )
                                 FullWidthActionButton(
-                                    label = "\u9078\u629e\u3092\u524a\u9664",
+                                    label = "選択を削除",
                                     destructive = true,
                                     onClick = {
                                         address = "-"
-                                        radiusLabel = "\u901a\u77e5\u534a\u5f84100m"
+                                        radiusLabel = "通知半径100m"
                                         latitude = null
                                         longitude = null
                                         radiusMeters = 100f
@@ -278,16 +278,16 @@ fun LocationLambdaEditScreen(
                             }
                         }
                         DividerLine()
-                        SeamlessSection(title = "\u30bf\u30a4\u30df\u30f3\u30b0") {
+                        SeamlessSection(title = "タイミング") {
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 SelectChip(
-                                    label = "\u5230\u7740",
+                                    label = "到着",
                                     selected = onEnter,
                                     selectedColor = EnterBlue,
                                     onClick = { onEnter = !onEnter }
                                 )
                                 SelectChip(
-                                    label = "\u9000\u51fa",
+                                    label = "退出",
                                     selected = onExit,
                                     selectedColor = ExitOrange,
                                     onClick = { onExit = !onExit }
@@ -295,7 +295,7 @@ fun LocationLambdaEditScreen(
                             }
                         }
                         DividerLine()
-                        SeamlessSection(title = "\u901a\u77e5\u30af\u30fc\u30eb\u30c0\u30a6\u30f3") {
+                        SeamlessSection(title = "通知クールダウン") {
                             CooldownSelector(
                                 cooldownMin = cooldownMin,
                                 isCustomCooldown = isCustomCooldown,
@@ -312,30 +312,30 @@ fun LocationLambdaEditScreen(
                             )
                         }
                         DividerLine()
-                        SeamlessSection(title = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3") {
+                        SeamlessSection(title = "通知後アクション") {
                             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                     ActionTypeChip(
-                                        label = "URL\u3092\u958b\u304f",
+                                        label = "URLを開く",
                                         selected = actionTypeModel == ActionType.URL.name,
                                         onClick = {
-                                            actionType = "URL\u3092\u958b\u304f"
+                                            actionType = "URLを開く"
                                             actionTypeModel = ActionType.URL.name
                                         }
                                     )
                                     ActionTypeChip(
-                                        label = "\u30a2\u30d7\u30ea\u3092\u958b\u304f",
+                                        label = "アプリを開く",
                                         selected = actionTypeModel == ActionType.APP.name,
                                         onClick = {
-                                            actionType = "\u30a2\u30d7\u30ea\u3092\u958b\u304f"
+                                            actionType = "アプリを開く"
                                             actionTypeModel = ActionType.APP.name
                                         }
                                     )
                                     ActionTypeChip(
-                                        label = "\u306a\u3057",
+                                        label = "なし",
                                         selected = actionTypeModel == ActionType.NOTIFICATION_ONLY.name,
                                         onClick = {
-                                            actionType = "\u306a\u3057"
+                                            actionType = "なし"
                                             actionTypeModel = ActionType.NOTIFICATION_ONLY.name
                                         }
                                     )

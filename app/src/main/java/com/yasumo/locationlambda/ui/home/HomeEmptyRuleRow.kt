@@ -83,7 +83,7 @@ internal fun EmptyRuleRow(
 
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "\u901a\u77e5\u5f8c\u30a2\u30af\u30b7\u30e7\u30f3",
+                text = "通知後アクション",
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate
@@ -94,7 +94,7 @@ internal fun EmptyRuleRow(
                 color = Divider
             )
             Text(
-                text = "\u5bfe\u8c61",
+                text = "対象",
                 style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate

@@ -190,7 +190,7 @@ fun MapSelectionScreen(
                                 modifier = Modifier.weight(1f),
                                 singleLine = true,
                                 placeholder = {
-                                    Text(text = "\u5834\u6240\u3092\u691c\u7d22")
+                                    Text(text = "場所を検索")
                                 },
                                 colors = TextFieldDefaults.colors(
                                     focusedContainerColor = Color.Transparent,
@@ -205,7 +205,7 @@ fun MapSelectionScreen(
                                 )
                             )
                             MapActionButton(
-                                label = "\u691c\u7d22",
+                                label = "検索",
                                 onClick = {
                                     focusManager.clearFocus()
                                     val keyword = searchQuery.trim()
@@ -223,12 +223,12 @@ fun MapSelectionScreen(
                         }
 
                         MapInfoRow(
-                            label = "\u4f4f\u6240",
+                            label = "住所",
                             value = resolvedAddress
                         )
                         HorizontalDivider(color = Divider)
                         Text(
-                            text = "\u901a\u77e5\u534a\u5f84",
+                            text = "通知半径",
                             style = MaterialTheme.typography.labelMedium,
                             color = SlateSoft
                         )
@@ -262,11 +262,11 @@ fun MapSelectionScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     MapActionButton(
-                        label = "\u30ad\u30e3\u30f3\u30bb\u30eb",
+                        label = "キャンセル",
                         onClick = onBack
                     )
                     MapActionButton(
-                        label = "\u3053\u306e\u5834\u6240\u3092\u4f7f\u3046",
+                        label = "この場所を使う",
                         primary = true,
                         onClick = {
                             onConfirm(
@@ -291,8 +291,8 @@ fun MapSelectionScreen(
 private fun MapSelectionScreenPreview() {
     LocationLambdaTheme {
         MapSelectionScreen(
-            name = "\u6e0b\u8c37\u99c5",
-            address = "\u6771\u4eac\u90fd\u6e0b\u8c37\u533a\u9053\u7384\u57421-1-1",
+            name = "渋谷駅",
+            address = "東京都渋谷区道玄坂1-1-1",
             radiusLabel = "150m",
             onBack = {},
             onConfirm = {}

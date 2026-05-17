@@ -106,7 +106,7 @@ fun DebugLogScreen(onBack: () -> Unit) {
         ) {
             if (logs.isEmpty()) {
                 Text(
-                    text = "\u8868\u793a\u4e2d\u306e\u30ed\u30b0\u306f\u3042\u308a\u307e\u305b\u3093\u3002",
+                    text = "表示中のログはありません。",
                     style = MaterialTheme.typography.bodyMedium,
                     color = SlateSoft
                 )
@@ -127,7 +127,7 @@ fun DebugLogScreen(onBack: () -> Unit) {
 private fun LogHelpDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "\u30ed\u30b0\u7a2e\u985e") },
+        title = { Text(text = "ログ種類") },
         text = {
             Column(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -140,7 +140,7 @@ private fun LogHelpDialog(onDismiss: () -> Unit) {
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = "\u9589\u3058\u308b")
+                Text(text = "閉じる")
             }
         }
     )
@@ -188,7 +188,7 @@ private fun LogBackButton(onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "\u623b\u308b",
+            text = "戻る",
             style = MaterialTheme.typography.labelLarge,
             color = Slate
         )
@@ -206,7 +206,7 @@ private fun LogHelpButton(onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "\uff1f \u30ed\u30b0\u8aac\u660e",
+            text = "？ ログ説明",
             style = MaterialTheme.typography.labelLarge,
             color = Color(0xFF1F6B4A)
         )
@@ -224,7 +224,7 @@ private fun LogMarkerButton(onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "\u533a\u5207\u308b",
+            text = "区切る",
             style = MaterialTheme.typography.labelLarge,
             color = Color(0xFF8A5A00)
         )
@@ -242,7 +242,7 @@ private fun LogDisplayClearButton(onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "\u8868\u793a\u30af\u30ea\u30a2",
+            text = "表示クリア",
             style = MaterialTheme.typography.labelLarge,
             color = Color(0xFF9F1D1D)
         )
@@ -283,17 +283,17 @@ private fun DebugLogType.logColor(): Color = when (this) {
 
 private fun DebugLogType.description(): String {
     return when (this) {
-        DebugLogType.NOTIFICATION -> "\u901a\u77e5\u306e\u8868\u793a\u30fb\u5931\u6557"
-        DebugLogType.GEOFENCE -> "\u6761\u4ef6\u306b\u5408\u3046\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9\u53cd\u5fdc"
-        DebugLogType.IGNORED -> "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u306a\u3069\u3067\u7121\u8996"
-        DebugLogType.REGISTRATION -> "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9\u767b\u9332\u30fb\u89e3\u9664"
-        DebugLogType.PERMISSION -> "\u6a29\u9650\u72b6\u614b"
-        DebugLogType.RECEIVED -> "\u53d7\u4fe1\u3057\u305f\u751f\u30a4\u30d9\u30f3\u30c8"
-        DebugLogType.SUPPRESSED -> "\u518d\u767b\u9332\u76f4\u5f8c\u306e\u767a\u706b\u6291\u5236"
-        DebugLogType.RULE -> "\u30eb\u30fc\u30eb\u4fdd\u5b58\u30fb\u5909\u66f4"
-        DebugLogType.STATUS -> "\u7aef\u672b\u72b6\u614b"
-        DebugLogType.RESTORE -> "\u518d\u8d77\u52d5\u30fb\u66f4\u65b0\u5f8c\u306e\u5fa9\u65e7"
-        DebugLogType.MARKER -> "\u624b\u52d5\u3067\u5165\u308c\u305f\u30ed\u30b0\u306e\u533a\u5207\u308a"
+        DebugLogType.NOTIFICATION -> "通知の表示・失敗"
+        DebugLogType.GEOFENCE -> "条件に合うジオフェンス反応"
+        DebugLogType.IGNORED -> "クールダウンなどで無視"
+        DebugLogType.REGISTRATION -> "ジオフェンス登録・解除"
+        DebugLogType.PERMISSION -> "権限状態"
+        DebugLogType.RECEIVED -> "受信した生イベント"
+        DebugLogType.SUPPRESSED -> "再登録直後の発火抑制"
+        DebugLogType.RULE -> "ルール保存・変更"
+        DebugLogType.STATUS -> "端末状態"
+        DebugLogType.RESTORE -> "再起動・更新後の復旧"
+        DebugLogType.MARKER -> "手動で入れたログの区切り"
     }
 }
 

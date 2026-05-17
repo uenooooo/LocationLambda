@@ -84,36 +84,36 @@ private fun LocationLambdaHomePreview() {
     val previewRules = listOf(
         LocationRuleUi(
             id = "1",
-            name = "\u6e0b\u8c37\u99c5",
-            addressLabel = "\u6771\u4eac\u90fd\u6e0b\u8c37\u533a\u9053\u7384\u57421-1-1",
-            areaLabel = "\u901a\u77e5\u534a\u5f84150m",
-            transitions = listOf(TransitionUi("\u5230\u7740", EnterBlue)),
-            actionTypeLabel = "URL\u3092\u958b\u304f",
+            name = "渋谷駅",
+            addressLabel = "東京都渋谷区道玄坂1-1-1",
+            areaLabel = "通知半径150m",
+            transitions = listOf(TransitionUi("到着", EnterBlue)),
+            actionTypeLabel = "URLを開く",
             actionTargetLabel = "https://example.com",
             actionTargetValue = "https://example.com",
             enabled = true
         ),
         LocationRuleUi(
             id = "2",
-            name = "\u4f1a\u793e",
-            addressLabel = "\u6771\u4eac\u90fd\u5343\u4ee3\u7530\u533a\u4e38\u306e\u51851-1-1",
-            areaLabel = "\u901a\u77e5\u534a\u5f84200m",
-            transitions = listOf(TransitionUi("\u9000\u51fa", ExitOrange)),
-            actionTypeLabel = "\u30a2\u30d7\u30ea\u3092\u958b\u304f",
+            name = "会社",
+            addressLabel = "東京都千代田区丸の内1-1-1",
+            areaLabel = "通知半径200m",
+            transitions = listOf(TransitionUi("退出", ExitOrange)),
+            actionTypeLabel = "アプリを開く",
             actionTargetLabel = "Teams",
             actionTargetValue = "com.microsoft.teams",
             enabled = true
         ),
         LocationRuleUi(
             id = "3",
-            name = "\u30b8\u30e0",
-            addressLabel = "\u6771\u4eac\u90fd\u65b0\u5bbf\u533a\u897f\u65b0\u5bbf2-2-2",
-            areaLabel = "\u901a\u77e5\u534a\u5f84120m",
+            name = "ジム",
+            addressLabel = "東京都新宿区西新宿2-2-2",
+            areaLabel = "通知半径120m",
             transitions = listOf(
-                TransitionUi("\u5230\u7740", EnterBlue),
-                TransitionUi("\u9000\u51fa", ExitOrange)
+                TransitionUi("到着", EnterBlue),
+                TransitionUi("退出", ExitOrange)
             ),
-            actionTypeLabel = "\u306a\u3057",
+            actionTypeLabel = "なし",
             actionTargetLabel = "-",
             actionTargetValue = "",
             enabled = false

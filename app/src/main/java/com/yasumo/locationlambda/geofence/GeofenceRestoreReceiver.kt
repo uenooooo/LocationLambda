@@ -15,7 +15,7 @@ class GeofenceRestoreReceiver : BroadcastReceiver() {
         val rules = RuleRepository(appContext).loadRules()
         val debugLogs = DebugLogRepository(appContext)
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            debugLogs.appendMarker(label = "\u7aef\u672b\u518d\u8d77\u52d5")
+            debugLogs.appendMarker(label = "端末再起動")
         }
         debugLogs.append(
             type = DebugLogType.RESTORE,
@@ -32,9 +32,9 @@ class GeofenceRestoreReceiver : BroadcastReceiver() {
 
     private fun String?.toRestoreTitle(): String {
         return when (this) {
-            Intent.ACTION_BOOT_COMPLETED -> "\u7aef\u672b\u518d\u8d77\u52d5"
-            Intent.ACTION_MY_PACKAGE_REPLACED -> "\u30a2\u30d7\u30ea\u66f4\u65b0"
-            else -> "\u5fa9\u65e7"
+            Intent.ACTION_BOOT_COMPLETED -> "端末再起動"
+            Intent.ACTION_MY_PACKAGE_REPLACED -> "アプリ更新"
+            else -> "復旧"
         }
     }
 }

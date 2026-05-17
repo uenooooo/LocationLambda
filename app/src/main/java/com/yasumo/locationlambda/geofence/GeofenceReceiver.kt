@@ -30,14 +30,14 @@ class GeofenceReceiver : BroadcastReceiver() {
         if (event == null) {
             DebugLogRepository(appContext).append(
                 type = DebugLogType.RECEIVED,
-                title = "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
+                title = "ジオフェンス",
                 detail = "event=null action=${intent.action.orEmpty()}"
             )
             return
         }
         DebugLogRepository(appContext).append(
             type = DebugLogType.RECEIVED,
-            title = "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
+            title = "ジオフェンス",
             detail = event.toReceiveDetail(intent.action)
         )
         if (!BuildConfig.SHOW_DEBUG_TOOLS) {
@@ -67,8 +67,8 @@ private class GeofenceLocationLogger(context: Context) {
         if (!appContext.hasLocationPermission()) {
             debugLogRepository.append(
                 type = DebugLogType.STATUS,
-                title = "\u73fe\u5728\u5730",
-                detail = "$prefix \u53d6\u5f97\u4e0d\u53ef reason=\u6a29\u9650\u4e0d\u8db3"
+                title = "現在地",
+                detail = "$prefix 取得不可 reason=権限不足"
             )
             return
         }
@@ -78,9 +78,9 @@ private class GeofenceLocationLogger(context: Context) {
         }
         debugLogRepository.append(
             type = DebugLogType.STATUS,
-            title = "\u73fe\u5728\u5730",
+            title = "現在地",
             detail = if (location == null) {
-                "$prefix \u53d6\u5f97\u5931\u6557"
+                "$prefix 取得失敗"
             } else {
                 "$prefix ${location.toDebugLocationText()}"
             }
@@ -158,8 +158,8 @@ private fun Double.formatCoordinate(): String {
 
 private fun Int.toTransitionLabel(): String {
     return when (this) {
-        Geofence.GEOFENCE_TRANSITION_ENTER -> "\u5230\u7740"
-        Geofence.GEOFENCE_TRANSITION_EXIT -> "\u9000\u51fa"
+        Geofence.GEOFENCE_TRANSITION_ENTER -> "到着"
+        Geofence.GEOFENCE_TRANSITION_EXIT -> "退出"
         else -> toString()
     }
 }

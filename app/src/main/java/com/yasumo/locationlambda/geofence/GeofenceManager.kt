@@ -32,28 +32,28 @@ class GeofenceManager(
     fun reregister(rules: List<LocationRule>) {
         debugLogRepository.append(
             type = DebugLogType.REGISTRATION,
-            title = "\u518d\u767b\u9332\u958b\u59cb",
+            title = "再登録開始",
             detail = "rules=${rules.size} enabled=${rules.count { it.enabled }} max=$MAX_ACTIVE_GEOFENCES"
         )
-        DebugDeviceStatusLogger.logPermissions(appContext, "\u518d\u767b\u9332\u6642")
-        DebugDeviceStatusLogger.logStatus(appContext, "\u518d\u767b\u9332\u6642")
+        DebugDeviceStatusLogger.logPermissions(appContext, "再登録時")
+        DebugDeviceStatusLogger.logStatus(appContext, "再登録時")
 
         val pendingIntent = buildPendingIntent()
         geofencingClient.removeGeofences(pendingIntent).addOnCompleteListener { removeTask ->
             debugLogRepository.append(
                 type = DebugLogType.REGISTRATION,
-                title = "\u65e2\u5b58\u767b\u9332\u89e3\u9664",
+                title = "既存登録解除",
                 detail = if (removeTask.isSuccessful) {
-                    "\u6210\u529f"
+                    "成功"
                 } else {
-                    "\u5931\u6557 ${removeTask.exception?.message.orEmpty()}"
+                    "失敗 ${removeTask.exception?.message.orEmpty()}"
                 }
             )
             if (!hasGeofencePermissions()) {
                 debugLogRepository.append(
                     type = DebugLogType.REGISTRATION,
-                    title = "\u767b\u9332\u4e2d\u6b62",
-                    detail = "\u4f4d\u7f6e\u60c5\u5831\u6a29\u9650\u4e0d\u8db3"
+                    title = "登録中止",
+                    detail = "位置情報権限不足"
                 )
                 notifyStatus(statusRepository.markPermissionMissing())
                 return@addOnCompleteListener
@@ -73,8 +73,8 @@ class GeofenceManager(
             if (geofences.isEmpty()) {
                 debugLogRepository.append(
                     type = DebugLogType.REGISTRATION,
-                    title = "\u767b\u9332\u306a\u3057",
-                    detail = "\u6709\u52b9\u306a\u30ed\u30b1\u30e9\u30e0\u306a\u3057"
+                    title = "登録なし",
+                    detail = "有効なロケラムなし"
                 )
                 notifyStatus(statusRepository.markNoRules())
                 return@addOnCompleteListener
@@ -95,11 +95,11 @@ class GeofenceManager(
             .addOnCompleteListener { task ->
                 debugLogRepository.append(
                     type = DebugLogType.REGISTRATION,
-                    title = "\u5168\u767b\u9332\u89e3\u9664",
+                    title = "全登録解除",
                     detail = if (task.isSuccessful) {
-                        "\u6210\u529f"
+                        "成功"
                     } else {
-                        "\u5931\u6557 ${task.exception?.message.orEmpty()}"
+                        "失敗 ${task.exception?.message.orEmpty()}"
                     }
                 )
             }
@@ -116,15 +116,15 @@ class GeofenceManager(
             .build()
         debugLogRepository.append(
             type = DebugLogType.SUPPRESSED,
-            title = "\u521d\u671f\u30c8\u30ea\u30ac\u30fc",
-            detail = "\u518d\u767b\u9332\u76f4\u5f8c\u306f\u767a\u706b\u3055\u305b\u306a\u3044 setInitialTrigger=0"
+            title = "初期トリガー",
+            detail = "再登録直後は発火させない setInitialTrigger=0"
         )
 
         geofencingClient.addGeofences(request, pendingIntent)
             .addOnSuccessListener {
                 debugLogRepository.append(
                     type = DebugLogType.REGISTRATION,
-                    title = "\u767b\u9332\u6210\u529f",
+                    title = "登録成功",
                     detail = "count=${geofences.size}"
                 )
                 notifyStatus(statusRepository.markRegistrationSucceeded(geofences.size))
@@ -132,7 +132,7 @@ class GeofenceManager(
             .addOnFailureListener { error ->
                 debugLogRepository.append(
                     type = DebugLogType.REGISTRATION,
-                    title = "\u767b\u9332\u5931\u6557",
+                    title = "登録失敗",
                     detail = error.message.orEmpty().ifBlank { error::class.java.simpleName }
                 )
                 notifyStatus(statusRepository.markRegistrationFailed(error.message))
@@ -171,21 +171,21 @@ class GeofenceManager(
             debugLogRepository.append(
                 type = DebugLogType.REGISTRATION,
                 title = rule.name.ifBlank { rule.id },
-                detail = "\u767b\u9332\u5bfe\u8c61\u5916 location=${if (rule.hasRegisteredLocation()) "\u3042\u308a" else "\u306a\u3057"}"
+                detail = "登録対象外 location=${if (rule.hasRegisteredLocation()) "あり" else "なし"}"
             )
         }
         rules.filter { !it.enabled }.forEach { rule ->
             debugLogRepository.append(
                 type = DebugLogType.REGISTRATION,
                 title = rule.name.ifBlank { rule.id },
-                detail = "\u767b\u9332\u5bfe\u8c61\u5916 \u7121\u52b9"
+                detail = "登録対象外 無効"
             )
         }
     }
 
     private fun LocationRule.toRegistrationDetail(): String {
         return listOf(
-            "\u767b\u9332\u5bfe\u8c61",
+            "登録対象",
             "radius=${radiusMeters.toInt()}m",
             "transition=${transitionType.toTransitionLabel()}",
             "lat=$latitude",
@@ -195,8 +195,8 @@ class GeofenceManager(
 
     private fun Int.toTransitionLabel(): String {
         val labels = mutableListOf<String>()
-        if (LocationTransition.includesEnter(this)) labels += "\u5230\u7740"
-        if (LocationTransition.includesExit(this)) labels += "\u9000\u51fa"
+        if (LocationTransition.includesEnter(this)) labels += "到着"
+        if (LocationTransition.includesExit(this)) labels += "退出"
         return labels.joinToString("/").ifBlank { "-" }
     }
 

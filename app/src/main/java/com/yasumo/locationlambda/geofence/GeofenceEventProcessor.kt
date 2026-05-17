@@ -28,12 +28,12 @@ internal class GeofenceEventProcessor(
     fun process(event: GeofencingEvent) {
         if (event.hasError()) {
             logIgnored(
-                    "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
-                    "\u53d7\u4fe1\u30a8\u30e9\u30fc code=${event.errorCode}"
+                    "ジオフェンス",
+                    "受信エラー code=${event.errorCode}"
             )
             statusRepository.markIgnored(
-                    "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
-                    "\u53d7\u4fe1\u30a8\u30e9\u30fc"
+                    "ジオフェンス",
+                    "受信エラー"
             )
             return
         }
@@ -41,22 +41,22 @@ internal class GeofenceEventProcessor(
         val transition = event.geofenceTransition
         if (!transition.isSupportedTransition()) {
             logIgnored(
-                    "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
-                    "\u5bfe\u8c61\u5916\u30a4\u30d9\u30f3\u30c8"
+                    "ジオフェンス",
+                    "対象外イベント"
             )
             statusRepository.markIgnored(
-                    "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
-                    "\u5bfe\u8c61\u5916\u30a4\u30d9\u30f3\u30c8"
+                    "ジオフェンス",
+                    "対象外イベント"
             )
             return
         }
 
         val triggeredIds = event.triggeringGeofences?.map { it.requestId }?.toSet().orEmpty()
         if (triggeredIds.isEmpty()) {
-            logIgnored("\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9", "\u5bfe\u8c61\u306a\u3057")
+            logIgnored("ジオフェンス", "対象なし")
             statusRepository.markIgnored(
-                    "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
-                    "\u5bfe\u8c61\u306a\u3057"
+                    "ジオフェンス",
+                    "対象なし"
             )
             return
         }
@@ -78,34 +78,34 @@ internal class GeofenceEventProcessor(
                             detail = transition.toTransitionLabel()
                     )
                     if (!rule.enabled) {
-                        logIgnored(rule.name, "\u7121\u52b9")
-                        statusRepository.markIgnored(rule.name, "\u7121\u52b9")
+                        logIgnored(rule.name, "無効")
+                        statusRepository.markIgnored(rule.name, "無効")
                         return@map rule
                     }
                     if (!rule.matchesTransition(transition)) {
                         logIgnored(
                                 rule.name,
-                                "\u6761\u4ef6\u4e0d\u4e00\u81f4 \u53d7\u4fe1=${transition.toTransitionLabel()} \u8a2d\u5b9a=${rule.transitionType.toTransitionLabel()}"
+                                "条件不一致 受信=${transition.toTransitionLabel()} 設定=${rule.transitionType.toTransitionLabel()}"
                         )
-                        statusRepository.markIgnored(rule.name, "\u6761\u4ef6\u4e0d\u4e00\u81f4")
+                        statusRepository.markIgnored(rule.name, "条件不一致")
                         return@map rule
                     }
                     if (rule.isBoundaryJitter(transition, now)) {
                         logIgnored(
                                 rule.name,
-                                "\u5883\u754c\u63fa\u308c \u524d\u56de=${rule.lastTriggeredTransition.toTransitionLabel()} \u4eca\u56de=${transition.toTransitionLabel()} ${rule.boundaryJitterElapsedSeconds(now)}s"
+                                "境界揺れ 前回=${rule.lastTriggeredTransition.toTransitionLabel()} 今回=${transition.toTransitionLabel()} ${rule.boundaryJitterElapsedSeconds(now)}s"
                         )
-                        statusRepository.markIgnored(rule.name, "\u5883\u754c\u63fa\u308c")
+                        statusRepository.markIgnored(rule.name, "境界揺れ")
                         return@map rule
                     }
                     if (!rule.isCooldownReady(now)) {
                         logIgnored(
                                 rule.name,
-                                "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u4e2d remaining=${rule.cooldownRemainingSeconds(now)}s"
+                                "クールダウン中 remaining=${rule.cooldownRemainingSeconds(now)}s"
                         )
                         statusRepository.markIgnored(
                                 rule.name,
-                                "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u4e2d"
+                                "クールダウン中"
                         )
                         return@map rule
                     }
@@ -141,8 +141,8 @@ internal class GeofenceEventProcessor(
 
         if (!hasMatchedRule) {
             logIgnored(
-                    "\u30b8\u30aa\u30d5\u30a7\u30f3\u30b9",
-                    "\u5bfe\u8c61\u30eb\u30fc\u30eb\u306a\u3057 ${triggeredIds.joinToString(",")}"
+                    "ジオフェンス",
+                    "対象ルールなし ${triggeredIds.joinToString(",")}"
             )
         }
 
@@ -202,16 +202,16 @@ internal class GeofenceEventProcessor(
 
     private fun Int.toTransitionUi(): TransitionUi {
         return when (this) {
-            Geofence.GEOFENCE_TRANSITION_EXIT -> TransitionUi("\u9000\u51fa", ExitOrange)
-            else -> TransitionUi("\u5230\u7740", EnterBlue)
+            Geofence.GEOFENCE_TRANSITION_EXIT -> TransitionUi("退出", ExitOrange)
+            else -> TransitionUi("到着", EnterBlue)
         }
     }
 
     private fun Int.toTransitionLabel(): String {
-        if (this == LocationTransition.BOTH) return "\u5230\u7740/\u9000\u51fa"
+        if (this == LocationTransition.BOTH) return "到着/退出"
         return when (this) {
-            Geofence.GEOFENCE_TRANSITION_EXIT -> "\u9000\u51fa"
-            else -> "\u5230\u7740"
+            Geofence.GEOFENCE_TRANSITION_EXIT -> "退出"
+            else -> "到着"
         }
     }
 

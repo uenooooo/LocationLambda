@@ -28,7 +28,7 @@ internal fun hasRegisteredPosition(
 }
 
 internal fun normalizeAddressLabel(address: String): String {
-    return address.removePrefix("\u65e5\u672c\u3001").removePrefix("\u65e5\u672c ").trim()
+    return address.removePrefix("日本、").removePrefix("日本 ").trim()
 }
 
 internal fun normalizeRadiusLabel(radiusLabel: String): String {

@@ -92,7 +92,7 @@ internal fun TitleNameEditor(
             ) {
                 if (value.isBlank()) {
                     Text(
-                        text = "\u540d\u524d\u3092\u5165\u529b",
+                        text = "名前を入力",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = EditPlaceholderGray

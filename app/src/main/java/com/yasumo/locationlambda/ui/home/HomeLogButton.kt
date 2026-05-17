@@ -28,7 +28,7 @@ internal fun HomeLogButton(onClick: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "\u30ed\u30b0",
+            text = "ログ",
             style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.SemiBold,
             color = CardSurface

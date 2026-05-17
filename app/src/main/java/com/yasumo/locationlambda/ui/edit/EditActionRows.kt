@@ -67,9 +67,9 @@ internal fun AppPickerRow(
     ) {
         Text(
             text = if (selectedLabel.isBlank()) {
-                "\u30a2\u30d7\u30ea\u3092\u9078\u629e"
+                "アプリを選択"
             } else {
-                "\u5bfe\u8c61"
+                "対象"
             },
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
@@ -89,7 +89,7 @@ internal fun AppPickerRow(
                 )
             }
             Text(
-                text = selectedLabel.ifBlank { "\u30a2\u30d7\u30ea\u3092\u9078\u629e" },
+                text = selectedLabel.ifBlank { "アプリを選択" },
                 style = MaterialTheme.typography.bodyLarge,
                 color = Slate
             )
@@ -117,7 +117,7 @@ internal fun UrlTargetRow(
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
-            text = if (value.isBlank()) "\u0055\u0052\u004c\u3092\u5165\u529b" else "\u5bfe\u8c61",
+            text = if (value.isBlank()) "URLを入力" else "対象",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
@@ -168,7 +168,7 @@ internal fun DisabledTargetRow() {
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
-            text = "\u5bfe\u8c61",
+            text = "対象",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )

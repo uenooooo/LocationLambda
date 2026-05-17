@@ -100,8 +100,8 @@ internal fun LocationLambdaApp() {
                 DebugDeviceStatusLogger.logPermissions(
                         context = context,
                         title =
-                                if (granted) "\u901a\u77e5\u6a29\u9650\u8a31\u53ef"
-                                else "\u901a\u77e5\u6a29\u9650\u672a\u8a31\u53ef"
+                                if (granted) "通知権限許可"
+                                else "通知権限未許可"
                 )
                 if (!granted && context.needsNotificationPermission()) {
                     showNotificationPermissionDeniedDialog = true
@@ -118,8 +118,8 @@ internal fun LocationLambdaApp() {
                 DebugDeviceStatusLogger.logPermissions(
                         context = context,
                         title =
-                                if (fineGranted) "\u524d\u666f\u4f4d\u7f6e\u6a29\u9650\u8a31\u53ef"
-                                else "\u524d\u666f\u4f4d\u7f6e\u6a29\u9650\u672a\u8a31\u53ef"
+                                if (fineGranted) "前景位置権限許可"
+                                else "前景位置権限未許可"
                 )
                 permissionStep =
                         if (fineGranted) {
@@ -131,8 +131,8 @@ internal fun LocationLambdaApp() {
             }
 
     LaunchedEffect(Unit) {
-        DebugDeviceStatusLogger.logPermissions(context, "\u8d77\u52d5\u6642")
-        DebugDeviceStatusLogger.logStatus(context, "\u8d77\u52d5\u6642")
+        DebugDeviceStatusLogger.logPermissions(context, "起動時")
+        DebugDeviceStatusLogger.logStatus(context, "起動時")
         permissionStep = PermissionStep.Notification
     }
 
@@ -162,13 +162,13 @@ internal fun LocationLambdaApp() {
                     hadGeofencePermissions = false
                     DebugDeviceStatusLogger.logPermissions(
                             context,
-                            "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u672a\u8a31\u53ef"
+                            "バックグラウンド位置未許可"
                     )
                     showBackgroundLocationDialog = true
                 } else {
                     DebugDeviceStatusLogger.logPermissions(
                             context,
-                            "\u30d0\u30c3\u30af\u30b0\u30e9\u30a6\u30f3\u30c9\u4f4d\u7f6e\u8a31\u53ef"
+                            "バックグラウンド位置許可"
                     )
                     if (!hadGeofencePermissions) {
                         scheduleGeofenceReregistration(rules)
@@ -356,9 +356,9 @@ private fun DebugLogRepository.logRuleChanges(
                 type = DebugLogType.RULE,
                 title =
                         if (previousRule == null) {
-                            "${rule.name.ifBlank { rule.id }} \u65b0\u898f\u4fdd\u5b58"
+                            "${rule.name.ifBlank { rule.id }} 新規保存"
                         } else {
-                            "${rule.name.ifBlank { rule.id }} \u4fdd\u5b58"
+                            "${rule.name.ifBlank { rule.id }} 保存"
                         },
                 detail = rule.toRuleLogDetail()
         )
@@ -369,7 +369,7 @@ private fun DebugLogRepository.logRuleChanges(
         append(
                 type = DebugLogType.RULE,
                 title = deletedRule.name.ifBlank { deletedRule.id },
-                detail = "\u524a\u9664"
+                detail = "削除"
         )
     }
 }
@@ -377,7 +377,7 @@ private fun DebugLogRepository.logRuleChanges(
 private fun LocationRule.toRuleLogDetail(): String {
     return listOf(
                     "enabled=${enabled.toOnOffLabel()}",
-                    "location=${if (hasRegisteredLocation()) "\u3042\u308a" else "\u306a\u3057"}",
+                    "location=${if (hasRegisteredLocation()) "あり" else "なし"}",
                     "radius=${radiusMeters.toInt()}m",
                     "transition=${transitionType.toRuleTransitionLabel()}",
                     "cooldown=${cooldownMin.toCooldownLabel()}",
@@ -389,16 +389,16 @@ private fun LocationRule.toRuleLogDetail(): String {
 
 private fun Int.toRuleTransitionLabel(): String {
     val labels = mutableListOf<String>()
-    if (LocationTransition.includesEnter(this)) labels += "\u5230\u7740"
-    if (LocationTransition.includesExit(this)) labels += "\u9000\u51fa"
+    if (LocationTransition.includesEnter(this)) labels += "到着"
+    if (LocationTransition.includesExit(this)) labels += "退出"
     return labels.joinToString("/").ifBlank { "-" }
 }
 
 private fun ActionType.toRuleActionLabel(): String {
     return when (this) {
-        ActionType.URL -> "URL\u3092\u958b\u304f"
-        ActionType.APP -> "\u30a2\u30d7\u30ea\u3092\u958b\u304f"
-        ActionType.NOTIFICATION_ONLY -> "\u901a\u77e5\u306e\u307f"
+        ActionType.URL -> "URLを開く"
+        ActionType.APP -> "アプリを開く"
+        ActionType.NOTIFICATION_ONLY -> "通知のみ"
     }
 }
 
@@ -411,7 +411,7 @@ private fun LocationRule.toActionTargetLogLabel(): String {
 }
 
 private fun Int.toCooldownLabel(): String {
-    return if (this <= 0) "\u306a\u3057" else "${this}\u5206"
+    return if (this <= 0) "なし" else "${this}分"
 }
 
 private fun Boolean.toOnOffLabel(): String {

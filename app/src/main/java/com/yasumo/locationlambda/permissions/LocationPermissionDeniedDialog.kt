@@ -12,20 +12,20 @@ internal fun LocationPermissionDeniedDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = "\u4f4d\u7f6e\u60c5\u5831\u304c\u8a31\u53ef\u3055\u308c\u3066\u3044\u307e\u305b\u3093") },
+        title = { Text(text = "位置情報が許可されていません") },
         text = {
             Text(
-                text = "\u4f4d\u7f6e\u60c5\u5831\u304c\u8a31\u53ef\u3055\u308c\u308b\u307e\u3067\u3001\u5834\u6240\u306b\u5165\u308b\u30fb\u51fa\u308b\u3068\u304d\u306e\u901a\u77e5\u306f\u52d5\u304d\u307e\u305b\u3093\u3002\u5f8c\u304b\u3089Android\u306e\u8a2d\u5b9a\u3067\u8a31\u53ef\u3067\u304d\u307e\u3059\u3002"
+                text = "位置情報が許可されるまで、場所に入る・出るときの通知は動きません。後からAndroidの設定で許可できます。"
             )
         },
         confirmButton = {
             TextButton(onClick = onOpenSettings) {
-                Text(text = "\u8a2d\u5b9a\u3092\u958b\u304f")
+                Text(text = "設定を開く")
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = "\u9589\u3058\u308b")
+                Text(text = "閉じる")
             }
         }
     )

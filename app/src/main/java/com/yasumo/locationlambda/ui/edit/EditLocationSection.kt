@@ -30,7 +30,7 @@ internal fun MapSelectorRow(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text(
-            text = "\u4f4f\u6240",
+            text = "住所",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )
@@ -40,7 +40,7 @@ internal fun MapSelectorRow(
             color = Slate
         )
         Text(
-            text = "\u901a\u77e5\u534a\u5f84",
+            text = "通知半径",
             style = MaterialTheme.typography.labelMedium,
             color = SlateSoft
         )

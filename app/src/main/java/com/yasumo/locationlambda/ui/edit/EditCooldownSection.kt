@@ -50,7 +50,7 @@ internal fun CooldownSelector(
                 )
             }
             CompactSelectChip(
-                label = "\u30ab\u30b9\u30bf\u30e0",
+                label = "カスタム",
                 selected = isCustomCooldown,
                 selectedColor = SuccessGreen,
                 modifier = Modifier.weight(1.25f),
@@ -101,7 +101,7 @@ private fun CustomCooldownField(
                         Box(modifier = Modifier.weight(1f)) {
                             if (value.isBlank()) {
                                 Text(
-                                    text = "1\u301c720",
+                                    text = "1〜720",
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = SlateSoft.copy(alpha = 0.55f)
                                 )
@@ -109,7 +109,7 @@ private fun CustomCooldownField(
                             innerTextField()
                         }
                         Text(
-                            text = "\u5206",
+                            text = "分",
                             style = MaterialTheme.typography.bodyMedium,
                             color = suffixColor
                         )
@@ -118,7 +118,7 @@ private fun CustomCooldownField(
             )
         }
         Text(
-            text = "\u6700\u592712\u6642\u9593\u307e\u3067",
+            text = "最大12時間まで",
             style = MaterialTheme.typography.labelMedium,
             color = suffixColor
         )
@@ -132,7 +132,7 @@ private fun CooldownChip(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    val label = if (minutes == 0) "\u306a\u3057" else "${minutes}\u5206"
+    val label = if (minutes == 0) "なし" else "${minutes}分"
     CompactSelectChip(
         label = label,
         selected = selected,
